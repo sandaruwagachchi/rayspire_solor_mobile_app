@@ -28,8 +28,8 @@
 6. Order Conformation
 🗽 Shows success message
 
-Order History
+7. Order History
 🧾 View previous orders and re-order option
 
-User Profile
+8. User Profile
 🐼 View and update user details 
