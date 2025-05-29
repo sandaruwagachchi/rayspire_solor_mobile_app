@@ -1,8 +1,12 @@
 🔧 Technologies Used:
 
  1. Frontend: Android Studio (Kotlin)
+ 
  2. Backend/Database: Firebase Realtime Database
+ 
  3. Authentication: Firebase Authentication
+
+
 
 ✨ Key Features:
 
