@@ -21,6 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<activity android:name=".LoginActivity" />
+<activity android:name=".AddpizzaActivity"/>
+        <activity android:name=".DisplaycartActivity" />
+   <activity android:name=".CheckOutScreenActivity" />
+        <activity android:name=".OrderConfirmScreenActivity" />
+        <activity android:name=".OrderedHistoryActivity"/>
     </application>
 
 </manifest>
