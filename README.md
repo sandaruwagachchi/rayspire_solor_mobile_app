@@ -16,10 +16,10 @@
 2. User Registration & Login
 🔐 Secure authentication with Firebase (Email/Password based)
 
-3. Browse Pizza Menu
-📋 View list of available pizzas with images, prices, and descriptions (loaded from Firebase)
+3. Browse Solor Menu
+📋 View list of available solors with images, prices, and descriptions (loaded from Firebase)
 
-4. Customize Pizza Orders
+4. Customize Solor Orders
 🍕 Choose size, crust type, toppings, and quantity
 
 5. Add to Cart & Checkout
