@@ -12,21 +12,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PizzaZone"
         tools:targetApi="31">
+
         <activity
-            android:name=".MainActivity"
+            android:name=".RegisterActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<activity android:name=".LoginActivity" />
-<activity android:name=".AddpizzaActivity"/>
-        <activity android:name=".DisplaycartActivity" />
-   <activity android:name=".CheckOutScreenActivity" />
-        <activity android:name=".OrderConfirmScreenActivity" />
-        <activity android:name=".OrderedHistoryActivity"/>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".AddsolarActivity" />
+        <activity android:name=".CheckOutScreenActivity" />
+        <activity android:name=".OrderConfirmScreenActivity" android:exported="true" />
+
     </application>
 
 </manifest>

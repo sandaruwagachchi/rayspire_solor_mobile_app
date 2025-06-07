@@ -6,20 +6,22 @@ import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
-class DisplaycartActivity :AppCompatActivity () {
-
+class AddsolarActivity:AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_displaycart)
+        setContentView(R.layout.activity_addsolar)
 
-        val btnNext = findViewById<Button>(R.id.btncart)
+        val btnNext = findViewById<Button>(R.id.btnadd)
 
-        btnNext.setOnClickListener {
-            val intent = Intent(this, CheckOutScreenActivity::class.java)
+        btnNext.setOnClickListener{
+            val intent = Intent(this,DisplayCartFragment
+            ::class.java)
             startActivity(intent)
-
-
         }
+
+
+
     }
+
 }
