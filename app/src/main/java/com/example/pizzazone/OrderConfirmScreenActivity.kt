@@ -17,8 +17,8 @@ class OrderConfirmScreenActivity : AppCompatActivity () {
         val btnNext = findViewById<Button>(R.id.btnConfirm)
 
         btnNext.setOnClickListener{
-            val intent = Intent(this, OrderedHistoryActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("loadFragment", "orderHistory")
             startActivity(intent)
-
 
         }}}
