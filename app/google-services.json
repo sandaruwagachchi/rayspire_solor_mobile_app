@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "460152609397",
+    "project_id": "rayspire-54f32",
+    "storage_bucket": "rayspire-54f32.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460152609397:android:ac8659775ee83b23baf63c",
+        "android_client_info": {
+          "package_name": "com.example.pizzazone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqadleiWf5vey35sv_lcLNriTlIbOzBz0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
