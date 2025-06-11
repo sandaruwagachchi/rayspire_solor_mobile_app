@@ -24,14 +24,14 @@
             android:orientation="vertical"
             android:padding="32dp"
             android:background="@android:color/white">
-            <com.airbnb.lottie.LottieAnimationView
+           { <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lottieAnimationView"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="20dp"
                 app:lottie_autoPlay="true"
                 app:lottie_fileName="OrderConfirm.json"
-                app:lottie_loop="true" />
+                app:lottie_loop="true" /> }
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
