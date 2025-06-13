@@ -7,7 +7,7 @@
     android:icon="@android:drawable/ic_menu_view"
     />
 <item
-    android:id="@+id/nav_myorderhistory"
+    android:id="@+id/nav_myorder"
     android:title="My Order"
     android:icon="@android:drawable/ic_menu_myplaces"
     />

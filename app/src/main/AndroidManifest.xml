@@ -27,9 +27,9 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".AddsolarActivity" />
-        <activity android:name=".CheckOutScreenActivity" />
-        <activity android:name=".OrderConfirmScreenActivity" android:exported="true" />
+      <activity android:name=".ForgotPasswordScreenActivity"/>
+        <activity android:name=".HomeScreenActivity"
+            android:exported="true" />
 
     </application>
 
