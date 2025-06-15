@@ -28,6 +28,9 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" />
       <activity android:name=".ForgotPasswordScreenActivity"/>
+        <activity android:name=".ListScreenActivity" />
+        <activity android:name=".DetailsScreenActivity"/>
+        <activity android:name=".CheckoutScreenActivity" />
         <activity android:name=".HomeScreenActivity"
             android:exported="true" />
 
