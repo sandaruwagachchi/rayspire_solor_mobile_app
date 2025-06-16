@@ -27,11 +27,16 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" />
-      <activity android:name=".ForgotPasswordScreenActivity"/>
+        <activity android:name=".ForgotPasswordScreenActivity"/>
         <activity android:name=".ListScreenActivity" />
         <activity android:name=".DetailsScreenActivity"/>
         <activity android:name=".CheckoutScreenActivity" />
         <activity android:name=".OrderConfirmActivity" />
+        <activity android:name=".AdminHomeScreenActivity" />
+        <activity android:name=".AdminAddProductActivity"/>
+        <activity android:name=".AdminDeleteAndUpdateActivity"/>
+        <activity android:name=".AdminViewProductActivity"/>
+        <activity android:name=".AdminOrderHistoryActivity" />
         <activity android:name=".OderInfoActivity" />
         <activity android:name=".HomeScreenActivity"
             android:exported="true" />
