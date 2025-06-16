@@ -19,7 +19,7 @@ val view = inflater.inflate(R.layout.fragment_cart, container, false)
 
 
        buttoncheck.setOnClickListener {
-            val intent = Intent(activity,DetailsScreenActivity::class.java)
+            val intent = Intent(activity,CheckoutScreenActivity::class.java)
             intent.putExtra("showListFragment", true)
             startActivity(intent)
         }

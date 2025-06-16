@@ -31,6 +31,8 @@
         <activity android:name=".ListScreenActivity" />
         <activity android:name=".DetailsScreenActivity"/>
         <activity android:name=".CheckoutScreenActivity" />
+        <activity android:name=".OrderConfirmActivity" />
+        <activity android:name=".OderInfoActivity" />
         <activity android:name=".HomeScreenActivity"
             android:exported="true" />
 

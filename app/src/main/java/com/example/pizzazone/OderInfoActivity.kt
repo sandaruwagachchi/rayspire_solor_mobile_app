@@ -5,19 +5,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class CheckoutScreenActivity : AppCompatActivity() {
+class OderInfoActivity :AppCompatActivity() {
 
     private lateinit var bottomNavigationView: BottomNavigationView
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_checkout_screen)
+        setContentView(R.layout.activity_oderer_infromation)
 
         bottomNavigationView = findViewById(R.id.bottom_navigation)
 
         if (savedInstanceState == null) {
-            replaceFragment(CheckoutScreenFragment())
+            replaceFragment(OderInfoFragment())
 
             bottomNavigationView.menu.setGroupCheckable(0, true, false)
             bottomNavigationView.menu.findItem(R.id.nav_home).isChecked = false
@@ -25,28 +24,13 @@ class CheckoutScreenActivity : AppCompatActivity() {
 
         }
 
+
         bottomNavigationView.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home -> {
-                    replaceFragment(HomeFragment())
-                    true
-                }
-
-                R.id.nav_myorder -> {
-                    replaceFragment(MyOrderFragment())
-                    true
-                }
-
-                R.id.nav_cart -> {
-                    replaceFragment(CartFragment())
-                    true
-                }
-
-                R.id.nav_profile -> {
-                    replaceFragment(ProfileFragment())
-                    true
-                }
-
+            when(item.itemId) {
+                R.id.nav_home -> { replaceFragment(HomeFragment()); true }
+                R.id.nav_myorder -> { replaceFragment(MyOrderFragment()); true }
+                R.id.nav_cart -> { replaceFragment(CartFragment()); true }
+                R.id.nav_profile -> { replaceFragment(ProfileFragment()); true }
                 else -> false
             }
         }
@@ -59,4 +43,3 @@ class CheckoutScreenActivity : AppCompatActivity() {
     }
 
 }
-
