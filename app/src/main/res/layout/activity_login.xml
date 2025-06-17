@@ -59,21 +59,21 @@
     <!-- Login Card -->
     <androidx.cardview.widget.CardView
         android:id="@+id/loginFormCard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="346dp"
+        android:layout_height="443dp"
         android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="10dp"
         app:cardElevation="8dp"
-        app:layout_constraintTop_toBottomOf="@id/illustrationImage"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/illustrationImage">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="433dp"
             android:orientation="vertical"
             android:padding="24dp">
 
@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="10dp"
                 android:text="Forgot Password?"
                 android:textColor="#FF9800" />
 
@@ -110,22 +110,56 @@
                 android:backgroundTint="#FF9800"
                 android:text="Login"
                 android:textColor="@android:color/white" />
+
+
+            <ImageView
+                android:id="@+id/google"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="250px"
+                android:layout_marginTop="36dp"
+                android:contentDescription="Illustration"
+                android:src="@drawable/google"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/topBarLayout" />
+
+            <ImageView
+                android:id="@+id/facebook"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="350px"
+                android:layout_marginTop="-30dp"
+                android:contentDescription="Illustration"
+                android:src="@drawable/facebook"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/topBarLayout" />
+
+            <TextView
+                android:id="@+id/textViewaccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="10dp"
+                android:text="Don't have an account?"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/textViewSignUp"
+                android:layout_width="300px"
+                android:layout_height="70px"
+                android:layout_marginLeft="450px"
+                android:layout_marginTop="-25dp"
+                android:layout_marginBottom="24dp"
+                android:text=" Sign Up"
+                android:textColor="#FF9800" />
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <!-- Sign Up Redirect -->
-    <TextView
-        android:id="@+id/textViewSignUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Don't have an account? Sign Up"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
-        android:textColor="#FF9800"
-        app:layout_constraintTop_toBottomOf="@id/loginFormCard"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
