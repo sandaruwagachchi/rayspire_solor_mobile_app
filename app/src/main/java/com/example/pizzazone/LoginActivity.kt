@@ -14,8 +14,10 @@ class LoginActivity:AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         val buttonlog = findViewById<Button>(R.id.buttonLogin)
-        val textViewForgot = findViewById<TextView>(R.id.textViewForgot)
+        val textViewreg = findViewById<TextView>(R.id.textViewreg)
         val buttonadmin = findViewById<Button>(R.id.buttonadmin)
+        val textViewForgot =findViewById<TextView>(R.id.textViewForgot)
+
 
         buttonlog.setOnClickListener{
             val intent = Intent(this, HomeScreenActivity::class.java)
@@ -31,6 +33,12 @@ class LoginActivity:AppCompatActivity() {
         buttonadmin.setOnClickListener{
             val intent = Intent(this, AdminHomeScreenActivity::class.java)
             startActivity(intent)
+        }
+
+        textViewreg.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+
         }
 
 }}
