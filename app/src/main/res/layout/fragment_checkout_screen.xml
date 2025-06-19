@@ -50,19 +50,15 @@
                 app:layout_constraintBottom_toBottomOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Order Summary -->
-
-        <!-- Payment Methods -->
-
-        <!-- Shipping Details -->
 
         <androidx.cardview.widget.CardView
             android:id="@+id/order_summary_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            app:cardBackgroundColor="#FFA500"
-            app:cardCornerRadius="8dp"
+            app:cardBackgroundColor="#FF9800"
+            app:cardCornerRadius="12dp"
+            android:layout_marginTop="20dp"
             app:cardElevation="4dp"
             app:contentPadding="16dp">
 
@@ -77,7 +73,7 @@
                     android:layout_marginBottom="12dp"
                     android:text="Order summary"
                     android:textColor="@android:color/white"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <!-- Order row -->
@@ -89,18 +85,20 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
                         android:text="Order:"
                         android:textColor="@android:color/white"
-                        android:textSize="18sp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/tv_order_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:layout_marginTop="18dp"
                         android:text="$16.48"
                         android:textColor="@android:color/white"
-                        android:textSize="18sp" />
+                        android:textSize="20sp" />
                 </RelativeLayout>
 
                 <!-- Delivery fees row -->
@@ -114,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:text="Delivery fees:"
                         android:textColor="@android:color/white"
-                        android:textSize="18sp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/tv_delivery_fees"
@@ -123,7 +121,7 @@
                         android:layout_alignParentEnd="true"
                         android:text="$1.50"
                         android:textColor="@android:color/white"
-                        android:textSize="18sp" />
+                        android:textSize="20sp" />
                 </RelativeLayout>
 
                 <!-- Total row -->
@@ -161,7 +159,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginLeft="16dp"
             android:text="Payment methods"
-            android:textColor="#FFA500"
+            android:textColor="#FF9800"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -169,10 +167,10 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/shipping_details_card"
             android:layout_width="match_parent"
-            android:layout_height="237dp"
+            android:layout_height="263dp"
             android:layout_margin="16dp"
             app:cardBackgroundColor="#FFCC80"
-            app:cardCornerRadius="8dp"
+            app:cardCornerRadius="18dp"
             app:cardElevation="4dp"
             app:contentPadding="16dp">
 
@@ -195,18 +193,18 @@
                         android:layout_marginTop="16dp"
                         android:text="Shipping Details"
                         android:textColor="@color/black"
-                        android:textSize="22sp"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_shipping_name"
-                        android:layout_width="168dp"
+                        android:layout_width="204dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:text="Sandaru Wagachchi ,"
                         android:textColor="@android:color/black"
-                        android:textSize="16sp"
+                        android:textSize="19sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -216,17 +214,17 @@
                         android:layout_marginBottom="4dp"
                         android:text="62/1A ,\nOvilana .\nBeliatta"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp"
+                        android:textSize="19sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_shipping_mobile"
-                        android:layout_width="101dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:text="0772040312"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp"
+                        android:textSize="19sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -235,7 +233,7 @@
                         android:layout_height="wrap_content"
                         android:text="82400"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp"
+                        android:textSize="19sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -256,26 +254,70 @@
                     android:layout_height="67dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="-4dp"
-                    android:layout_marginBottom="111dp"
+                    android:layout_marginEnd="-1dp"
+                    android:layout_marginBottom="113dp"
                     android:contentDescription="Delivery Truck Icon"
                     android:src="@drawable/truck" />
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Confirm Button -->
-        <Button
-            android:id="@+id/buttonconfirm"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/checkout_bottom_fixed_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="#FF9800"
-            android:paddingVertical="12dp"
-            android:text="Confirm"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/white"
+            android:paddingHorizontal="16dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <!-- Total Text -->
+            <TextView
+                android:id="@+id/tv_total_label_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total:"
+                android:textColor="@android:color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Total Amount -->
+            <TextView
+                android:id="@+id/tv_total_amount_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="$18.19"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_total_label_bottom"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <Button
+                android:id="@+id/buttonconfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#FF9800"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="12dp"
+                android:text="Confirm"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:cornerRadius="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </ScrollView>
