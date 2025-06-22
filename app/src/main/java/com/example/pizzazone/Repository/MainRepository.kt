@@ -2,31 +2,37 @@ package com.example.pizzazone.Repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.pizzazone.Domain.ItemModel
 import com.example.pizzazone.Domain.CategoryModel
 import com.google.firebase.database.*
 
 class MainRepository {
-    private val firebaseDatabase = FirebaseDatabase.getInstance()
+
+    private val db = FirebaseDatabase.getInstance().reference
 
     fun loadCategory(): LiveData<MutableList<CategoryModel>> {
-        val listData = MutableLiveData<MutableList<CategoryModel>>()
-        val ref = firebaseDatabase.getReference("Category")
-
-        ref.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+        val data = MutableLiveData<MutableList<CategoryModel>>()
+        db.child("Category").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snap: DataSnapshot) {
                 val list = mutableListOf<CategoryModel>()
-                for (childSnapshot in snapshot.children) {
-                    val item = childSnapshot.getValue(CategoryModel::class.java)
-                    item?.let { list.add(it) }
-                }
-                listData.value = list
+                for (c in snap.children) c.getValue(CategoryModel::class.java)?.let { list.add(it) }
+                data.value = list
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                // Handle error if needed
-            }
+            override fun onCancelled(err: DatabaseError) {}
         })
+        return data
+    }
 
-        return listData
+    fun loadPopular(): LiveData<List<ItemModel>> {
+        val data = MutableLiveData<List<ItemModel>>()
+        db.child("Popular").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snap: DataSnapshot) {
+                val list = mutableListOf<ItemModel>()
+                for (c in snap.children) c.getValue(ItemModel::class.java)?.let { list.add(it) }
+                data.value = list
+            }
+            override fun onCancelled(err: DatabaseError) {}
+        })
+        return data
     }
 }
