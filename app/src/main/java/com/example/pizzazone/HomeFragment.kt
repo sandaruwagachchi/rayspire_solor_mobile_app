@@ -7,46 +7,55 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.pizzazone.Adapter.CategoryAdapter
+import com.example.pizzazone.ViewModel.MainViewModel
+import com.example.pizzazone.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var viewModel: MainViewModel
+    private lateinit var categoryAdapter: CategoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout and assign to variable
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val view = binding.root
 
-        // Access the button inside the view
-        val buttonlist = view.findViewById<Button>(R.id.buttonlist)
+        // Initialize ViewModel
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
-        // Set click listener
-        buttonlist.setOnClickListener {
+        // Setup RecyclerView
+        categoryAdapter = CategoryAdapter(mutableListOf())
+        binding.recycleView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recycleView.adapter = categoryAdapter
+
+        // Observe Category Data from Firebase
+        viewModel.loadCategory().observe(viewLifecycleOwner, Observer { categoryList ->
+            categoryAdapter = CategoryAdapter(categoryList)
+            binding.recycleView.adapter = categoryAdapter
+        })
+
+        // Button Click
+        binding.buttonlist.setOnClickListener {
             val intent = Intent(activity, ListScreenActivity::class.java)
             intent.putExtra("showListFragment", true)
             startActivity(intent)
         }
 
-        // Return the view
         return view
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
