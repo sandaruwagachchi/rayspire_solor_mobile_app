@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 
 class CheckoutScreenFragment : Fragment() {
 
@@ -19,17 +20,29 @@ class CheckoutScreenFragment : Fragment() {
 
         val buttonconfirm = view.findViewById<Button>(R.id.buttonconfirm)
 
-        val buttongo = view.findViewById<Button>(R.id.buttongo)
+        val backArrow = view.findViewById<ImageView>(R.id.shipping_back_arrow)
+
+        val edit_shop = view.findViewById<ImageView>(R.id.edit_shipping_icon)
+
 
         buttonconfirm.setOnClickListener {
             val intent = Intent(activity, OrderConfirmActivity::class.java)
             startActivity(intent)
         }
 
-        buttongo.setOnClickListener {
+        edit_shop.setOnClickListener {
             val intent = Intent(activity,OderInfoActivity::class.java)
             startActivity(intent)
         }
+
+        backArrow.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, CartFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+
 
 
         return view

@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.Toast
 
 class OderInfoFragment : Fragment() {
 
@@ -16,13 +18,23 @@ class OderInfoFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_oderer_infromation, container, false)
 
+        val backArrow = view.findViewById<ImageView>(R.id.shipping_back_arrow)
+
+
         val buttonsave = view.findViewById<Button>(R.id.buttonsave)
 
         buttonsave.setOnClickListener {
+            Toast.makeText(requireContext(), "Shipping Details Saved Successfully...", Toast.LENGTH_SHORT).show()
             val intent = Intent(requireContext(), CheckoutScreenActivity::class.java)
             intent.putExtra("showHome", true)
             startActivity(intent)
         }
+
+        backArrow.setOnClickListener {
+            val intent = Intent(requireContext(), CheckoutScreenActivity::class.java)
+            startActivity(intent)
+        }
+
 
         return view
     }
