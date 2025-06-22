@@ -1,5 +1,6 @@
 package com.example.pizzazone.Adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -24,7 +25,7 @@ class CategoryAdapter(private val items: MutableList<CategoryModel>) :
         return Viewholder(binding)
     }
 
-    override fun onBindViewHolder(holder: Viewholder, position: Int) {
+    override fun onBindViewHolder(holder: Viewholder, @SuppressLint("RecyclerView") position: Int) {
         val item = items[position]
         holder.binding.titleCat.text = item.title
 
@@ -36,10 +37,10 @@ class CategoryAdapter(private val items: MutableList<CategoryModel>) :
         }
 
         if (selectedPosition == position) {
-            holder.binding.titleCat.setBackgroundResource(R.drawable.gray_bg)
-            holder.binding.titleCat.setTextColor(context.getColor(R.color.white))
+            holder.binding.titleCat.setBackgroundResource(R.drawable.orange_bg)
+            holder.binding.titleCat.setTextColor(context.getColor(R.color.black))
         } else {
-            holder.binding.titleCat.setBackgroundResource(R.drawable.white_bg)
+            holder.binding.titleCat.setBackgroundResource(R.drawable.gray_bg)
             holder.binding.titleCat.setTextColor(context.getColor(R.color.black))
         }
     }

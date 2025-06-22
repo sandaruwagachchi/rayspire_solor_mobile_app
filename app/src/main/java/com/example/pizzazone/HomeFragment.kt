@@ -5,12 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pizzazone.Adapter.CategoryAdapter
+import com.example.pizzazone.Adapter.PopularAdapter
 import com.example.pizzazone.ViewModel.MainViewModel
 import com.example.pizzazone.databinding.FragmentHomeBinding
 
@@ -21,37 +20,42 @@ class HomeFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var popularAdapter: PopularAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val view = binding.root
-
-        // Initialize ViewModel
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
-        // Setup RecyclerView
+        // Setup category RecyclerView (horizontal)
         categoryAdapter = CategoryAdapter(mutableListOf())
-        binding.recycleView.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.recycleView.adapter = categoryAdapter
-
-        // Observe Category Data from Firebase
-        viewModel.loadCategory().observe(viewLifecycleOwner, Observer { categoryList ->
-            categoryAdapter = CategoryAdapter(categoryList)
+        binding.recycleView.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = categoryAdapter
+        }
+        viewModel.loadCategory().observe(viewLifecycleOwner) { list ->
+            categoryAdapter = CategoryAdapter(list)
             binding.recycleView.adapter = categoryAdapter
-        })
+        }
 
-        // Button Click
+        // Setup popular RecyclerView (vertical)
+        popularAdapter = PopularAdapter(mutableListOf())
+        binding.recycleView2.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = popularAdapter
+        }
+        viewModel.loadPopular().observe(viewLifecycleOwner) { popList ->
+            popularAdapter = PopularAdapter(popList.toMutableList())
+            binding.recycleView2.adapter = popularAdapter
+        }
+
+        // Button click
         binding.buttonlist.setOnClickListener {
             val intent = Intent(activity, ListScreenActivity::class.java)
             intent.putExtra("showListFragment", true)
             startActivity(intent)
         }
 
-        return view
+        return binding.root
     }
 
     override fun onDestroyView() {
