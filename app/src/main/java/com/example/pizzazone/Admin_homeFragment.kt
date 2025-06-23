@@ -16,9 +16,9 @@ class Admin_homeFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_adminhome, container, false)
 
-        val btnadd = view.findViewById<Button>(R.id.btnadd)
-        val btnview = view.findViewById<Button>(R.id.btnview)
-        val btnupdate = view.findViewById<Button>(R.id.btnupdate)
+        val btnadd = view.findViewById<Button>(R.id.btnadd1)
+        val btnview = view.findViewById<Button>(R.id.btnview1)
+        val btnupdate = view.findViewById<Button>(R.id.btnupdate1)
 
         btnadd.setOnClickListener {
             val intent = Intent(activity, AdminAddProductActivity::class.java)
