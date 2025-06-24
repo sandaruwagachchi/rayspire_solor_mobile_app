@@ -21,8 +21,6 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="12dp"
-            android:contentDescription="@string/back_arrow_description"
-
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -46,8 +44,6 @@
         android:layout_width="166dp"
         android:layout_height="151dp"
         android:layout_marginTop="36dp"
-        android:contentDescription="@string/illustration_description"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topBarLayout" />
@@ -129,15 +125,12 @@
                     android:id="@+id/googleIcon"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:contentDescription="@string/google_icon_description"
-
                     android:layout_marginEnd="24dp"/>
 
                 <ImageView
                     android:id="@+id/facebookIcon"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:contentDescription="@string/facebook_icon_description"
                     />
             </LinearLayout>
 
