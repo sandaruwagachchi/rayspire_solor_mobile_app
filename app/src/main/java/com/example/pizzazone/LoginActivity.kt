@@ -22,6 +22,9 @@ class LoginActivity:AppCompatActivity() {
         val textViewreg = findViewById<TextView>(R.id.textViewSignUp)
         val buttonadmin = findViewById<Button>(R.id.buttonAdminLogin)
         val textViewForgot =findViewById<TextView>(R.id.textViewForgotPassword)
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 
