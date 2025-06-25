@@ -14,9 +14,15 @@ class LoginActivity:AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         val buttonlog = findViewById<Button>(R.id.buttonLogin)
+<<<<<<< Updated upstream
         val textViewreg = findViewById<TextView>(R.id.textViewreg)
         val buttonadmin = findViewById<Button>(R.id.buttonadmin)
         val textViewForgot =findViewById<TextView>(R.id.textViewForgot)
+=======
+        val textViewreg = findViewById<TextView>(R.id.textViewSignUp)
+        val buttonadmin = findViewById<Button>(R.id.buttonAdminLogin)
+        val textViewForgot =findViewById<TextView>(R.id.textViewForgotPassword)
+>>>>>>> Stashed changes
 
 
         buttonlog.setOnClickListener{
