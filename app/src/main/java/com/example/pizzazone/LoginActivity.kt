@@ -3,6 +3,7 @@ package com.example.pizzazone
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,32 +14,35 @@ class LoginActivity:AppCompatActivity() {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login)
 
-        val buttonlog = findViewById<Button>(R.id.buttonLogin)
-        val textViewreg = findViewById<TextView>(R.id.textViewreg)
-        val buttonadmin = findViewById<Button>(R.id.buttonadmin)
-        val textViewForgot =findViewById<TextView>(R.id.textViewForgot)
+        val buttonLogin = findViewById<Button>(R.id.buttonLogin)
+        val backArrow = findViewById<ImageView>(R.id.backArrow)
+        val textViewSignUp = findViewById<TextView>(R.id.textViewSignUp)
+        val forgotPassword = findViewById<TextView>(R.id.textViewForgotPassword)
 
-
-        buttonlog.setOnClickListener{
+        buttonLogin.setOnClickListener{
             val intent = Intent(this, HomeScreenActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
-        textViewForgot.setOnClickListener {
-            val intent = Intent(this, ForgotPasswordScreenActivity::class.java)
-            startActivity(intent)
-
-        }
-
-        buttonadmin.setOnClickListener{
-            val intent = Intent(this, AdminHomeScreenActivity::class.java)
-            startActivity(intent)
-        }
-
-        textViewreg.setOnClickListener {
+        backArrow.setOnClickListener{
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
+            finish()
 
         }
+
+        textViewSignUp.setOnClickListener{
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+         forgotPassword.setOnClickListener{
+             val intent = Intent(this, forgotPassword::class.java)
+             startActivity(intent)
+             finish()
+
+         }
 
 }}
