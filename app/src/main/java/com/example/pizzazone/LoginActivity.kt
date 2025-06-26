@@ -3,6 +3,7 @@ package com.example.pizzazone
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -12,6 +13,12 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        val buttonLogin = findViewById<Button>(R.id.buttonLogin)
+        val backArrow = findViewById<ImageView>(R.id.backArrow)
+        val textViewSignUp = findViewById<TextView>(R.id.textViewSignUp)
+        val frogetpawword = findViewById<TextView>(R.id.textViewForgotPassword)
+
+        buttonLogin.setOnClickListener{
         val buttonlog = findViewById<Button>(R.id.buttonLogin)
  
         val textViewreg = findViewById<TextView>(R.id.textViewreg) // "Please register"
@@ -27,11 +34,13 @@ class LoginActivity : AppCompatActivity() {
         buttonlog.setOnClickListener {
             val intent = Intent(this, HomeScreenActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
-        textViewForgot.setOnClickListener {
-            val intent = Intent(this, ForgotPasswordScreenActivity::class.java)
+        backArrow.setOnClickListener{
+            val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
+            finish(
         }
 
         textViewForgotPassword.setOnClickListener {
@@ -39,6 +48,19 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        textViewSignUp.setOnClickListener{
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+       frogetpawword.setOnClickListener{
+           val intent = Intent(this, ForgotPasswordScreenActivity::class.java)
+           startActivity(intent)
+           finish()
+       }
+
+}}
         buttonadmin.setOnClickListener {
             val intent = Intent(this, AdminHomeScreenActivity::class.java)
             startActivity(intent)

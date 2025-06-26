@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".LoginActivity">
 
 
@@ -73,28 +74,29 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="12dp"
+            android:contentDescription="Back"
+            android:src="@drawable/ic_back_arrow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/loginTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Login"
-            android:textColor="#FF9800"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" /> <TextView
+        android:id="@+id/loginTitle" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textColor="#FF9800"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/illustrationImage"
         android:layout_width="166dp"
         android:layout_height="151dp"
+        android:layout_marginTop="24dp" android:contentDescription="Illustration"
+        android:src="@drawable/login"
         android:layout_marginTop="36dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -102,12 +104,10 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/loginFormCard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="24dp"
+        android:layout_marginTop="25dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginTop="32dp"
-
+        app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="10dp"
         app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -117,15 +117,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="wrap_content" android:orientation="vertical"
             android:padding="24dp">
 
             <EditText
                 android:id="@+id/editTextEmail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_height="wrap_content" android:layout_marginBottom="16dp"
                 android:hint="Email or Username"
                 android:inputType="textEmailAddress" />
 
@@ -133,44 +131,50 @@
                 android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginTop="16dp" android:layout_marginBottom="16dp"
                 android:hint="Password"
                 android:inputType="textPassword" />
 
             <TextView
                 android:id="@+id/textViewForgotPassword"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:text="Forgot Password?"
-                android:textColor="#FF9800"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_marginBottom="16dp"/>
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="end" android:layout_marginBottom="16dp" android:text="Forgot Password?"
+                android:textColor="#FF9800" />
 
             <Button
                 android:id="@+id/buttonLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#FF9800"
+                android:layout_marginTop="24dp" android:backgroundTint="#FF9800"
                 android:text="Login"
-                android:textColor="@android:color/white"
-                android:paddingVertical="12dp"/>
+                android:textColor="@android:color/white" />
 
             <TextView
-                android:id="@+id/textViewOr"
+                android:id="@+id/or"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Or login with"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="24dp"
-                android:layout_marginBottom="16dp"
-                android:textColor="@android:color/black"/>
+                android:text="Or login with"
+                android:textColor="@android:color/black" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="16dp">
+
+                <ImageView
+                    android:id="@+id/google"
+                    android:layout_width="40dp" android:layout_height="40dp"
+                    android:contentDescription="Login with Google"
+                    android:src="@drawable/google"
+                    android:layout_marginEnd="16dp"/> <ImageView
+                android:id="@+id/facebook"
+                android:layout_width="40dp" android:layout_height="40dp"
+                android:contentDescription="Login with Facebook"
+                android:src="@drawable/facebook" />
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_vertical">
 
@@ -189,19 +193,23 @@
                     android:layout_height="30dp"
                     />
 
-
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="24dp">
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp">
 
                 <TextView
-                    android:id="@+id/textViewAccountPrompt"
+                    android:id="@+id/textViewaccount"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Don't have an account?"
+                    android:textColor="@color/black" />
 
                     android:layout_height="match_parent"
 
@@ -214,14 +222,13 @@
                     android:layout_height="wrap_content"
                     android:text=" Sign Up"
                     android:textColor="#FF9800"
-                    android:textStyle="bold"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_marginStart="4dp"/>
+                    android:textStyle="bold" />
             </LinearLayout>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+</androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textViewreg"
