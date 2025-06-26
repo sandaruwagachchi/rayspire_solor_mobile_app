@@ -17,7 +17,7 @@ class LoginActivity:AppCompatActivity() {
         val buttonLogin = findViewById<Button>(R.id.buttonLogin)
         val backArrow = findViewById<ImageView>(R.id.backArrow)
         val textViewSignUp = findViewById<TextView>(R.id.textViewSignUp)
-        val forgotPassword = findViewById<TextView>(R.id.textViewForgotPassword)
+        val frogetpawword = findViewById<TextView>(R.id.textViewForgotPassword)
 
         buttonLogin.setOnClickListener{
             val intent = Intent(this, HomeScreenActivity::class.java)
@@ -38,11 +38,10 @@ class LoginActivity:AppCompatActivity() {
             finish()
         }
 
-         forgotPassword.setOnClickListener{
-             val intent = Intent(this, forgotPassword::class.java)
-             startActivity(intent)
-             finish()
-
-         }
+       frogetpawword.setOnClickListener{
+           val intent = Intent(this, ForgotPasswordScreenActivity::class.java)
+           startActivity(intent)
+           finish()
+       }
 
 }}
