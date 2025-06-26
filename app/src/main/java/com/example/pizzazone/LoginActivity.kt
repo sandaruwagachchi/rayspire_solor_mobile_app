@@ -12,25 +12,13 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val buttonlog = findViewById<Button>(R.id.buttonLogin)
- 
-        val textViewreg = findViewById<TextView>(R.id.textViewreg) // "Please register"
-        val buttonadmin = findViewById<Button>(R.id.buttonadmin)
-        val textViewForgot = findViewById<TextView>(R.id.textViewForgot)
-        val textViewreg = findViewById<TextView>(R.id.textViewSignUp)
-        val buttonadmin = findViewById<Button>(R.id.buttonAdminLogin)
-        val textViewForgot =findViewById<TextView>(R.id.textViewForgotPasswordi main
+        val buttonLogin = findViewById<Button>(R.id.buttonLogin)
+        val textViewRegister = findViewById<TextView>(R.id.textViewSignUp)
+        val buttonAdminLogin = findViewById<Button>(R.id.buttonAdminLogin)
+        val textViewForgotPassword = findViewById<TextView>(R.id.textViewForgotPassword)
 
-        val textViewSignUp = findViewById<TextView>(R.id.textViewSignUp) // "Sign Up" bold text
-        val textViewForgotPassword = findViewById<TextView>(R.id.textViewForgotPassword) // inside card
-
-        buttonlog.setOnClickListener {
+        buttonLogin.setOnClickListener {
             val intent = Intent(this, HomeScreenActivity::class.java)
-            startActivity(intent)
-        }
-
-        textViewForgot.setOnClickListener {
-            val intent = Intent(this, ForgotPasswordScreenActivity::class.java)
             startActivity(intent)
         }
 
@@ -39,17 +27,12 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        buttonadmin.setOnClickListener {
+        buttonAdminLogin.setOnClickListener {
             val intent = Intent(this, AdminHomeScreenActivity::class.java)
             startActivity(intent)
         }
 
-        textViewreg.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-        }
-
-        textViewSignUp.setOnClickListener {
+        textViewRegister.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
