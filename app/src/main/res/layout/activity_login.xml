@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
     tools:context=".LoginActivity">
+
 
     <TextView
         android:id="@+id/tv_find_dream_job"
@@ -58,6 +58,62 @@
         app:layout_constraintTop_toBottomOf="@id/illustrationImage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/loginTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textColor="#FF9800"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/illustrationImage"
+        android:layout_width="166dp"
+        android:layout_height="151dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBarLayout" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/loginFormCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="32dp"
+
+        app:cardCornerRadius="10dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/illustrationImage">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -127,7 +183,13 @@
                 <ImageView
                     android:id="@+id/facebookIcon"
                     android:layout_width="30dp"
+
                     android:layout_height="30dp"/>
+
+                    android:layout_height="30dp"
+                    />
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -140,8 +202,10 @@
                 <TextView
                     android:id="@+id/textViewAccountPrompt"
                     android:layout_width="wrap_content"
+
                     android:layout_height="match_parent"
-                    android:text="Don't have an account?"
+
+                    android:layout_height="wrap_content"                 android:text="Don't have an account?"
                     android:textColor="@android:color/black" />
 
                 <TextView
@@ -157,6 +221,7 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
 
     <TextView
         android:id="@+id/textViewreg"
@@ -183,8 +248,24 @@
         android:focusable="true"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/textViewreg"
+
+    <Button
+        android:id="@+id/buttonAdminLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Admin Login"
+        android:backgroundTint="#FF8C00"
+        android:textColor="@android:color/white"
+        android:paddingVertical="12dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintTop_toBottomOf="@id/loginFormCard"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
 
     <Button
         android:id="@+id/buttonadmin"
