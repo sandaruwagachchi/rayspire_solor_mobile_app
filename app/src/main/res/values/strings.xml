@@ -14,4 +14,7 @@
     <string name="todo">TODO</string>
     <string name="todo2">TODO</string>
     <string name="todo3">TODO</string>
+    <string name="title">title</string>
+    <string name="price">$-</string>
+    <string name="tdo">TODO</string>
 </resources>
