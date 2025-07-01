@@ -1,3 +1,5 @@
+// package com.example.pizzazone.ViewModel
+// MainViewModel.kt
 package com.example.pizzazone.ViewModel
 
 import androidx.lifecycle.LiveData
@@ -15,7 +17,8 @@ class MainViewModel : ViewModel() {
         return repository.loadPopular()
     }
 
-    fun loadItems(categoryId:String):LiveData<MutableList<ItemModel>>{
+    // HERE IS THE CHANGE: Change parameter type to String
+    fun loadItems(categoryId: String):LiveData<MutableList<ItemModel>>{
         return repository.loadItemCategory(categoryId)
     }
 }
