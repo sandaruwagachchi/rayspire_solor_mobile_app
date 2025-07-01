@@ -13,67 +13,33 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val buttonLogin = findViewById<Button>(R.id.buttonLogin)
         val backArrow = findViewById<ImageView>(R.id.backArrow)
-        val textViewSignUp = findViewById<TextView>(R.id.textViewSignUp)
-        val frogetpawword = findViewById<TextView>(R.id.textViewForgotPassword)
+        val textsingup = findViewById<TextView>(R.id.textViewSignUp)
+        val buttonLogin = findViewById<Button>(R.id.buttonLogin)
+        val textViewForgotPassword = findViewById<TextView>(R.id.textViewForgotPassword)
 
-        buttonLogin.setOnClickListener{
-        val buttonlog = findViewById<Button>(R.id.buttonLogin)
- 
-        val textViewreg = findViewById<TextView>(R.id.textViewreg) // "Please register"
-        val buttonadmin = findViewById<Button>(R.id.buttonadmin)
-        val textViewForgot = findViewById<TextView>(R.id.textViewForgot)
-        val textViewreg = findViewById<TextView>(R.id.textViewSignUp)
-        val buttonadmin = findViewById<Button>(R.id.buttonAdminLogin)
-        val textViewForgot =findViewById<TextView>(R.id.textViewForgotPasswordi main
 
-        val textViewSignUp = findViewById<TextView>(R.id.textViewSignUp) // "Sign Up" bold text
-        val textViewForgotPassword = findViewById<TextView>(R.id.textViewForgotPassword) // inside card
+        backArrow.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
-        buttonlog.setOnClickListener {
+        buttonLogin.setOnClickListener {
             val intent = Intent(this, HomeScreenActivity::class.java)
             startActivity(intent)
             finish()
-        }
 
-        backArrow.setOnClickListener{
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-            finish(
         }
-
         textViewForgotPassword.setOnClickListener {
             val intent = Intent(this, ForgotPasswordScreenActivity::class.java)
-            startActivity(intent)
-        }
-
-        textViewSignUp.setOnClickListener{
-            val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-       frogetpawword.setOnClickListener{
-           val intent = Intent(this, ForgotPasswordScreenActivity::class.java)
-           startActivity(intent)
-           finish()
-       }
-
-}}
-        buttonadmin.setOnClickListener {
-            val intent = Intent(this, AdminHomeScreenActivity::class.java)
-            startActivity(intent)
-        }
-
-        textViewreg.setOnClickListener {
+        textsingup.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
+            finish()
         }
-
-        textViewSignUp.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-        }
-    }
-}
+    }}

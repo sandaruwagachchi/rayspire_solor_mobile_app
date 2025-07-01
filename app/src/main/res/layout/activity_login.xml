@@ -8,58 +8,7 @@
     android:background="@android:color/white"
     tools:context=".LoginActivity">
 
-
-    <TextView
-        android:id="@+id/tv_find_dream_job"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login Screen"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="16sp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/backArrow"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="12dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/loginTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:textColor="#FF9800"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <ImageView
-        android:id="@+id/illustrationImage"
-        android:layout_width="166dp"
-        android:layout_height="151dp"
-        android:layout_marginTop="36dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_find_dream_job"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/loginFormCard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="8dp"
-        app:layout_constraintTop_toBottomOf="@id/illustrationImage"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
+    <!-- Back Button and Title Bar -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topBarLayout"
         android:layout_width="0dp"
@@ -78,52 +27,60 @@
             android:src="@drawable/ic_back_arrow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" /> <TextView
-        android:id="@+id/loginTitle" android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:textColor="#FF9800"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/loginTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textColor="#FF9800"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!-- Illustration -->
     <ImageView
         android:id="@+id/illustrationImage"
         android:layout_width="166dp"
         android:layout_height="151dp"
-        android:layout_marginTop="24dp" android:contentDescription="Illustration"
+        android:layout_marginTop="24dp"
+        android:contentDescription="Illustration"
         android:src="@drawable/login"
-        android:layout_marginTop="36dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBarLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topBarLayout" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Login Card Form -->
     <androidx.cardview.widget.CardView
         android:id="@+id/loginFormCard"
-        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="24dp"
-        android:layout_marginTop="25dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="10dp"
         app:cardElevation="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/illustrationImage"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/illustrationImage">
-
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:padding="24dp">
 
             <EditText
                 android:id="@+id/editTextEmail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:layout_marginBottom="16dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:hint="Email or Username"
                 android:inputType="textEmailAddress" />
 
@@ -131,21 +88,26 @@
                 android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:hint="Password"
                 android:inputType="textPassword" />
 
             <TextView
                 android:id="@+id/textViewForgotPassword"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="end" android:layout_marginBottom="16dp" android:text="Forgot Password?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginBottom="16dp"
+                android:text="Forgot Password?"
                 android:textColor="#FF9800" />
 
             <Button
                 android:id="@+id/buttonLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp" android:backgroundTint="#FF9800"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="#FF9800"
                 android:text="Login"
                 android:textColor="@android:color/white" />
 
@@ -161,59 +123,39 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
                 android:gravity="center_horizontal"
-                android:layout_marginTop="16dp">
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/google"
-                    android:layout_width="40dp" android:layout_height="40dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="16dp"
                     android:contentDescription="Login with Google"
-                    android:src="@drawable/google"
-                    android:layout_marginEnd="16dp"/> <ImageView
-                android:id="@+id/facebook"
-                android:layout_width="40dp" android:layout_height="40dp"
-                android:contentDescription="Login with Facebook"
-                android:src="@drawable/facebook" />
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_vertical">
+                    android:src="@drawable/google" />
 
                 <ImageView
-                    android:id="@+id/googleIcon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginEnd="24dp"/>
-
-                <ImageView
-                    android:id="@+id/facebookIcon"
-                    android:layout_width="30dp"
-
-                    android:layout_height="30dp"/>
-
-                    android:layout_height="30dp"
-                    />
-
+                    android:id="@+id/facebook"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:contentDescription="Login with Facebook"
+                    android:src="@drawable/facebook" />
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="24dp"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textViewaccount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Don't have an account?"
-                    android:textColor="@color/black" />
-
-                    android:layout_height="match_parent"
-
-                    android:layout_height="wrap_content"                 android:text="Don't have an account?"
                     android:textColor="@android:color/black" />
 
                 <TextView
@@ -224,67 +166,6 @@
                     android:textColor="#FF9800"
                     android:textStyle="bold" />
             </LinearLayout>
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/textViewreg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Don't have an account? Please register"
-        android:textColor="@android:color/black"
-        android:layout_marginTop="24dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/loginFormCard"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewForgot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Forget password?"
-        android:textColor="@android:color/black"
-        android:layout_marginTop="24dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/textViewreg"
-
-    <Button
-        android:id="@+id/buttonAdminLogin"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Admin Login"
-        android:backgroundTint="#FF8C00"
-        android:textColor="@android:color/white"
-        android:paddingVertical="12dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintTop_toBottomOf="@id/loginFormCard"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.0"/>
-
-    <Button
-        android:id="@+id/buttonadmin"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Admin Log in"
-        android:backgroundTint="#FF9800"
-        android:textColor="@android:color/white"
-        android:paddingVertical="12dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@id/textViewForgot"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
