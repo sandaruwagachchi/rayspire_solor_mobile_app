@@ -15,7 +15,7 @@ class LoginActivity : AppCompatActivity() {
 
         val buttonLogin = findViewById<Button>(R.id.buttonLogin)
         val textViewRegister = findViewById<TextView>(R.id.textViewSignUp)
-        val buttonAdminLogin = findViewById<Button>(R.id.buttonAdminLogin)
+
         val textViewForgotPassword = findViewById<TextView>(R.id.textViewForgotPassword)
         val backArrow = findViewById<ImageView>(R.id.backArrow)
 
@@ -39,14 +39,6 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-
-
-        // Admin Login -> Admin Home
-        buttonAdminLogin.setOnClickListener {
-            val intent = Intent(this, AdminHomeScreenActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
 
         // Forgot Password
         textViewForgotPassword.setOnClickListener {
