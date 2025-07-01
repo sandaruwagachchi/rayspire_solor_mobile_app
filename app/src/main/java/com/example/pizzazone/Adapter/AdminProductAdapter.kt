@@ -12,6 +12,7 @@ import com.example.pizzazone.databinding.ViewholderPopularBinding // Reusing thi
 class AdminProductAdapter(private var items: MutableList<ItemModel>) :
     RecyclerView.Adapter<AdminProductAdapter.ViewHolder>() {
 
+    private lateinit var context: Context
 
     class ViewHolder(val binding: ViewholderPopularBinding) : RecyclerView.ViewHolder(binding.root)
 
