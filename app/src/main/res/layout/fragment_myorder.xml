@@ -47,7 +47,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Extra Icon on Right -->
         <ImageView
             android:id="@+id/baseline_density_medium"
             android:layout_width="wrap_content"
@@ -78,18 +77,22 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- Order Summary Card -->
         <androidx.cardview.widget.CardView
+
             android:id="@+id/order_summary_card"
-            android:layout_width="383dp"
-            android:layout_height="241dp"
-            app:cardBackgroundColor="#FF9800"
-            app:cardCornerRadius="44dp"
-            app:cardElevation="4dp"
-            app:contentPadding="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#FF9800"
+        app:cardElevation="4dp"
+        app:contentPadding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -189,7 +192,6 @@
                     android:weightSum="2"
                     >
 
-                    <!-- Date Label + Value -->
                     <TextView
                         android:id="@+id/date"
                         android:layout_width="wrap_content"
@@ -212,7 +214,6 @@
                         android:textColor="@android:color/white"
                         android:textSize="18sp" />
 
-                    <!-- Time Label + Value -->
                     <TextView
                         android:id="@+id/time"
                         android:layout_width="wrap_content"
