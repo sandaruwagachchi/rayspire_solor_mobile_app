@@ -13,16 +13,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-
-        val backArrow = findViewById<ImageView>(R.id.backArrow)
-        val textsingup = findViewById<TextView>(R.id.textViewSignUp)
-        val buttonLogin = findViewById<Button>(R.id.buttonLogin)
-        val textViewForgotPassword = findViewById<TextView>(R.id.textViewForgotPassword)
-
-
-        backArrow.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-
         val buttonLogin = findViewById<Button>(R.id.buttonLogin)
         val textViewRegister = findViewById<TextView>(R.id.textViewSignUp)
         val buttonAdminLogin = findViewById<Button>(R.id.buttonAdminLogin)
@@ -49,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        textsingup.setOnClickListener {
+
 
         // Admin Login -> Admin Home
         buttonAdminLogin.setOnClickListener {
