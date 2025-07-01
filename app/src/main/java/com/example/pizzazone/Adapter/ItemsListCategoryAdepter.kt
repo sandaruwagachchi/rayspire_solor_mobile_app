@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pizzazone.Domain.ItemModel
 import com.example.pizzazone.DetailsScreenActivity // Assuming you have a DetailActivity for item details
+import com.example.pizzazone.DetailsScreenFragment
 import com.example.pizzazone.databinding.ViewHolderItemPicLeftBinding
 import com.example.pizzazone.databinding.ViewHolderItemPicRightBinding
 
@@ -70,7 +71,7 @@ class ItemsListCategoryAdapter(val items: MutableList<ItemModel>) :
                         .into(holder.binding.imageView4)
 
                     holder.itemView.setOnClickListener {
-                        val intent = Intent(context, DetailsScreenActivity::class.java) // Corrected: Start DetailActivity
+                        val intent = Intent(context, DetailsScreenFragment::class.java) // Corrected: Start DetailActivity
                         intent.putExtra("object", items[position])
                         context.startActivity(intent)
                     }
@@ -86,7 +87,7 @@ class ItemsListCategoryAdapter(val items: MutableList<ItemModel>) :
                         .into(holder.binding.imageView4)
 
                     holder.itemView.setOnClickListener {
-                        val intent = Intent(context, DetailsScreenActivity::class.java) // Corrected: Start DetailActivity
+                        val intent = Intent(context, DetailsScreenFragment::class.java) // Corrected: Start DetailActivity
                         intent.putExtra("object", items[position])
                         context.startActivity(intent)
                     }
