@@ -8,10 +8,8 @@
     android:background="@android:color/white"
     tools:context=".AdminOrderHistoryActivity">
 
-    <!-- Fragment Container -->
 
 
-    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
@@ -21,7 +19,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:menu="@menu/bottom_admin_menu" />
 
-    <!-- Top Header Bar -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/shipping_header_bar"
         android:layout_width="0dp"
@@ -58,22 +55,9 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-        <ImageView
-            android:id="@+id/baseline_density_medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/baseline_density_medium_24"
-            android:contentDescription="Menu"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:tint="@android:color/black" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Table Header Row -->
     <LinearLayout
         android:id="@+id/table_headers"
         android:layout_width="0dp"
@@ -145,7 +129,6 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Bottom Horizontal Divider Line -->
     <View
         android:id="@+id/header_divider"
         android:layout_width="0dp"
@@ -155,7 +138,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- RecyclerView for Data -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/order_list_recycler_view"
         android:layout_width="0dp"
