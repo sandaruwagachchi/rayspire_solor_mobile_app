@@ -15,7 +15,7 @@ class LoginActivity : AppCompatActivity() {
 
         val buttonLogin = findViewById<Button>(R.id.buttonLogin)
         val textViewRegister = findViewById<TextView>(R.id.textViewSignUp)
-
+        val textviewADMIN = findViewById<TextView>(R.id.textADMIN)
         val textViewForgotPassword = findViewById<TextView>(R.id.textViewForgotPassword)
         val backArrow = findViewById<ImageView>(R.id.backArrow)
 
@@ -59,4 +59,5 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
     }}

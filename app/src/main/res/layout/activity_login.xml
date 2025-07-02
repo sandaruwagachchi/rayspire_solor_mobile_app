@@ -92,7 +92,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:hint="Email or Username"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:layout_marginTop="70px" />
 
             <EditText
                 android:id="@+id/editTextPassword"
@@ -128,7 +129,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="24dp"
                 android:text="Or login with"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -169,7 +171,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Don't have an account?"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="130px"
+                    />
 
                 <TextView
                     android:id="@+id/textViewSignUp"
@@ -178,6 +183,28 @@
                     android:text=" Sign Up"
                     android:textColor="#FF9800"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textADMIN"
+                    android:layout_width="match_parent"
+                    android:layout_height="50px"
+                    android:text="Are you an admin?"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    android:layout_marginTop="60px"
+                    android:layout_marginLeft="-520px"
+                    />
+                <TextView
+                    android:id="@+id/textADMINLogin"
+                    android:layout_width="300px"
+                    android:layout_height="100px"
+                    android:text="Log in here"
+                    android:textColor="#FF9800"
+                    android:textStyle="bold"
+                    android:layout_marginTop="60px"
+                    android:layout_marginLeft="10px"/>
+
+
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
