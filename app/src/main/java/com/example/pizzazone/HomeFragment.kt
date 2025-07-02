@@ -48,13 +48,6 @@ class HomeFragment : Fragment() {
             binding.recycleView2.adapter = popularAdapter
         }
 
-        // Button click
-        binding.buttonlist.setOnClickListener {
-            val intent = Intent(activity, ListScreenActivity::class.java)
-            intent.putExtra("showListFragment", true)
-            startActivity(intent)
-        }
-
         return binding.root
     }
 
