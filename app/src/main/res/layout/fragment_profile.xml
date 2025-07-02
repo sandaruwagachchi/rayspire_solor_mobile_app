@@ -116,7 +116,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingVertical="8dp">
+                android:paddingVertical="8dp"
+                android:layout_marginTop="120px">
 
                 <TextView
                     android:layout_width="0dp"
@@ -124,7 +125,8 @@
                     android:layout_weight="1"
                     android:text="Thenula"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                   />
 
                 <ImageView
                     android:id="@+id/editName"
