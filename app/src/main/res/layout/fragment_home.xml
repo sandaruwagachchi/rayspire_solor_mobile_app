@@ -7,21 +7,13 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/buttonlist"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="16dp">
+            android:paddingBottom="16dp"
+            tools:ignore="MissingConstraints">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -127,21 +119,5 @@
                 android:nestedScrollingEnabled="false"
                 android:layout_marginHorizontal="12dp" />
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 
-    <Button
-        android:id="@+id/buttonlist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/goto_list_screen"
-        android:backgroundTint="@android:color/holo_blue_dark"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:paddingVertical="12dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
