@@ -7,6 +7,9 @@ import android.os.Handler
 import android.os.Looper
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class SplashActivity : AppCompatActivity() {
@@ -15,6 +18,15 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        val rayspireTextView: TextView = findViewById(R.id.rayspire_text_view)
+        val fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+        rayspireTextView.startAnimation(fadeInAnimation)
+
+        val rayspire_logo_image_view: ImageView= findViewById(R.id.rayspire_logo_image_view)
+        val fadeInAnimation2 = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+        rayspire_logo_image_view.startAnimation(fadeInAnimation2)
+
 
         // Make the activity fullscreen in a backward-compatible way
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
