@@ -10,11 +10,11 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.pizzazone.Adapter.AdminProductAdapter // New adapter
+import com.example.pizzazone.Adapter.AdminProductAdapter
 import com.example.pizzazone.Domain.CategoryModel
 import com.example.pizzazone.Domain.ItemModel
 import com.example.pizzazone.ViewModel.MainViewModel
-import com.example.pizzazone.databinding.FragmentAdminViewProductBinding // Corrected binding class
+import com.example.pizzazone.databinding.FragmentAdminViewProductBinding
 
 class AdminViewProductFragment : Fragment() {
 
@@ -52,7 +52,7 @@ class AdminViewProductFragment : Fragment() {
             categories = categoryList
 
             val categoryNames = categoryList.map { it.title ?: "Unknown" }.toMutableList()
-            categoryNames.add(0, "Select Category") // Add a default "Select Category" option
+            categoryNames.add(0, "Select Category")
 
             val spinnerAdapter = ArrayAdapter(
                 requireContext(),
@@ -64,16 +64,14 @@ class AdminViewProductFragment : Fragment() {
 
             binding.categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    if (position > 0) { // Ignore "Select Category" at position 0
-                        val selectedCategory = categories[position - 1] // Adjust for the added default item
+                    if (position > 0) {
+                        val selectedCategory = categories[position - 1]
                         selectedCategory.id?.let { categoryId ->
                             viewModel.loadItems(categoryId.toString()).observe(viewLifecycleOwner) { items ->
                                 updateProductList(items)
                             }
                         }
                     } else {
-                        // If "Select Category" is chosen or no category is selected, clear the list or show all
-                        // For now, let's clear the list. You could load all items here if desired.
                         updateProductList(mutableListOf())
                     }
                 }
@@ -87,15 +85,12 @@ class AdminViewProductFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding.backArrow.setOnClickListener {
-            // Handle back button click
             activity?.onBackPressed()
         }
 
         binding.seeAll.setOnClickListener {
-            // Load all popular items when "See all" is clicked
             viewModel.loadPopular().observe(viewLifecycleOwner) { popList ->
                 updateProductList(popList.toMutableList())
-                // Optionally reset the spinner selection to default
                 binding.categorySpinner.setSelection(0)
             }
         }

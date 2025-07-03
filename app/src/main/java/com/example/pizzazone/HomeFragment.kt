@@ -37,7 +37,6 @@ class HomeFragment : Fragment() {
             binding.recycleView.adapter = categoryAdapter
         }
 
-        // Setup popular RecyclerView (vertical)
         popularAdapter = PopularAdapter(mutableListOf())
         binding.recycleView2.apply {
             layoutManager = LinearLayoutManager(context)

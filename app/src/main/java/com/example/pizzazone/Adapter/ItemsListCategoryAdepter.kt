@@ -16,8 +16,8 @@ class ItemsListCategoryAdapter(private val items: MutableList<ItemModel>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
-        const val TYPE_ITEM1 = 0 // Item with pic on right
-        const val TYPE_ITEM2 = 1 // Item with pic on left
+        const val TYPE_ITEM1 = 0
+        const val TYPE_ITEM2 = 1
     }
 
     private lateinit var context: Context
@@ -58,7 +58,7 @@ class ItemsListCategoryAdapter(private val items: MutableList<ItemModel>) :
         when (holder) {
             is ViewholderItem -> {
                 holder.binding.textView7.text = item.title
-                holder.binding.textView8.text = "$${String.format("%.2f", item.price)}" // Format price
+                holder.binding.textView8.text = "$${String.format("%.2f", item.price)}"
                 holder.binding.ratingBar.rating = item.rating.toFloat()
 
                 if (item.picUrl.isNotEmpty()) {
@@ -71,14 +71,14 @@ class ItemsListCategoryAdapter(private val items: MutableList<ItemModel>) :
 
                 holder.itemView.setOnClickListener {
                     val intent = Intent(context, DetailsScreenActivity::class.java)
-                    intent.putExtra("object", item)
+                    intent.putExtra(DetailsScreenActivity.EXTRA_ITEM_OBJECT, item)
                     context.startActivity(intent)
                 }
             }
 
             is ViewholderItem2 -> {
                 holder.binding.textView7.text = item.title
-                holder.binding.textView8.text = "$${String.format("%.2f", item.price)}" // Fixed price binding
+                holder.binding.textView8.text = "$${String.format("%.2f", item.price)}"
                 holder.binding.ratingBar.rating = item.rating.toFloat()
 
                 if (item.picUrl.isNotEmpty()) {
@@ -91,7 +91,8 @@ class ItemsListCategoryAdapter(private val items: MutableList<ItemModel>) :
 
                 holder.itemView.setOnClickListener {
                     val intent = Intent(context, DetailsScreenActivity::class.java)
-                    intent.putExtra("object", item)
+
+                    intent.putExtra(DetailsScreenActivity.EXTRA_ITEM_OBJECT, item)
                     context.startActivity(intent)
                 }
             }

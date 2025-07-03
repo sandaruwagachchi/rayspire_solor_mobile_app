@@ -29,8 +29,8 @@ class MainRepository {
         return data
     }
 
-    fun loadPopular(): LiveData<MutableList<ItemModel>> { // Changed to MutableList for consistency
-        val data = MutableLiveData<MutableList<ItemModel>>() // Changed to MutableList
+    fun loadPopular(): LiveData<MutableList<ItemModel>> {
+        val data = MutableLiveData<MutableList<ItemModel>>()
         db.child("Popular").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snap: DataSnapshot) {
                 val list = mutableListOf<ItemModel>()
@@ -52,8 +52,7 @@ class MainRepository {
         val ref = db.child("Items")
         val query: Query = ref.orderByChild("categoryId").equalTo(categoryId)
 
-        // Using addListenerForSingleValueEvent to fetch data once
-        // If you need real-time updates, use addValueEventListener
+
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val list = mutableListOf<ItemModel>()
@@ -66,7 +65,7 @@ class MainRepository {
             override fun onCancelled(error: DatabaseError) {
                 // TODO: Handle error appropriately, e.g., log it or set an error state
                 println("DatabaseError for ItemCategory ($categoryId): ${error.message}")
-                itemsLiveData.value = mutableListOf() // Post an empty list on error
+                itemsLiveData.value = mutableListOf()
             }
         })
         return itemsLiveData
