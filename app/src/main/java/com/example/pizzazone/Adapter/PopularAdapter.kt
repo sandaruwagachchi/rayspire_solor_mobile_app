@@ -1,16 +1,20 @@
 package com.example.pizzazone.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pizzazone.Domain.ItemModel
+import com.example.pizzazone.DetailsScreenActivity
+import com.example.pizzazone.R
 import com.example.pizzazone.databinding.ViewholderPopularBinding
 
 
 class PopularAdapter(val items:MutableList<ItemModel>):RecyclerView.Adapter<PopularAdapter.Viewholder>() {
     lateinit var context: Context
+
     class Viewholder(val binding: ViewholderPopularBinding): RecyclerView.ViewHolder(binding.root) {
 
     }
@@ -22,13 +26,33 @@ class PopularAdapter(val items:MutableList<ItemModel>):RecyclerView.Adapter<Popu
     }
 
     override fun onBindViewHolder(holder: PopularAdapter.Viewholder, position: Int) {
-       holder.binding.textView5.text = items[position].title
-        holder.binding.textView6.text ="$"+items[position].price.toString()
+        val item = items[position] // Get the current item
 
-        Glide.with(context)
-            .load(items[position].picUrl[0])
-            .into(holder.binding.imageView3)
+        holder.binding.textView5.text = item.title
+        holder.binding.textView6.text ="$"+item.price.toString()
+
+        if (item.picUrl.isNotEmpty()) {
+            Glide.with(context)
+                .load(item.picUrl[0])
+                .into(holder.binding.imageView3)
+        } else {
+            Glide.with(context).load(R.drawable.placeholder_image).into(holder.binding.imageView3)
+        }
+
+
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, DetailsScreenActivity::class.java)
+            intent.putExtra(DetailsScreenActivity.EXTRA_ITEM_OBJECT, item)
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int = items.size
+
+    fun updateItems(newItems: List<ItemModel>) {
+        items.clear()
+        items.addAll(newItems)
+        notifyDataSetChanged()
+    }
 }

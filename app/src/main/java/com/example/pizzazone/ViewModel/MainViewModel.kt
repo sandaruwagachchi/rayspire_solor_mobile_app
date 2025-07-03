@@ -10,11 +10,11 @@ import com.example.pizzazone.Repository.MainRepository
 class MainViewModel : ViewModel() {
     private val repository = MainRepository()
 
-    fun loadCategory(): LiveData<MutableList<CategoryModel>> { // Explicitly define return type for clarity
+    fun loadCategory(): LiveData<MutableList<CategoryModel>> {
         return repository.loadCategory()
     }
 
-    fun loadPopular(): LiveData<MutableList<ItemModel>> { // Changed to MutableList for consistency with other methods
+    fun loadPopular(): LiveData<MutableList<ItemModel>> {
         return repository.loadPopular()
     }
 
