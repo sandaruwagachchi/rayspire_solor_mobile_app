@@ -1,24 +1,24 @@
-// package com.example.pizzazone.ViewModel
-// MainViewModel.kt
 package com.example.pizzazone.ViewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.pizzazone.Domain.CategoryModel
 import com.example.pizzazone.Domain.ItemModel
 import com.example.pizzazone.Repository.MainRepository
 
 class MainViewModel : ViewModel() {
     private val repository = MainRepository()
 
-    fun loadCategory() = repository.loadCategory()
+    fun loadCategory(): LiveData<MutableList<CategoryModel>> { // Explicitly define return type for clarity
+        return repository.loadCategory()
+    }
 
-    fun loadPopular(): LiveData<List<ItemModel>> {
+    fun loadPopular(): LiveData<MutableList<ItemModel>> { // Changed to MutableList for consistency with other methods
         return repository.loadPopular()
     }
 
-    // HERE IS THE CHANGE: Change parameter type to String
-    fun loadItems(categoryId: String):LiveData<MutableList<ItemModel>>{
+    fun loadItems(categoryId: String): LiveData<MutableList<ItemModel>> {
         return repository.loadItemCategory(categoryId)
     }
 }
