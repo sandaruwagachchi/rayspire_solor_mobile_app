@@ -90,7 +90,7 @@ class ListScreenActivity : AppCompatActivity() { // This is an Activity, not a F
                 )
                 listView.adapter = ItemsListCategoryAdapter(items) // Pass the list of items
             })
-            imageView.setOnClickListener { finish() }
+            backArrow.setOnClickListener { finish() }
         }
     }
 

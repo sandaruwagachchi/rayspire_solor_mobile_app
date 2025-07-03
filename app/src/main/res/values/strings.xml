@@ -20,4 +20,21 @@
     <string name="goto_admin_home_screen">Goto Admin home Screen</string>
     <string name="admin_view_products">View Products</string>
     <string name="login">Login</string>
+    <string name="Admin_category">Category</string>
+    <string name="product_name">Product Name</string>
+    <string name="delete">Delete</string>
+    <string name="set">Set</string>
+    <string name="update_and_delete">Update and Delete</string>
+    <string name="onboarding_illustration">Onboarding illustration</string>
+    <string name="clean_energy_at_your_fingertips">Clean Energy at Your Fingertips</string>
+    <string name="track_your_solar_energy_production_monitor_performance_and_take_control_of_your_clean_energy_usage_anytime_anywhere">Track your solar energy production, monitor performance, and take control of your clean energy usage—anytime, anywhere.</string>
+    <string name="next">Next</string>
+    <string name="onboarding_illustration_for_a_greener_tomorrow">Onboarding illustration for a greener tomorrow</string>
+    <string name="build_a_greener_tomorrow">Build a Greener Tomorrow</string>
+    <string name="track_how_much_co_you_ve_saved_and_how_your_clean_energy_is_helping_build_a_greener_planet">Track how much CO₂ you’ve saved and how your clean energy is helping build a greener planet.</string>
+    <string name="next2">Next</string>
+    <string name="onboarding_illustration_for_easy_order_and_free_setup">Onboarding illustration for easy order and free setup</string>
+    <string name="easy_order_and_free_setup">Easy Order and Free Setup</string>
+    <string name="choose_your_solar_package_place_your_order_through_the_app_and_enjoy_hassle_free_installation_at_your_home_100_free_setup_included">Choose your solar package, place your order through the app, and enjoy hassle-free installation at your home—100% free setup included!</string>
+    <string name="get_started">Get Started</string>
 </resources>

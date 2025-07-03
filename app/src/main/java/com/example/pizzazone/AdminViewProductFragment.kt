@@ -86,7 +86,7 @@ class AdminViewProductFragment : Fragment() {
     }
 
     private fun setupClickListeners() {
-        binding.imageView.setOnClickListener {
+        binding.backArrow.setOnClickListener {
             // Handle back button click
             activity?.onBackPressed()
         }
@@ -100,12 +100,7 @@ class AdminViewProductFragment : Fragment() {
             }
         }
 
-        binding.btnhome.setOnClickListener {
-            // Handle "Go to Admin Home Screen" button click
-            val intent = Intent(activity, AdminHomeScreenActivity::class.java) // Assuming AdminHomeScreenActivity exists
-            startActivity(intent)
-            activity?.finish() // Finish current activity if you don't want to come back
-        }
+
     }
 
     private fun updateProductList(items: MutableList<ItemModel>) {
