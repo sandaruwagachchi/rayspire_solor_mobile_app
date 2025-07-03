@@ -19,4 +19,5 @@
     <string name="tdo">TODO</string>
     <string name="goto_admin_home_screen">Goto Admin home Screen</string>
     <string name="admin_view_products">View Products</string>
+    <string name="login">Login</string>
 </resources>

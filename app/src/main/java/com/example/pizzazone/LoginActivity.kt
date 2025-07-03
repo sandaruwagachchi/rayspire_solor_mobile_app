@@ -15,9 +15,10 @@ class LoginActivity : AppCompatActivity() {
 
         val buttonLogin = findViewById<Button>(R.id.buttonLogin)
         val textViewRegister = findViewById<TextView>(R.id.textViewSignUp)
-        val textviewADMIN = findViewById<TextView>(R.id.textADMIN)
+        val textviewADMIN = findViewById<TextView>(R.id.textADMINLogin)
         val textViewForgotPassword = findViewById<TextView>(R.id.textViewForgotPassword)
         val backArrow = findViewById<ImageView>(R.id.backArrow)
+
 
         // Login Button -> HomeScreen
         buttonLogin.setOnClickListener {
@@ -56,6 +57,11 @@ class LoginActivity : AppCompatActivity() {
         backArrow.setOnClickListener {
 
             val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        textviewADMIN.setOnClickListener {
+            val intent = Intent(this, Admin_LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
