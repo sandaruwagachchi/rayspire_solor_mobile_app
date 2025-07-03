@@ -26,13 +26,6 @@ class List_Screen_Fragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_list__screen_, container, false)
 
-        val buttondetai = view.findViewById<Button>(R.id.buttondetai)
-
-        buttondetai.setOnClickListener {
-            val intent = Intent(activity, DetailsScreenActivity::class.java)
-            intent.putExtra("showDetailsFragment", true)
-            startActivity(intent)
-        }
 
         return view
     }
