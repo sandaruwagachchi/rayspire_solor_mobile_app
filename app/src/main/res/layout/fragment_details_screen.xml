@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Fragment Title -->
     <TextView
         android:id="@+id/text_fragment_title"
         android:layout_width="wrap_content"
@@ -15,22 +16,125 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="16dp" />
 
-    <Button
-        android:id="@+id/buttondetails"
-        android:layout_width="match_parent"
+    <!-- Product Name -->
+    <TextView
+        android:id="@+id/text_product_name"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Add to Cart"
-        android:backgroundTint="@android:color/holo_blue_dark"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:paddingVertical="12dp"
+        android:text="12.8V 100AH 200AH 300AH Series Lithium Battery"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_fragment_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Product Image -->
+    <ImageView
+        android:id="@+id/image_product"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/battery"
+        app:layout_constraintTop_toBottomOf="@id/text_product_name"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Scrollable Product Description -->
+    <ScrollView
+        android:id="@+id/scroll_description"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:descendantFocusability="blocksDescendants"
+        app:layout_constraintTop_toBottomOf="@id/image_product"
+        app:layout_constraintBottom_toTopOf="@id/buttondetails"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+
+
+    <TextView
+            android:id="@+id/text_product_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Brand: Zandon
+Power up your energy needs with the Zandon 12V 200Ah Battery, engineered for high performance and long-lasting reliability. Whether for solar systems, backup power, or off-grid applications, this battery delivers exceptional energy storage with minimal maintenance.
+Key Features:
+Voltage: 12 Volts
+Capacity: 200Ah
+Deep Cycle Technology for longer life and consistent performance
+Maintenance-Free Design – hassle-free operation
+Durable ABS Housing – tough and weather-resistant
+Ideal for: Solar systems, inverters, RVs, telecom, and backup power solutions
+🔌 Dependable. Durable. Ready When You Are.Brand: Zandon
+Power up your energy needs with the Zandon 12V 200Ah Battery, engineered for high performance and long-lasting reliability. Whether for solar systems, backup power, or off-grid applications, this battery delivers exceptional energy storage with minimal maintenance.
+Key Features:
+Voltage: 12 Volts
+Capacity: 200Ah
+Deep Cycle Technology for longer life and consistent performance
+Maintenance-Free Design – hassle-free operation
+Durable ABS Housing – tough and weather-resistant
+Ideal for: Solar systems, inverters, RVs, telecom, and backup power solutions
+🔌 Dependable. Durable. Ready When You Are."
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:padding="8dp"
+            android:background="@android:color/white" />
+    </ScrollView>
+
+    <!-- Product Price: Bottom-left -->
+    <TextView
+        android:id="@+id/text_product_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$25"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@android:color/holo_orange_dark"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="65dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/text_delivery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delivery within 2-5 days"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:textColor="@android:color/black"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <!-- Add to Cart Button: Bottom-right -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttondetails"
+        android:layout_width="200dp"
+        android:layout_height="64dp"
+        android:text="Add to Cart"
+        android:background="@drawable/button_orange_rounded"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
