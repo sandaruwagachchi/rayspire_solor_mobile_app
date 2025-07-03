@@ -32,6 +32,7 @@
         <activity android:name=".DetailsScreenActivity"/>
         <activity android:name=".CheckoutScreenActivity" />
         <activity android:name=".OrderConfirmActivity" />
+        <activity android:name=".Admin_LoginActivity"/>
         <activity android:name=".AdminHomeScreenActivity" />
         <activity android:name=".AdminAddProductActivity"/>
         <activity android:name=".AdminDeleteAndUpdateActivity"/>
