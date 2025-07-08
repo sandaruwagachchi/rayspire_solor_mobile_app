@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:paddingBottom="16dp">
 
-        <!-- Header -->
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/checkout_header_bar"
             android:layout_width="match_parent"
@@ -77,7 +77,7 @@
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
-                <!-- Order row -->
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
                         android:textSize="20sp" />
                 </RelativeLayout>
 
-                <!-- Delivery fees row -->
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
                         android:textSize="20sp" />
                 </RelativeLayout>
 
-                <!-- Total row -->
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="37dp">
@@ -275,7 +275,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <!-- Total Text -->
+           >
             <TextView
                 android:id="@+id/tv_total_label_bottom"
                 android:layout_width="wrap_content"
@@ -288,7 +288,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Total Amount -->
+
             <TextView
                 android:id="@+id/tv_total_amount_bottom"
                 android:layout_width="wrap_content"
