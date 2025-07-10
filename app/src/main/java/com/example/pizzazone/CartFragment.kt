@@ -7,11 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView // Import TextView for subtotal
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pizzazone.CartManager // Import CartManager
 
 class CartFragment : Fragment() {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var cartAdapter: CartAdapter
+    private lateinit var textSubprice: TextView // Reference for subtotal TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,28 +25,41 @@ class CartFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_cart, container, false)
 
-        // Setup RecyclerView
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewCart)
+        recyclerView = view.findViewById(R.id.recyclerViewCart)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        // Sample cart data - replace with your real cart items or use CartManager
-        val cartItems = listOf(
-            CartProduct("12.8V 100AH 200AH 300AH Series Lithium Battery", "$25.00", R.drawable.battery),
-            CartProduct("BR-M580-600W 210 HALF CELL SOLAR PANEL", "$80.00", R.drawable.solarpanel)
-        )
+        // Initialize subtotal TextView
+        textSubprice = view.findViewById(R.id.textSubprice)
 
-        // Set adapter
-        val adapter = CartAdapter(cartItems)
-        recyclerView.adapter = adapter
+        // Initialize adapter with an empty list initially
+        cartAdapter = CartAdapter(mutableListOf()) { // Pass lambda for item changes
+            updateSubtotal()
+        }
+        recyclerView.adapter = cartAdapter
+
+        // Observe cart items from CartManager
+        CartManager.cartItems.observe(viewLifecycleOwner) { items ->
+            cartAdapter.updateCartItems(items) // Update adapter with new list
+            updateSubtotal() // Update subtotal whenever cart items change
+        }
 
         // Checkout button click
-        val buttoncheck = view.findViewById<Button>(R.id.buttonCheckout)
-        buttoncheck.setOnClickListener {
+        val buttonCheck = view.findViewById<Button>(R.id.buttonCheckout)
+        buttonCheck.setOnClickListener {
             val intent = Intent(activity, CheckoutScreenActivity::class.java)
             intent.putExtra("showListFragment", true)
             startActivity(intent)
         }
 
         return view
+    }
+
+    private fun updateSubtotal() {
+        val currentCart = CartManager.cartItems.value ?: mutableListOf()
+        var subtotal = 0.0
+        for (cartItem in currentCart) {
+            subtotal += cartItem.item.price * cartItem.quantity
+        }
+        textSubprice.text = "$${String.format("%.2f", subtotal)}"
     }
 }

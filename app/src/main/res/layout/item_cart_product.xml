@@ -1,75 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
-    android:layout_marginTop="20dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
     app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    app:cardElevation="4dp"
+    android:backgroundTint="@android:color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:padding="8dp">
 
-        <ImageView
-            android:id="@+id/imageProduct"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/battery"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        <LinearLayout
-            android:id="@+id/productDetailsLayout"
+            <ImageView
+                android:id="@+id/imageProduct"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                tools:src="@tools:sample/avatars" />
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/textProductName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="@id/imageProduct"
-            app:layout_constraintBottom_toBottomOf="@id/imageProduct"
-            app:layout_constraintStart_toEndOf="@id/imageProduct"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:layout_marginEnd="8dp"
+            android:text="12.8V 100AH 200AH 300AH Series Lithium Battery"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toStartOf="@+id/buttonAddOne"
+            app:layout_constraintStart_toEndOf="@+id/cardViewImage"
+            app:layout_constraintTop_toTopOf="@+id/cardViewImage" />
 
-            <TextView
-                android:id="@+id/textProductName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="12.8V 100AH 200AH 300AH Series Lithium Battery"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textProductPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$25.00"
-                android:textSize="14sp"
-                android:textColor="@android:color/holo_orange_dark" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/buttonRemove"
+        <RatingBar
+            android:id="@+id/ratingBarProduct"
+            style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Remove"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            android:minHeight="0dp"
-            android:minWidth="0dp"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="4dp"
-            android:backgroundTint="@android:color/holo_orange_dark"
-            android:textColor="@android:color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:rating="4"
+            app:layout_constraintStart_toEndOf="@+id/cardViewImage"
+            app:layout_constraintTop_toBottomOf="@+id/textProductName" />
 
+        <TextView
+            android:id="@+id/textProductPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:text="$25.00"
+            android:textColor="#FF8C00"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/cardViewImage"
+            app:layout_constraintTop_toBottomOf="@+id/ratingBarProduct" />
+
+        <TextView
+            android:id="@+id/textQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:text="Qty 1"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/cardViewImage"
+            app:layout_constraintTop_toBottomOf="@+id/textProductPrice" />
+
+        <ImageView
+            android:id="@+id/buttonAddOne"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/plus"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textProductName" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonRemove"
+            android:layout_width="80dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/button_orange_rounded"
+            android:text="Remove"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonAddOne" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
