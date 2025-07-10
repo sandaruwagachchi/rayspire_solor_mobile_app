@@ -43,13 +43,16 @@ class CartFragment : Fragment() {
             updateSubtotal() // Update subtotal whenever cart items change
         }
 
-        // Checkout button click
+
         val buttonCheck = view.findViewById<Button>(R.id.buttonCheckout)
         buttonCheck.setOnClickListener {
+            val subtotal = CartManager.cartItems.value?.sumOf { it.item.price * it.quantity } ?: 0.0
             val intent = Intent(activity, CheckoutScreenActivity::class.java)
+            intent.putExtra("subtotal_amount", subtotal)
             intent.putExtra("showListFragment", true)
             startActivity(intent)
         }
+
 
         return view
     }
