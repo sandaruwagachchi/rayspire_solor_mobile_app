@@ -8,17 +8,6 @@
     android:background="@android:color/white"
     tools:context=".LoginActivity">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/loginFormCard1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="8dp"
-        app:layout_constraintTop_toBottomOf="@id/illustrationImage"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topBarLayout"
         android:layout_width="0dp"
@@ -32,7 +21,6 @@
             android:id="@+id/backArrow"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginStart="12dp"
             android:contentDescription="Back"
             android:src="@drawable/ic_back_arrow"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -53,7 +41,6 @@
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Illustration -->
     <ImageView
         android:id="@+id/illustrationImage"
         android:layout_width="166dp"
@@ -65,15 +52,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Login Card Form -->
     <androidx.cardview.widget.CardView
         android:id="@+id/loginFormCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        app:cardBackgroundColor="@android:color/white"
+        android:layout_marginTop="16dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="8dp"
         app:layout_constraintTop_toBottomOf="@id/illustrationImage"
@@ -90,17 +75,13 @@
                 android:id="@+id/editTextEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:hint="Email or Username"
-                android:inputType="textEmailAddress"
-                android:layout_marginTop="70px" />
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
 
             <EditText
                 android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
                 android:hint="Password"
                 android:inputType="textPassword" />
 
@@ -109,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="8dp"
                 android:text="Forgot Password?"
                 android:textColor="#FF9800" />
 
@@ -117,64 +98,56 @@
                 android:id="@+id/buttonLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:backgroundTint="#FF9800"
+                android:layout_marginTop="16dp"
                 android:text="Login"
+                android:backgroundTint="#FF9800"
                 android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/or"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="Or login with"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_gravity="center" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="8dp">
 
                 <ImageView
                     android:id="@+id/google"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginEnd="16dp"
-                    android:contentDescription="Login with Google"
-
-                    android:src="@drawable/google" />
+                    android:src="@drawable/google"
+                    android:contentDescription="Google Login"
+                    android:layout_marginEnd="16dp"/>
 
                 <ImageView
                     android:id="@+id/facebook"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:contentDescription="Login with Facebook"
-                    android:src="@drawable/facebook" />
-
-
+                    android:src="@drawable/facebook"
+                    android:contentDescription="Facebook Login"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="8dp"
-                android:orientation="horizontal">
+                android:layout_marginTop="24dp">
 
                 <TextView
                     android:id="@+id/textViewaccount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Don't have an account?"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="130px"
-                    />
+                    android:textColor="@android:color/black" />
 
                 <TextView
                     android:id="@+id/textViewSignUp"
@@ -183,37 +156,30 @@
                     android:text=" Sign Up"
                     android:textColor="#FF9800"
                     android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp">
 
                 <TextView
                     android:id="@+id/textADMIN"
-                    android:layout_width="match_parent"
-                    android:layout_height="50px"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Are you an admin?"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold"
-                    android:layout_marginTop="60px"
-                    android:layout_marginLeft="-520px"
-                    />
+                    android:textColor="@android:color/black" />
+
                 <TextView
                     android:id="@+id/textADMINLogin"
-                    android:layout_width="300px"
-                    android:layout_height="100px"
-                    android:text="Log in here"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Log in here"
                     android:textColor="#FF9800"
-                    android:textStyle="bold"
-                    android:layout_marginTop="60px"
-                    android:layout_marginLeft="10px"/>
-
-
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
-
-
-
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
