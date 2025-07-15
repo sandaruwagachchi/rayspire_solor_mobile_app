@@ -2,68 +2,74 @@ package com.example.pizzazone
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        auth = FirebaseAuth.getInstance()
+
+        val editTextEmail = findViewById<EditText>(R.id.editTextEmail)
+        val editTextPassword = findViewById<EditText>(R.id.editTextPassword)
         val buttonLogin = findViewById<Button>(R.id.buttonLogin)
         val textViewRegister = findViewById<TextView>(R.id.textViewSignUp)
-        val textviewADMIN = findViewById<TextView>(R.id.textADMINLogin)
         val textViewForgotPassword = findViewById<TextView>(R.id.textViewForgotPassword)
+        val textViewAdmin = findViewById<TextView>(R.id.textADMINLogin)
         val backArrow = findViewById<ImageView>(R.id.backArrow)
 
-
-        // Login Button -> HomeScreen
         buttonLogin.setOnClickListener {
-            val intent = Intent(this, HomeScreenActivity::class.java)
+            val email = editTextEmail.text.toString().trim()
+            val password = editTextPassword.text.toString().trim()
 
-            startActivity(intent)
-            finish()
+            if (email.isEmpty()) {
+                editTextEmail.error = "Email is required"
+                return@setOnClickListener
+            }
+
+            if (password.isEmpty()) {
+                editTextPassword.error = "Password is required"
+                return@setOnClickListener
+            }
+
+            loginUser(email, password)
         }
 
-        buttonLogin.setOnClickListener {
-            val intent = Intent(this, HomeScreenActivity::class.java)
-            startActivity(intent)
-            finish()
-
-        }
-        textViewForgotPassword.setOnClickListener {
-            val intent = Intent(this, ForgotPasswordScreenActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-
-        // Forgot Password
-        textViewForgotPassword.setOnClickListener {
-            val intent = Intent(this, ForgotPasswordScreenActivity::class.java)
-            startActivity(intent)
-        }
-
-        // Register Text -> Register Screen
         textViewRegister.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
 
-        // Back Arrow -> Register Screen
+        textViewForgotPassword.setOnClickListener {
+            startActivity(Intent(this, ForgotPasswordScreenActivity::class.java))
+        }
+
+        textViewAdmin.setOnClickListener {
+            startActivity(Intent(this, Admin_LoginActivity::class.java))
+            finish()
+        }
+
         backArrow.setOnClickListener {
-
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, HomeScreenActivity::class.java))
             finish()
         }
-        textviewADMIN.setOnClickListener {
-            val intent = Intent(this, Admin_LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+    }
 
-    }}
+    private fun loginUser(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, HomeScreenActivity::class.java))
+                    finish()
+                } else {
+                    Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                }
+            }
+    }
+}
