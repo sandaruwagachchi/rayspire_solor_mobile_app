@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.logger.Logger
 
 class SplashActivity : AppCompatActivity() {
     private val SPLASH_DELAY: Long = 2000
@@ -28,7 +29,7 @@ class SplashActivity : AppCompatActivity() {
         rayspire_logo_image_view.startAnimation(fadeInAnimation2)
 
 
-        // Make the activity fullscreen in a backward-compatible way
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
         } else {
@@ -39,9 +40,9 @@ class SplashActivity : AppCompatActivity() {
             )
         }
 
-        // Delay the transition to the next activity
+
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this@SplashActivity, Onboarding1Activity::class.java)
+            val intent = Intent(this@SplashActivity, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }, SPLASH_DELAY)
