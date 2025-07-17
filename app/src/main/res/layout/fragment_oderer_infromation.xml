@@ -13,10 +13,11 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- Header Bar -->
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/shipping_header_bar"
             android:layout_width="match_parent"
+            android:layout_marginTop="30dp"
             android:layout_height="?attr/actionBarSize"
             android:background="@android:color/white"
             app:layout_constraintTop_toTopOf="parent"
@@ -51,7 +52,7 @@
                 app:layout_constraintBottom_toBottomOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Lottie Animation -->
+
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieAnimationView"
             android:layout_width="250dp"
@@ -64,7 +65,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <!-- Full Name -->
+
         <TextView
             android:id="@+id/textViewName"
             android:layout_width="wrap_content"
@@ -91,7 +92,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Shipping Address -->
+
         <TextView
             android:id="@+id/textViewAddress"
             android:layout_width="wrap_content"
@@ -117,7 +118,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Mobile -->
+
         <TextView
             android:id="@+id/textViewMobile"
             android:layout_width="wrap_content"
@@ -143,7 +144,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Zip -->
+
         <TextView
             android:id="@+id/textViewZipCode"
             android:layout_width="wrap_content"

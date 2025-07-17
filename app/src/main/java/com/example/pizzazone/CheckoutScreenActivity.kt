@@ -17,12 +17,19 @@ class CheckoutScreenActivity : AppCompatActivity() {
         bottomNavigationView = findViewById(R.id.bottom_navigation)
 
         if (savedInstanceState == null) {
-            replaceFragment(CheckoutScreenFragment())
+            val fragment = CheckoutScreenFragment()
+
+
+            val bundle = intent.extras
+            if (bundle != null) {
+                fragment.arguments = bundle
+            }
+
+            replaceFragment(fragment)
 
             bottomNavigationView.menu.setGroupCheckable(0, true, false)
             bottomNavigationView.menu.findItem(R.id.nav_home).isChecked = false
             bottomNavigationView.menu.setGroupCheckable(0, true, true)
-
         }
 
         bottomNavigationView.setOnItemSelectedListener { item ->
@@ -31,22 +38,18 @@ class CheckoutScreenActivity : AppCompatActivity() {
                     replaceFragment(HomeFragment())
                     true
                 }
-
                 R.id.nav_myorder -> {
                     replaceFragment(MyOrderFragment())
                     true
                 }
-
                 R.id.nav_cart -> {
                     replaceFragment(CartFragment())
                     true
                 }
-
                 R.id.nav_profile -> {
                     replaceFragment(ProfileFragment())
                     true
                 }
-
                 else -> false
             }
         }
@@ -57,6 +60,7 @@ class CheckoutScreenActivity : AppCompatActivity() {
             .replace(R.id.fragment_container, fragment)
             .commit()
     }
+
 
 }
 

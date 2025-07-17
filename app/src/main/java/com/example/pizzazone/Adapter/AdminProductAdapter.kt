@@ -32,25 +32,18 @@ class AdminProductAdapter(private var items: MutableList<ItemModel>) :
                 .load(item.picUrl[0])
                 .into(holder.binding.imageView3)
         } else {
-            // Handle case where picUrl is empty, e.g., set a placeholder image
-            holder.binding.imageView3.setImageResource(R.drawable.placeholder_image) // You'll need to add a placeholder_image to your drawables
+
+            holder.binding.imageView3.setImageResource(R.drawable.placeholder_image)
         }
 
-        // Add a click listener for editing/viewing product details for admin
+
         holder.itemView.setOnClickListener {
-            // TODO: Implement navigation to an Admin Product Detail/Edit screen
-            // You might want to pass the ItemModel object to the next activity/fragment
-            // val intent = Intent(context, AdminEditProductActivity::class.java)
-            // intent.putExtra("product", item)
-            // context.startActivity(intent)
-            // For now, let's just log a message or show a toast
-            // Toast.makeText(context, "Clicked: ${item.title}", Toast.LENGTH_SHORT).show()
+
         }
     }
 
     override fun getItemCount(): Int = items.size
 
-    // Method to update the list of items
     fun updateItems(newItems: MutableList<ItemModel>) {
         this.items = newItems
         notifyDataSetChanged()

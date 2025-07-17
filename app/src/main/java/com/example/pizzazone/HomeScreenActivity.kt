@@ -1,10 +1,10 @@
 package com.example.pizzazone
 
-
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.badge.BadgeDrawable // Import BadgeDrawable
 
 class HomeScreenActivity : AppCompatActivity() {
 
@@ -39,6 +39,19 @@ class HomeScreenActivity : AppCompatActivity() {
                     true
                 }
                 else -> false
+            }
+        }
+
+        // *** OBSERVE CART ITEM COUNT FOR BADGE ***
+        CartManager.cartItemCount.observe(this) { count ->
+            val cartBadge = bottomNavigationView.getOrCreateBadge(R.id.nav_cart)
+            if (count > 0) {
+                cartBadge.isVisible = true
+                cartBadge.number = count
+                cartBadge.maxCharacterCount = 3 // To prevent very large numbers from overflowing
+            } else {
+                cartBadge.isVisible = false
+                cartBadge.clearNumber()
             }
         }
     }

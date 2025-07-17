@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager // Import GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pizzazone.Adapter.CategoryAdapter
 import com.example.pizzazone.Adapter.PopularAdapter
@@ -37,22 +38,15 @@ class HomeFragment : Fragment() {
             binding.recycleView.adapter = categoryAdapter
         }
 
-        // Setup popular RecyclerView (vertical)
         popularAdapter = PopularAdapter(mutableListOf())
         binding.recycleView2.apply {
-            layoutManager = LinearLayoutManager(context)
+            // *** MODIFIED LINE HERE: Use GridLayoutManager for two items per row ***
+            layoutManager = GridLayoutManager(context, 2) // Set span count to 2
             adapter = popularAdapter
         }
         viewModel.loadPopular().observe(viewLifecycleOwner) { popList ->
             popularAdapter = PopularAdapter(popList.toMutableList())
             binding.recycleView2.adapter = popularAdapter
-        }
-
-        // Button click
-        binding.buttonlist.setOnClickListener {
-            val intent = Intent(activity, ListScreenActivity::class.java)
-            intent.putExtra("showListFragment", true)
-            startActivity(intent)
         }
 
         return binding.root

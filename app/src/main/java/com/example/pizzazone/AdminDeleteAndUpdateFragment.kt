@@ -17,13 +17,6 @@ class AdminDeleteAndUpdateFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_admin_delete_and_update, container, false)
 
-        val btnhome = view.findViewById<Button>(R.id.btnhome)
-
-        btnhome.setOnClickListener {
-            val intent = Intent(activity, AdminHomeScreenActivity::class.java)
-            intent.putExtra("showDetailsFragment", true)
-            startActivity(intent)
-        }
 
         return view
     }
