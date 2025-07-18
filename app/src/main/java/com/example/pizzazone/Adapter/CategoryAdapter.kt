@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pizzazone.Domain.CategoryModel
-import com.example.pizzazone.ListScreenActivity // Corrected: Start ListScreenActivity
+import com.example.pizzazone.ListScreenActivity
 import com.example.pizzazone.R
 import com.example.pizzazone.databinding.ViewholderCategoryBinding
 
@@ -42,7 +42,7 @@ class CategoryAdapter(private val items: MutableList<CategoryModel>) :
             notifyItemChanged(selectedPosition)
 
             Handler(Looper.getMainLooper()).postDelayed({
-                val intent = Intent(context, ListScreenActivity::class.java).apply { // Corrected: Start ListScreenActivity
+                val intent = Intent(context, ListScreenActivity::class.java).apply {
                     putExtra("id", item.id.toString())
                     putExtra("title", item.title)
                 }

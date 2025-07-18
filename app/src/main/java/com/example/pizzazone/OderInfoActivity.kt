@@ -16,12 +16,19 @@ class OderInfoActivity :AppCompatActivity() {
         bottomNavigationView = findViewById(R.id.bottom_navigation)
 
         if (savedInstanceState == null) {
-            replaceFragment(OderInfoFragment())
+            val fragment = OderInfoFragment()
+
+
+            val bundle = intent.extras
+            if (bundle != null) {
+
+                fragment.arguments = bundle
+            }
+            replaceFragment(fragment)
 
             bottomNavigationView.menu.setGroupCheckable(0, true, false)
             bottomNavigationView.menu.findItem(R.id.nav_home).isChecked = false
             bottomNavigationView.menu.setGroupCheckable(0, true, true)
-
         }
 
 
@@ -41,5 +48,4 @@ class OderInfoActivity :AppCompatActivity() {
             .replace(R.id.fragment_container, fragment)
             .commit()
     }
-
 }

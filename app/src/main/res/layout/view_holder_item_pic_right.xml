@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -19,22 +20,27 @@
             android:layout_height="95dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
-            android:contentDescription="@string/tdo"
+            android:contentDescription="Product image thumbnail"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <TextView
             android:id="@+id/textView7"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
-            android:text="@string/title"
+            android:layout_marginEnd="16dp"
+            android:text="Awesome Product Title That Can Be Long And Span Two Lines"
             android:textColor="#000000"
             android:textSize="16sp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:singleLine="false"
             app:layout_constraintStart_toEndOf="@+id/imageView4"
-            app:layout_constraintTop_toTopOf="@+id/imageView4" />
+            app:layout_constraintTop_toTopOf="@+id/imageView4"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <RatingBar
             android:id="@+id/ratingBar"
@@ -52,7 +58,7 @@
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/price"
+            android:text="$200"
             android:textColor="#FF8C00"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

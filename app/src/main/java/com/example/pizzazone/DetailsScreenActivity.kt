@@ -4,30 +4,40 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.pizzazone.Domain.ItemModel
 
-class DetailsScreenActivity :AppCompatActivity() {
+class DetailsScreenActivity : AppCompatActivity() {
+
 
     companion object {
         var bottomNavViewInstance: BottomNavigationView? = null
+        const val EXTRA_ITEM_OBJECT = "item_object"
     }
 
     private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_details_screen)
 
         bottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavViewInstance = bottomNavigationView
 
-        val showDetailsFragment = intent.getBooleanExtra("showDetailsFragment", false)
-        val showListFragment = intent.getBooleanExtra("showListFragment", false)
+
+        val itemModel = intent.getSerializableExtra(EXTRA_ITEM_OBJECT) as? ItemModel
 
         if (savedInstanceState == null) {
-            when {
-                showDetailsFragment -> replaceFragment(DetailsScreenFragment())
-                showListFragment -> replaceFragment(List_Screen_Fragment())
-                else -> replaceFragment(HomeFragment())
+
+            if (itemModel != null) {
+                val detailsFragment = DetailsScreenFragment()
+                val bundle = Bundle()
+                bundle.putSerializable(EXTRA_ITEM_OBJECT, itemModel)
+                detailsFragment.arguments = bundle
+                replaceFragment(detailsFragment)
+            } else {
+
+                replaceFragment(HomeFragment())
             }
         }
 
@@ -35,6 +45,7 @@ class DetailsScreenActivity :AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
+
                     replaceFragment(HomeFragment())
                     true
                 }
