@@ -9,7 +9,6 @@ class CheckoutScreenActivity : AppCompatActivity() {
 
     private lateinit var bottomNavigationView: BottomNavigationView
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_checkout_screen)
@@ -18,7 +17,6 @@ class CheckoutScreenActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             val fragment = CheckoutScreenFragment()
-
 
             val bundle = intent.extras
             if (bundle != null) {
@@ -31,6 +29,7 @@ class CheckoutScreenActivity : AppCompatActivity() {
             bottomNavigationView.menu.findItem(R.id.nav_home).isChecked = false
             bottomNavigationView.menu.setGroupCheckable(0, true, true)
         }
+
 
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -60,7 +59,4 @@ class CheckoutScreenActivity : AppCompatActivity() {
             .replace(R.id.fragment_container, fragment)
             .commit()
     }
-
-
 }
-

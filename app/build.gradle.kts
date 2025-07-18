@@ -62,14 +62,13 @@ dependencies {
     implementation(libs.gson)
     // Lottie library Dependency - නවතම stable version එක භාවිතා කරන්න
     implementation("com.airbnb.android:lottie:6.4.1") // 2025 ජූලි වන විට 6.4.1 නවතම stable version එකයි.
-
-
-
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
