@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F8F8"
-   >
+    android:background="#F8F8F8">
 
     <ImageView
         android:id="@+id/backArrow"
@@ -41,7 +40,6 @@
         app:layout_constraintTop_toTopOf="@+id/backArrow" />
 
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/profileImageContainer"
         android:layout_width="120dp"
@@ -55,7 +53,6 @@
             android:id="@+id/profileImage"
             android:layout_width="0dp"
             android:layout_height="0dp"
-
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,19 +60,18 @@
             tools:src="@drawable/dummy_profile_image" />
 
         <ImageView
-        android:id="@+id/cameraIcon"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-
-        android:padding="8dp"
-        android:src="@drawable/ic_camera"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:tint="@android:color/black" />
+            android:id="@+id/cameraIcon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_camera"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:tint="@android:color/black" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -120,13 +116,13 @@
                 android:layout_marginTop="120px">
 
                 <TextView
+                    android:id="@+id/textViewProfileName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Thenula"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                   />
+                    android:textSize="18sp" />
 
                 <ImageView
                     android:id="@+id/editName"
@@ -150,6 +146,7 @@
                 android:paddingVertical="8dp">
 
                 <TextView
+                    android:id="@+id/textViewProfileEmail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -179,7 +176,7 @@
                 android:paddingVertical="8dp">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:id="@+id/textViewProfilePassword" android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="********"
