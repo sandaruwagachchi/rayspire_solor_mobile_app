@@ -32,6 +32,8 @@
         android:layout_height="wrap_content"
         android:text="Profile"
         android:textColor="#FF9800"
+
+
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/backArrow"
