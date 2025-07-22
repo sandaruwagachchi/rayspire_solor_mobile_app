@@ -63,6 +63,20 @@ dependencies {
     // Lottie library Dependency - නවතම stable version එක භාවිතා කරන්න
     implementation("com.airbnb.android:lottie:6.4.1") // 2025 ජූලි වන විට 6.4.1 නවතම stable version එකයි.
 
+        // ... existing dependencies
+
+        // Firebase Storage
+        implementation(platform("com.google.firebase:firebase-bom:33.1.0")) // නවතම BOM version එක පාවිච්චි කරන්න
+        implementation("com.google.firebase:firebase-storage-ktx")
+
+        // Glide for image loading (පින්තූර load කිරීමට)
+    implementation("com.github.bumptech.glide:glide:4.16.0") // නවතම stable version එක
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0") // MPAndroidChart for charts
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+
+
 
 
 

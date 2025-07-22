@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="profileImage" type="id" />
+    <item name="cameraIcon" type="id" />
+    <item name="leftToRight" type="id" />
+    <item name="textViewProfileEmail" type="id" />
+    <item name="buttonLogout" type="id" />
+    <item name="textViewProfileName" type="id" />
+    <item name="greetingText" type="id" />
+</resources>
