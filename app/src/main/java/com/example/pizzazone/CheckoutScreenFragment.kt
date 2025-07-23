@@ -16,6 +16,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.text.SimpleDateFormat
 import java.util.*
+import android.util.Log // Import Log for debugging
+
+// Remove the placeholder CartItem and PopularDomain if they are in this file,
+// as the actual CartManager object is now provided separately.
+// The actual CartItem and ItemModel are defined in the CartManager file.
 
 class CheckoutScreenFragment : Fragment() {
 
@@ -65,9 +70,9 @@ class CheckoutScreenFragment : Fragment() {
         setTextOrHide(view.findViewById(R.id.tv_shipping_zip), zipCode)
 
         buttonConfirm.setOnClickListener {
-
             if (name.isNullOrBlank() || address.isNullOrBlank() || mobile.isNullOrBlank() || zipCode.isNullOrBlank()) {
                 Toast.makeText(requireContext(), "Please fill all shipping details before confirming.", Toast.LENGTH_SHORT).show()
+                Log.w("CheckoutScreenFragment", "Missing shipping details for order confirmation.")
             } else {
                 saveOrderToFirebase(
                     fullName = name,
@@ -81,7 +86,6 @@ class CheckoutScreenFragment : Fragment() {
         }
 
         editShop.setOnClickListener {
-
             val intent = Intent(activity, OderInfoActivity::class.java).apply {
                 putExtra("name", name)
                 putExtra("address", address)
@@ -92,7 +96,6 @@ class CheckoutScreenFragment : Fragment() {
         }
 
         backArrow.setOnClickListener {
-
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, CartFragment())
                 .addToBackStack(null)
@@ -112,8 +115,11 @@ class CheckoutScreenFragment : Fragment() {
     ) {
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
+        Log.d("CheckoutScreenFragment", "Attempting to save order. Current Firebase User: ${currentUser?.email} (UID: ${currentUser?.uid})")
+
         if (currentUser == null) {
-            Toast.makeText(requireContext(), "User not logged in.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "User not logged in. Please log in to confirm your order.", Toast.LENGTH_SHORT).show()
+            Log.e("CheckoutScreenFragment", "User is null, cannot save order.")
             return
         }
 
@@ -121,6 +127,12 @@ class CheckoutScreenFragment : Fragment() {
         val ordersRef = database.getReference("Orders")
 
         val orderId = ordersRef.push().key ?: ""
+        if (orderId.isEmpty()) {
+            Toast.makeText(requireContext(), "Failed to generate Order ID.", Toast.LENGTH_SHORT).show()
+            Log.e("CheckoutScreenFragment", "Generated orderId is empty, cannot save order.")
+            return
+        }
+        Log.d("CheckoutScreenFragment", "Generated Order ID: $orderId")
 
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val timeFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
@@ -128,15 +140,24 @@ class CheckoutScreenFragment : Fragment() {
         val time = timeFormat.format(Date())
 
         val cartItems = CartManager.cartItems.value ?: emptyList()
-        val orderItems = cartItems.map {
-            OrderItem(itemName = it.item.title, quantity = it.quantity)
+        if (cartItems.isEmpty()) {
+            Toast.makeText(requireContext(), "Your cart is empty. Cannot place an empty order.", Toast.LENGTH_SHORT).show()
+            Log.e("CheckoutScreenFragment", "Cart is empty, cannot save order.")
+            return
         }
+
+        // FIX STARTS HERE
+        // The CartItem now contains an ItemModel, so access its 'title'
+        val orderItems = cartItems.map { cartItem ->
+            OrderItem(itemName = cartItem.item.title, quantity = cartItem.quantity)
+        }
+        // FIX ENDS HERE
 
         val totalAmount = subtotal + deliveryFees
 
         val orderDetail = OrderDetail(
             orderId = orderId,
-            userId = currentUser.uid,
+            userId = currentUser.uid, // This is essential for linking the order to the user!
             date = date,
             time = time,
             fullName = fullName,
@@ -150,12 +171,14 @@ class CheckoutScreenFragment : Fragment() {
         ordersRef.child(orderId).setValue(orderDetail)
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Order Confirmed!", Toast.LENGTH_SHORT).show()
-                CartManager.clearCart()
+                Log.d("CheckoutScreenFragment", "Order saved successfully for UID: ${currentUser.uid}, Order ID: $orderId")
+                CartManager.clearCart() // Clear the cart after successful order
                 startActivity(Intent(requireActivity(), OrderConfirmActivity::class.java))
                 requireActivity().finish()
             }
-            .addOnFailureListener {
-                Toast.makeText(requireContext(), "Failed to save order: ${it.message}", Toast.LENGTH_LONG).show()
+            .addOnFailureListener { e ->
+                Toast.makeText(requireContext(), "Failed to save order: ${e.message}", Toast.LENGTH_LONG).show()
+                Log.e("CheckoutScreenFragment", "Failed to save order: ${e.message}", e)
             }
     }
 }
