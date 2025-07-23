@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pizzazone.Domain.OrderDetail
 import com.example.pizzazone.R
+import android.util.Log // Import Log
 
 class MyOrdersListAdapter(private val orderList: ArrayList<OrderDetail>) :
     RecyclerView.Adapter<MyOrdersListAdapter.OrderViewHolder>() {
@@ -22,18 +23,16 @@ class MyOrdersListAdapter(private val orderList: ArrayList<OrderDetail>) :
         holder.orderId.text = currentOrder.orderId
         holder.totalAmount.text = "$${String.format("%.2f", currentOrder.totalAmount)}"
 
-        holder.currentAddress.text = "${currentOrder.fullName}, ${currentOrder.address}"
+        holder.currentAddress.text = "${currentOrder.fullName}, ${currentOrder.address}, ${currentOrder.zipCode}"
         holder.date.text = "Date: ${currentOrder.date}"
         holder.time.text = "Time: ${currentOrder.time}"
-
 
         val itemsStringBuilder = StringBuilder()
         if (currentOrder.items.isNotEmpty()) {
             for (item in currentOrder.items) {
                 itemsStringBuilder.append("${item.itemName} x${item.quantity}\n")
             }
-
-            if (itemsStringBuilder.last() == '\n') {
+            if (itemsStringBuilder.lastOrNull() == '\n') {
                 itemsStringBuilder.deleteCharAt(itemsStringBuilder.length - 1)
             }
         } else {
@@ -57,8 +56,12 @@ class MyOrdersListAdapter(private val orderList: ArrayList<OrderDetail>) :
 
 
     fun updateOrders(newOrders: List<OrderDetail>) {
+        // Log the size of the list being passed to the adapter
+        Log.d("MyOrdersListAdapter", "Updating adapter with ${newOrders.size} new orders.")
         orderList.clear()
         orderList.addAll(newOrders)
         notifyDataSetChanged()
+        // Log the adapter's internal list size after update
+        Log.d("MyOrdersListAdapter", "Adapter's internal list size after update: ${orderList.size}")
     }
 }
