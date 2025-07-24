@@ -57,6 +57,7 @@
         android:layout_width="184dp"
         android:layout_height="51dp"
         android:backgroundTint="#FF8C00"
+        android:textAllCaps="false"
         android:text="@string/next2"
         android:textColor="#000000"
         android:textSize="20sp"

@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login"
-            android:textColor="#FF9800"
+            android:textColor="#FF8C00"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
@@ -98,17 +98,17 @@
                 android:layout_gravity="end"
                 android:layout_marginBottom="16dp"
                 android:text="Forgot Password?"
-                android:textColor="#FF9800" />
+                android:textColor="#FF8C00" />
 
             <Button
                 android:id="@+id/buttonLoginAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20px"
-                android:backgroundTint="#FF9800"
+                android:backgroundTint="#FF8C00"
                 android:paddingVertical="12dp"
                 android:text="Login"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/black" />
 
             <TextView
                 android:id="@+id/or"
