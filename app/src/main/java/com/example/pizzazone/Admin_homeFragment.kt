@@ -27,13 +27,13 @@ class Admin_homeFragment : Fragment() {
         }
 
         btnview.setOnClickListener {
-            val intent = Intent(activity, AdminViewProductActivity::class.java)
+            val intent = Intent(activity, AdminDeleteProductActivity::class.java)
             intent.putExtra("showListFragment", true)
             startActivity(intent)
         }
 
         btnupdate.setOnClickListener {
-            val intent = Intent(activity, AdminDeleteAndUpdateActivity::class.java)
+            val intent = Intent(activity, AdminViewAndUpdateActivity::class.java)
             intent.putExtra("showListFragment", true)
             startActivity(intent)
         }

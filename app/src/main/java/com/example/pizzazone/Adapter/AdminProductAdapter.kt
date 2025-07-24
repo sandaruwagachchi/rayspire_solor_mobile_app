@@ -7,18 +7,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pizzazone.Domain.ItemModel
 import com.example.pizzazone.R
-import com.example.pizzazone.databinding.ViewholderPopularBinding // Reusing this layout for simplicity
+import com.example.pizzazone.databinding.ViewholderDeleteBinding // Reusing this layout for simplicity
 
 class AdminProductAdapter(private var items: MutableList<ItemModel>) :
     RecyclerView.Adapter<AdminProductAdapter.ViewHolder>() {
 
     private lateinit var context: Context
 
-    class ViewHolder(val binding: ViewholderPopularBinding) : RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: ViewholderDeleteBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
-        val binding = ViewholderPopularBinding.inflate(LayoutInflater.from(context), parent, false)
+        val binding = ViewholderDeleteBinding.inflate(LayoutInflater.from(context), parent, false)
         return ViewHolder(binding)
     }
 

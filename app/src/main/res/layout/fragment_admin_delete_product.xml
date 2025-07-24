@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".AdminViewProductFragment">
+    tools:context=".AdminDeleteProductFragment">
 
     <LinearLayout
         android:id="@+id/headerLayout"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="View Products"
+            android:text="Delete Products"
             android:textColor="#FF8C00"
             android:textStyle="bold"
             android:textSize="18sp" />
@@ -96,6 +96,6 @@
         app:layout_constraintTop_toBottomOf="@id/spinnerLayout"
         app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:listitem="@layout/viewholder_popular" />
+        tools:listitem="@layout/viewholder_delete" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

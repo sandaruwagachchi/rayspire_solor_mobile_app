@@ -39,8 +39,8 @@
         <activity android:name=".Admin_LoginActivity"/>
         <activity android:name=".AdminHomeScreenActivity" />
         <activity android:name=".AdminAddProductActivity"/>
-        <activity android:name=".AdminDeleteAndUpdateActivity"/>
-        <activity android:name=".AdminViewProductActivity"/>
+        <activity android:name=".AdminViewAndUpdateActivity"/>
+        <activity android:name=".AdminDeleteProductActivity"/>
         <activity android:name=".OderInfoActivity" />
         <activity android:name=".AdminOrderHistoryActivity" />
         <activity android:name=".HomeScreenActivity"
