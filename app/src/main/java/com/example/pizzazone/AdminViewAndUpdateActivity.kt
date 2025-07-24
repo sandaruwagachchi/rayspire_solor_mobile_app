@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class AdminDeleteAndUpdateActivity :AppCompatActivity() {
+class AdminViewAndUpdateActivity :AppCompatActivity() {
 
 
     private lateinit var bottomNavigationView: BottomNavigationView
@@ -20,7 +20,7 @@ class AdminDeleteAndUpdateActivity :AppCompatActivity() {
 
         if (savedInstanceState == null) {
             if (showListFragment) {
-                replaceFragment(AdminDeleteAndUpdateFragment())
+                replaceFragment(AdminViewAndUpdateFragment())
             } else {
                 replaceFragment(Admin_homeFragment())
             }

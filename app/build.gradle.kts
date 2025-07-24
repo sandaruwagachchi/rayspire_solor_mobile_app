@@ -56,8 +56,8 @@ dependencies {
     implementation(libs.googleid)
 //    implementation(libs.firebase.storage.ktx)
 //    implementation(libs.firebase.firestore.ktx)
-    implementation("com.google.firebase:firebase-firestore-ktx:25.0.0")
-    implementation("com.google.firebase:firebase-storage-ktx:21.0.0")
+    implementation(libs.firebase.firestore.ktx.v2500)
+    implementation(libs.firebase.storage.ktx.v2100)
 
     implementation(libs.litert.support.api)
     testImplementation(libs.junit)
@@ -66,7 +66,7 @@ dependencies {
     implementation(libs.lottie)
     implementation(libs.glide)
     implementation(libs.gson)
-    implementation("com.google.firebase:firebase-database:20.3.1")
+    implementation(libs.firebase.database.v2031)
 
 
 

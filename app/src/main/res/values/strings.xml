@@ -9,8 +9,8 @@
     <string name="goto_list_screen">Goto List Screen</string>
     <string name="hot_sales">Admin Home</string>
     <string name="add_products">Add Products</string>
-    <string name="view_products">View Products</string>
-    <string name="update_and_delete_products">Update and Delete Products</string>
+    <string name="view_products">Delete Products</string>
+    <string name="update_and_delete_products">View and Update Products</string>
     <string name="todo">TODO</string>
     <string name="todo2">TODO</string>
     <string name="todo3">TODO</string>

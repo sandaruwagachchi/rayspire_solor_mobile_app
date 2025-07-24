@@ -1,6 +1,5 @@
 package com.example.pizzazone
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,16 +8,16 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager // <-- Import GridLayoutManager
 import com.example.pizzazone.Adapter.AdminProductAdapter
 import com.example.pizzazone.Domain.CategoryModel
 import com.example.pizzazone.Domain.ItemModel
 import com.example.pizzazone.ViewModel.MainViewModel
-import com.example.pizzazone.databinding.FragmentAdminViewProductBinding
+import com.example.pizzazone.databinding.FragmentAdminDeleteProductBinding
 
-class AdminViewProductFragment : Fragment() {
+class AdminDeleteProductFragment : Fragment() {
 
-    private var _binding: FragmentAdminViewProductBinding? = null
+    private var _binding: FragmentAdminDeleteProductBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var viewModel: MainViewModel
@@ -29,7 +28,7 @@ class AdminViewProductFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAdminViewProductBinding.inflate(inflater, container, false)
+        _binding = FragmentAdminDeleteProductBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         setupRecyclerView()
@@ -42,7 +41,8 @@ class AdminViewProductFragment : Fragment() {
     private fun setupRecyclerView() {
         adminProductAdapter = AdminProductAdapter(mutableListOf())
         binding.listView.apply {
-            layoutManager = LinearLayoutManager(context)
+            // Change to GridLayoutManager with 2 columns
+            layoutManager = GridLayoutManager(context, 2) // <-- HERE: Set spanCount to 2
             adapter = adminProductAdapter
         }
     }
@@ -72,7 +72,7 @@ class AdminViewProductFragment : Fragment() {
                             }
                         }
                     } else {
-                        updateProductList(mutableListOf())
+                        updateProductList(mutableListOf()) // Show empty list if "Select Category" is chosen
                     }
                 }
 
@@ -89,18 +89,20 @@ class AdminViewProductFragment : Fragment() {
         }
 
         binding.seeAll.setOnClickListener {
+            // It seems 'loadPopular' is not filtering by category, so it loads all popular items.
+            // If you want to load ALL items (not just popular) for "See All", you'd need a new method in MainRepository/ViewModel.
+            // For now, this will show popular items.
             viewModel.loadPopular().observe(viewLifecycleOwner) { popList ->
                 updateProductList(popList.toMutableList())
-                binding.categorySpinner.setSelection(0)
+                binding.categorySpinner.setSelection(0) // Reset spinner to "Select Category"
             }
         }
-
-
     }
 
     private fun updateProductList(items: MutableList<ItemModel>) {
-        adminProductAdapter = AdminProductAdapter(items)
-        binding.listView.adapter = adminProductAdapter
+        // You should ideally update the existing adapter's data, not create a new adapter every time.
+        // This is more efficient.
+        adminProductAdapter.updateItems(items)
     }
 
     override fun onDestroyView() {

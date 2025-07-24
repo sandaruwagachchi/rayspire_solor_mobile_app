@@ -1,5 +1,8 @@
 [versions]
 agp = "8.9.2"
+firebaseDatabaseVersion = "20.3.1"
+firebaseFirestoreKtxVersion = "25.0.0"
+firebaseStorageKtxVersion = "21.0.0"
 glide = "4.15.1"
 gson = "2.10.1"
 kotlin = "2.0.21"
@@ -25,6 +28,9 @@ litertSupportApi = "1.4.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+firebase-database-v2031 = { module = "com.google.firebase:firebase-database", version.ref = "firebaseDatabaseVersion" }
+firebase-firestore-ktx-v2500 = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseFirestoreKtxVersion" }
+firebase-storage-ktx-v2100 = { module = "com.google.firebase:firebase-storage-ktx", version.ref = "firebaseStorageKtxVersion" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
