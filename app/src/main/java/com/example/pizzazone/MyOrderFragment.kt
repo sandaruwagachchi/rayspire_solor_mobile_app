@@ -10,7 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pizzazone.Adapter.MyOrdersListAdapter
+import com.example.pizzazone.Adapter.OrderListAdapter // Changed from MyOrdersListAdapter to OrderListAdapter
 import com.example.pizzazone.Domain.OrderDetail
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -22,8 +22,8 @@ import android.util.Log
 class MyOrderFragment : Fragment() {
 
     private lateinit var ordersRecyclerView: RecyclerView
-    private lateinit var myOrdersListAdapter: MyOrdersListAdapter
-    private lateinit var orderList: ArrayList<OrderDetail> // This is the fragment's list
+    private lateinit var orderListAdapter: OrderListAdapter // Changed adapter type
+    private lateinit var orderList: ArrayList<OrderDetail>
     private lateinit var emptyOrdersTextView: TextView
 
     private lateinit var auth: FirebaseAuth
@@ -40,9 +40,11 @@ class MyOrderFragment : Fragment() {
 
         ordersRecyclerView = view.findViewById(R.id.ordersRecyclerView)
         ordersRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        orderList = ArrayList() // Initialize the fragment's list
-        myOrdersListAdapter = MyOrdersListAdapter(orderList) // Pass it to the adapter initially
-        ordersRecyclerView.adapter = myOrdersListAdapter
+        orderList = ArrayList()
+
+        // Initialize OrderListAdapter with item_order.xml (no button click listener needed here)
+        orderListAdapter = OrderListAdapter(orderList, R.layout.item_order, null) // Pass null for click listener
+        ordersRecyclerView.adapter = orderListAdapter
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
@@ -76,11 +78,10 @@ class MyOrderFragment : Fragment() {
 
         Log.d("MyOrderFragment", "Querying orders for user ID: $userId")
 
-
         ordersRef.orderByChild("userId").equalTo(userId)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val fetchedOrderList = ArrayList<OrderDetail>() // Use a temporary list for fetching
+                    val fetchedOrderList = ArrayList<OrderDetail>()
 
                     if (snapshot.exists()) {
                         Log.d("MyOrderFragment", "Orders snapshot exists for user $userId. Number of children: ${snapshot.childrenCount}")
@@ -88,7 +89,7 @@ class MyOrderFragment : Fragment() {
                             for (orderSnapshot in snapshot.children) {
                                 val order = orderSnapshot.getValue(OrderDetail::class.java)
                                 order?.let {
-                                    fetchedOrderList.add(it) // Add to the temporary list
+                                    fetchedOrderList.add(it)
                                     Log.d("MyOrderFragment", "Added order: ${it.orderId} (Total: ${it.totalAmount}), Items: ${it.items.size}")
                                 } ?: run {
                                     Log.e("MyOrderFragment", "Failed to parse OrderDetail from snapshot: ${orderSnapshot.key}. Data: ${orderSnapshot.value}")
@@ -96,8 +97,7 @@ class MyOrderFragment : Fragment() {
                                 }
                             }
 
-                            // Update the adapter with the fetched list
-                            myOrdersListAdapter.updateOrders(fetchedOrderList)
+                            orderListAdapter.updateOrders(fetchedOrderList)
                             Log.d("MyOrderFragment", "Called adapter.updateOrders() with list of size: ${fetchedOrderList.size}")
 
                             if (fetchedOrderList.isNotEmpty()) {
@@ -105,7 +105,6 @@ class MyOrderFragment : Fragment() {
                                 ordersRecyclerView.visibility = View.VISIBLE
                                 Log.d("MyOrderFragment", "Orders displayed. Total orders now visible: ${fetchedOrderList.size}")
                             } else {
-                                // This case should theoretically not be hit if snapshot.childrenCount > 0
                                 emptyOrdersTextView.visibility = View.VISIBLE
                                 ordersRecyclerView.visibility = View.GONE
                                 Toast.makeText(requireContext(), "No orders found for this user.", Toast.LENGTH_SHORT).show()
@@ -113,16 +112,14 @@ class MyOrderFragment : Fragment() {
                             }
 
                         } else {
-                            // snapshot.exists() is true but childrenCount is 0, which means no orders match the query
-                            myOrdersListAdapter.updateOrders(emptyList()) // Clear adapter if no children
+                            orderListAdapter.updateOrders(emptyList())
                             emptyOrdersTextView.visibility = View.VISIBLE
                             ordersRecyclerView.visibility = View.GONE
                             Toast.makeText(requireContext(), "No orders found for this user.", Toast.LENGTH_SHORT).show()
                             Log.d("MyOrderFragment", "Snapshot exists but no matching orders found for user ID: $userId")
                         }
                     } else {
-                        // snapshot.exists() is false, meaning no data at all for this query
-                        myOrdersListAdapter.updateOrders(emptyList()) // Clear adapter if no snapshot
+                        orderListAdapter.updateOrders(emptyList())
                         emptyOrdersTextView.visibility = View.VISIBLE
                         ordersRecyclerView.visibility = View.GONE
                         Toast.makeText(requireContext(), "No orders found for this user.", Toast.LENGTH_SHORT).show()
