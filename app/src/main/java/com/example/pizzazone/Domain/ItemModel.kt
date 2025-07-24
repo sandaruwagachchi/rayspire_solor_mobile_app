@@ -9,5 +9,6 @@ data class ItemModel(
     var price: Double = 0.0,
     var rating: Double = 0.0,
     var numberInCart: Int? = null,
-    var categoryId: String = ""
+    var categoryId: String = "",
+    var id: String = "" // Make sure this is a var and initialized
 ) : Serializable
