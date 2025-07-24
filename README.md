@@ -32,4 +32,7 @@
 🧾 View previous orders and re-order option
 
 8. User Profile
-🐼 View and update user details 
+🐼 View and update user details
+
+8. Admin Panel
+🐼 View, Delete, Update, Add, Recived Orders, Order Summary and Income Overview usind Charts
