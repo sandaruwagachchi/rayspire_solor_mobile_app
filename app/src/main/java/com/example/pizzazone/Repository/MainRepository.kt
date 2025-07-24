@@ -11,6 +11,8 @@ class MainRepository {
 
     private val db = FirebaseDatabase.getInstance().reference
 
+    // ... (existing loadCategory, loadPopular, loadItemCategory functions) ...
+
     fun loadCategory(): LiveData<MutableList<CategoryModel>> {
         val data = MutableLiveData<MutableList<CategoryModel>>()
         db.child("Category").addValueEventListener(object : ValueEventListener {
@@ -40,7 +42,11 @@ class MainRepository {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val list = mutableListOf<ItemModel>()
                 for (c in snapshot.children) {
-                    c.getValue(ItemModel::class.java)?.let { list.add(it) }
+                    val item = c.getValue(ItemModel::class.java)
+                    item?.let {
+                        it.id = c.key ?: "" // Set the ItemModel's ID to the Firebase database key
+                        list.add(it)
+                    }
                 }
                 data.value = list
             }
@@ -60,7 +66,11 @@ class MainRepository {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val list = mutableListOf<ItemModel>()
                 for (c in snapshot.children) {
-                    c.getValue(ItemModel::class.java)?.let { list.add(it) }
+                    val item = c.getValue(ItemModel::class.java)
+                    item?.let {
+                        it.id = c.key ?: "" // Set the ItemModel's ID to the Firebase database key
+                        list.add(it)
+                    }
                 }
                 itemsLiveData.value = list
             }
@@ -71,5 +81,54 @@ class MainRepository {
             }
         })
         return itemsLiveData
+    }
+
+    fun deleteItem(itemId: String): LiveData<Boolean> {
+        val result = MutableLiveData<Boolean>()
+        db.child("Items").child(itemId).removeValue()
+            .addOnSuccessListener {
+                Log.d("FIREBASE_DELETE", "Item $itemId deleted successfully.")
+                result.value = true
+            }
+            .addOnFailureListener { e ->
+                Log.e("FIREBASE_DELETE", "Failed to delete item $itemId", e)
+                result.value = false
+            }
+        return result
+    }
+
+    // New function to update an item
+    fun updateItem(item: ItemModel): LiveData<Boolean> {
+        val result = MutableLiveData<Boolean>()
+        if (item.id.isNullOrEmpty()) {
+            Log.e("FIREBASE_UPDATE", "Cannot update item: ID is null or empty.")
+            result.value = false
+            return result
+        }
+
+        // Convert ItemModel to a Map for partial updates
+        // This is good if you only want to update specific fields,
+        // but for full model update, just setting value might be simpler.
+        // If you are pushing the entire object, ensure all fields are correctly set.
+        val itemMap = mapOf(
+            "title" to item.title,
+            "description" to item.description,
+            "picUrl" to item.picUrl,
+            "price" to item.price,
+            "rating" to item.rating, // Keep rating, or remove if not updated
+            "numberInCart" to item.numberInCart, // Keep, or remove if not updated
+            "categoryId" to item.categoryId
+        )
+
+        db.child("Items").child(item.id!!).updateChildren(itemMap) // Use updateChildren for partial updates
+            .addOnSuccessListener {
+                Log.d("FIREBASE_UPDATE", "Item ${item.id} updated successfully.")
+                result.value = true
+            }
+            .addOnFailureListener { e ->
+                Log.e("FIREBASE_UPDATE", "Failed to update item ${item.id}", e)
+                result.value = false
+            }
+        return result
     }
 }

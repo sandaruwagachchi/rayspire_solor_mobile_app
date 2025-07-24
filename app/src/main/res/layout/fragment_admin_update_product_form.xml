@@ -13,179 +13,176 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/shipping_header_bar"
-            android:layout_width="match_parent"
-            android:layout_marginTop="30dp"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/white"
+        <LinearLayout
+            android:id="@+id/headerLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="12dp"
+            android:layout_marginTop="20dp"
+            android:paddingBottom="12dp"
+            android:gravity="center_vertical"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
-
             <ImageView
-                android:id="@+id/shipping_back_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/baseline_arrow_back_ios_new_24"
-                android:padding="16dp"
+                android:id="@+id/backArrow"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="12dp"
                 android:contentDescription="Back"
-                android:clickable="true"
-                android:focusable="true"
+                android:src="@drawable/ic_back_arrow"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:tint="@android:color/black" />
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/shipping_title_text"
-                android:layout_width="wrap_content"
+                android:id="@+id/textView3"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Shipping Details"
-                android:textColor="#FF9800"
-                android:textSize="24sp"
+                android:layout_weight="1"
+                android:text="@string/update_product"
+                android:textColor="#FF8C00"
+                android:textSize="20sp"
+                android:textAlignment="center"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_marginEnd="28dp" />
+        </LinearLayout>
+        <View
+            android:id="@+id/headerSeparator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#D3D3D3"
+            app:layout_constraintTop_toBottomOf="@id/headerLayout" />
 
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottieAnimationView"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_marginTop="16dp"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="DeliveryTruck.json"
-            app:lottie_loop="true"
-            app:layout_constraintTop_toBottomOf="@id/shipping_header_bar"
+        <ImageView
+            android:id="@+id/imageViewProduct"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="24dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toBottomOf="@id/headerSeparator"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/textViewName"
+            android:id="@+id/textViewNameLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Full name"
+            android:text="Product Name"
             android:textColor="@android:color/black"
             android:textSize="17sp"
             android:textStyle="bold"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@id/lottieAnimationView"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewProduct"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/editTextName"
+            android:id="@+id/editTextTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/rounded_edittext_background"
-            android:drawableRight="@drawable/baseline_border_color_24"
+            android:drawableEnd="@drawable/baseline_border_color_24"
             android:drawablePadding="8dp"
             android:inputType="textPersonName"
             android:padding="12dp"
-            app:layout_constraintTop_toBottomOf="@id/textViewName"
+            app:layout_constraintTop_toBottomOf="@id/textViewNameLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-
         <TextView
-            android:id="@+id/textViewAddress"
+            android:id="@+id/textViewCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Shipping Address"
+            android:text="Category"
             android:textColor="@android:color/black"
             android:textSize="17sp"
             android:textStyle="bold"
             android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@id/editTextName"
+            app:layout_constraintTop_toBottomOf="@id/editTextTitle"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <EditText
-            android:id="@+id/editTextAddress"
+        <Spinner
+            android:id="@+id/categorySpinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_edittext_background"
-            android:drawableRight="@drawable/baseline_border_color_24"
-            android:drawablePadding="8dp"
-            android:inputType="textPostalAddress"
+            android:layout_marginTop="10dp"
             android:padding="12dp"
-            app:layout_constraintTop_toBottomOf="@id/textViewAddress"
+            app:layout_constraintTop_toBottomOf="@id/textViewCategory"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-
         <TextView
-            android:id="@+id/textViewMobile"
+            android:id="@+id/textViewPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mobile Number"
+            android:text="Price"
             android:textColor="@android:color/black"
             android:textSize="17sp"
             android:textStyle="bold"
             android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@id/editTextAddress"
+            app:layout_constraintTop_toBottomOf="@id/categorySpinner"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <EditText
-            android:id="@+id/editTextMobile"
+            android:id="@+id/editTextPrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_edittext_background"
-            android:drawableRight="@drawable/baseline_border_color_24"
+            android:drawableEnd="@drawable/baseline_border_color_24"
             android:drawablePadding="8dp"
-            android:inputType="phone"
+            android:inputType="numberDecimal"
             android:padding="12dp"
-            app:layout_constraintTop_toBottomOf="@id/textViewMobile"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/textViewPrice"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-
         <TextView
-            android:id="@+id/textViewZipCode"
+            android:id="@+id/textViewDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Zip Code"
+            android:text="Description"
             android:textColor="@android:color/black"
             android:textSize="17sp"
             android:textStyle="bold"
             android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@id/editTextMobile"
+            app:layout_constraintTop_toBottomOf="@id/editTextPrice"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <EditText
-            android:id="@+id/editTextZipCode"
+            android:id="@+id/editTextDescription"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="120dp"
             android:background="@drawable/rounded_edittext_background"
-            android:drawableRight="@drawable/baseline_border_color_24"
+            android:drawableEnd="@drawable/baseline_border_color_24"
             android:drawablePadding="8dp"
-            android:inputType="number"
+            android:inputType="textMultiLine"
+            android:gravity="top|start"
             android:padding="12dp"
-            app:layout_constraintTop_toBottomOf="@id/textViewZipCode"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/textViewDescription"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-
 
         <Button
-            android:id="@+id/buttonsave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save"
+            android:id="@+id/buttonUpdateProduct"
+            android:layout_width="0dp"
+            android:layout_height="51dp"
+            android:text="@string/set"
             android:textAllCaps="false"
             android:textSize="18sp"
+            android:textStyle="bold"
+            app:cornerRadius="10dp"
             android:textColor="@android:color/black"
             android:backgroundTint="#FF8C00"
             android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/editTextZipCode"
+            app:layout_constraintTop_toBottomOf="@id/editTextDescription"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

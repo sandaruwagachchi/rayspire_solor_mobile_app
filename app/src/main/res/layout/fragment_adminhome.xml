@@ -69,6 +69,7 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:text="@string/add_products"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -106,6 +107,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     android:textStyle="bold"
+                    android:textAllCaps="false"
                     android:paddingVertical="6dp"
                     android:backgroundTint="#FF8C00"
                     android:layout_marginTop="8dp"/>
@@ -141,6 +143,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     android:textStyle="bold"
+                    android:textAllCaps="false"
                     android:paddingVertical="6dp"
                     android:backgroundTint="#FF8C00"
                     android:layout_marginTop="8dp"/>
