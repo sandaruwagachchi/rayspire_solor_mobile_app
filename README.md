@@ -35,4 +35,4 @@
 🐼 View and update user details
 
 8. Admin Panel
-🐼 View, Delete, Update, Add, Recived Orders, Order Summary and Income Overview usind Charts
+😎 View, Delete, Update, Add, Recived Orders, Order Summary and Income Overview usind Charts
