@@ -24,6 +24,7 @@
     <string name="product_name">Product Name</string>
     <string name="delete">Delete</string>
     <string name="set">Set</string>
+    <string name="update_product">Update Product</string>
     <string name="update_and_delete">Update and Delete</string>
     <string name="onboarding_illustration">Onboarding illustration</string>
     <string name="clean_energy_at_your_fingertips">Clean Energy at Your Fingertips</string>

@@ -38,6 +38,10 @@ class AdminDeleteProductFragment : Fragment() {
         setupSpinner()
         setupClickListeners()
 
+        // *** IMPORTANT ADDITION: Load default items immediately ***
+        // This will display popular items when the fragment first loads.
+        loadDefaultItems() // Call this new function
+
         return binding.root
     }
 
@@ -76,7 +80,8 @@ class AdminDeleteProductFragment : Fragment() {
                             }
                         }
                     } else {
-                        updateProductList(mutableListOf())
+                        // If "Select Category" is chosen, load popular items again
+                        loadDefaultItems()
                     }
                 }
 
@@ -93,10 +98,8 @@ class AdminDeleteProductFragment : Fragment() {
         }
 
         binding.seeAll.setOnClickListener {
-            viewModel.loadPopular().observe(viewLifecycleOwner) { popList ->
-                updateProductList(popList.toMutableList())
-                binding.categorySpinner.setSelection(0)
-            }
+            loadDefaultItems() // Reuse the function to load popular items
+            binding.categorySpinner.setSelection(0) // Reset spinner to "Select Category"
         }
     }
 
@@ -104,14 +107,20 @@ class AdminDeleteProductFragment : Fragment() {
         adminDeleteProductAdapter.updateItems(items)
     }
 
+    // *** NEW FUNCTION: To load popular items by default ***
+    private fun loadDefaultItems() {
+        viewModel.loadPopular().observe(viewLifecycleOwner) { popList ->
+            updateProductList(popList.toMutableList())
+        }
+    }
+
     private fun confirmAndDeleteItem(item: ItemModel) {
         AlertDialog.Builder(requireContext())
             .setTitle("Delete Product")
             .setMessage("Are you sure you want to delete '${item.title}'?")
             .setPositiveButton("Delete") { dialog, _ ->
-                // Safely access item.id using '?.let' or a direct null check
                 val itemId = item.id
-                if (!itemId.isNullOrEmpty()) { // Check if ID is not null and not empty
+                if (!itemId.isNullOrEmpty()) {
                     viewModel.deleteItem(itemId).observe(viewLifecycleOwner) { isSuccess ->
                         if (isSuccess) {
                             Toast.makeText(requireContext(), "${item.title} deleted successfully!", Toast.LENGTH_SHORT).show()
@@ -142,9 +151,8 @@ class AdminDeleteProductFragment : Fragment() {
                 }
             }
         } else {
-            viewModel.loadPopular().observe(viewLifecycleOwner) { popList ->
-                updateProductList(popList.toMutableList())
-            }
+            // If "Select Category" is chosen or no category was previously selected, load popular items
+            loadDefaultItems()
         }
     }
 
