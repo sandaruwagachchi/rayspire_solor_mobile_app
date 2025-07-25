@@ -50,6 +50,10 @@ class DetailsScreenFragment : Fragment() {
                 binding.imageProduct.setImageResource(R.drawable.placeholder_image)
             }
 
+            binding.backArrow.setOnClickListener {
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
+
 
             binding.buttondetails.setOnClickListener {
 
