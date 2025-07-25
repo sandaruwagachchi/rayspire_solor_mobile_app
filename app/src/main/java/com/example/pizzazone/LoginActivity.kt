@@ -57,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         backArrow.setOnClickListener {
-            startActivity(Intent(this, HomeScreenActivity::class.java))
+            startActivity(Intent(this, RegisterActivity::class.java))
             finish()
         }
     }
