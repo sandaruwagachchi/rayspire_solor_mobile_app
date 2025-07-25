@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pizzazone.Domain.ItemModel
 import com.example.pizzazone.R
-import com.example.pizzazone.databinding.ViewholderPopularBinding // Reusing for display, assuming it has image, title, price
+import com.example.pizzazone.databinding.ViewholderPopularBinding
 
 class AdminViewProductAdapter(
     private var items: MutableList<ItemModel>,
@@ -39,13 +39,11 @@ class AdminViewProductAdapter(
             holder.binding.imageView3.setImageResource(R.drawable.placeholder_image)
         }
 
-        // Handle item click
+
         holder.itemView.setOnClickListener {
             onItemClickListener.invoke(item) // Trigger the callback
         }
 
-        // Hide the plus icon (imageView5) if it exists in viewholder_popular.xml
-        // This adapter is for VIEWING, not adding to cart.
         holder.binding.imageView5.visibility = View.GONE
     }
 

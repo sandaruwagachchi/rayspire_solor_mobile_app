@@ -1,4 +1,3 @@
-// This file should be named CartAdapter.kt in the Adapter package or similar
 
 import android.view.LayoutInflater
 import android.view.View
@@ -13,20 +12,19 @@ import com.example.pizzazone.CartManager
 import com.example.pizzazone.CartItem // Import CartItem
 import com.example.pizzazone.R
 
-// Pass a lambda to notify the fragment about quantity/item changes for subtotal update
 class CartAdapter(
     private val items: MutableList<CartItem>,
-    private val onCartChanged: () -> Unit // Callback for any change (add, remove, quantity)
+    private val onCartChanged: () -> Unit
 ) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
     inner class CartViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val image = view.findViewById<ImageView>(R.id.imageProduct)
         val name = view.findViewById<TextView>(R.id.textProductName)
-        val ratingBar = view.findViewById<RatingBar>(R.id.ratingBarProduct) // New: RatingBar
+        val ratingBar = view.findViewById<RatingBar>(R.id.ratingBarProduct)
         val price = view.findViewById<TextView>(R.id.textProductPrice)
-        val quantity = view.findViewById<TextView>(R.id.textQuantity) // For displaying "Qty X"
-        val buttonAddOne = view.findViewById<ImageView>(R.id.buttonAddOne) // New: plus in circle
-        val buttonRemove = view.findViewById<AppCompatButton>(R.id.buttonRemove) // New: Remove button
+        val quantity = view.findViewById<TextView>(R.id.textQuantity)
+        val buttonAddOne = view.findViewById<ImageView>(R.id.buttonAddOne)
+        val buttonRemove = view.findViewById<AppCompatButton>(R.id.buttonRemove)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
@@ -39,9 +37,9 @@ class CartAdapter(
         val cartProduct = items[position]
 
         holder.name.text = cartProduct.item.title
-        holder.ratingBar.rating = cartProduct.item.rating.toFloat() // Set rating
-        holder.price.text = "$${String.format("%.2f", cartProduct.item.price)}" // Display individual item price
-        holder.quantity.text = "Qty ${cartProduct.quantity}" // Display quantity
+        holder.ratingBar.rating = cartProduct.item.rating.toFloat()
+        holder.price.text = "$${String.format("%.2f", cartProduct.item.price)}"
+        holder.quantity.text = "Qty ${cartProduct.quantity}"
 
         if (cartProduct.item.picUrl.isNotEmpty()) {
             Glide.with(holder.itemView.context)
@@ -49,26 +47,25 @@ class CartAdapter(
                 .into(holder.image)
         } else {
             Glide.with(holder.itemView.context)
-                .load(R.drawable.placeholder_image) // Ensure you have a placeholder_image
+                .load(R.drawable.placeholder_image)
                 .into(holder.image)
         }
 
-        // *** ADD ONE BUTTON CLICK LISTENER (plus in circle) ***
+
         holder.buttonAddOne.setOnClickListener {
             CartManager.addItemToCart(cartProduct.item)
-            onCartChanged.invoke() // Notify fragment to update subtotal and adapter
+            onCartChanged.invoke()
         }
 
-        // *** REMOVE BUTTON CLICK LISTENER ***
+
         holder.buttonRemove.setOnClickListener {
             CartManager.removeAllInstancesOfItem(cartProduct.item)
-            onCartChanged.invoke() // Notify fragment to update subtotal and adapter
+            onCartChanged.invoke()
         }
     }
 
     override fun getItemCount(): Int = items.size
 
-    // Method to update the adapter's data
     fun updateCartItems(newItems: MutableList<CartItem>) {
         items.clear()
         items.addAll(newItems)

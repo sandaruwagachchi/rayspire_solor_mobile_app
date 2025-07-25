@@ -7,17 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView // Import TextView for subtotal
+import android.widget.ImageView // Import ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pizzazone.CartManager // Import CartManager
+
 
 class CartFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var cartAdapter: CartAdapter
-    private lateinit var textSubprice: TextView // Reference for subtotal TextView
+    private lateinit var textSubprice: TextView
+    private lateinit var backArrow: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,21 +30,17 @@ class CartFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerViewCart)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        // Initialize subtotal TextView
         textSubprice = view.findViewById(R.id.textSubprice)
 
-        // Initialize adapter with an empty list initially
-        cartAdapter = CartAdapter(mutableListOf()) { // Pass lambda for item changes
+        cartAdapter = CartAdapter(mutableListOf()) {
             updateSubtotal()
         }
         recyclerView.adapter = cartAdapter
 
-        // Observe cart items from CartManager
         CartManager.cartItems.observe(viewLifecycleOwner) { items ->
-            cartAdapter.updateCartItems(items) // Update adapter with new list
-            updateSubtotal() // Update subtotal whenever cart items change
+            cartAdapter.updateCartItems(items)
+            updateSubtotal()
         }
-
 
         val buttonCheck = view.findViewById<Button>(R.id.buttonCheckout)
         buttonCheck.setOnClickListener {
@@ -54,6 +52,10 @@ class CartFragment : Fragment() {
         }
 
 
+        backArrow = view.findViewById(R.id.backArrow)
+        backArrow.setOnClickListener {
+            val intent = Intent(requireContext(), HomeScreenActivity::class.java)
+        }
         return view
     }
 
