@@ -56,6 +56,7 @@ class PopularAdapter(val items:MutableList<ItemModel>):RecyclerView.Adapter<Popu
 
     override fun getItemCount(): Int = items.size
 
+    // *** NEW FUNCTION ADDED FOR SEARCH IMPLEMENTATION ***
     fun updateItems(newItems: List<ItemModel>) {
         items.clear()
         items.addAll(newItems)
