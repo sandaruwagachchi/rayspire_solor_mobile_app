@@ -22,7 +22,6 @@ class MainViewModel : ViewModel() {
         return repository.loadItemCategory(categoryId)
     }
 
-    // *** NEW FUNCTION: Load all items ***
     fun loadAllItems(): LiveData<MutableList<ItemModel>> {
         return repository.loadAllItems()
     }
@@ -31,7 +30,6 @@ class MainViewModel : ViewModel() {
         return repository.deleteItem(itemId)
     }
 
-    // New function to update an item
     fun updateItem(item: ItemModel): LiveData<Boolean> {
         return repository.updateItem(item)
     }

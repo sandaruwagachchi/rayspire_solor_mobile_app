@@ -41,11 +41,11 @@ import com.google.firebase.database.ValueEventListener
 
 class IncomeFragment : Fragment() {
 
-    // View Binding for the fragment layout
+
     private var _binding: FragmentIncomeBinding? = null
     private val binding get() = _binding!!
 
-    // Firebase Database reference
+
     private lateinit var database: FirebaseDatabase
 
     // Date formatter for Firebase dates (e.g., "2025-07-16")
@@ -76,13 +76,19 @@ class IncomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment using View Binding
+
         _binding = FragmentIncomeBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        // Initialize Firebase Database
+
         database = FirebaseDatabase.getInstance()
 
+
+        setupPieChart()
+        setupBarChart()
+
+
+        fetchTotalCustomers()
         // Fetch product titles and prices first, then proceed with other data fetching
         fetchProductDataAndInitialize()
 
@@ -106,8 +112,9 @@ class IncomeFragment : Fragment() {
             updateCategorySalesChart()
         }
 
-        // Handle back arrow click
+
         binding.backArrowIncome.setOnClickListener {
+
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
@@ -119,6 +126,10 @@ class IncomeFragment : Fragment() {
 
         return view
     }
+
+
+
+    private fun fetchTotalCustomers() {
 
     // --- Fetch Product Data (Titles and Prices) from Firebase ---
     private fun fetchProductDataAndInitialize() {
@@ -248,15 +259,24 @@ class IncomeFragment : Fragment() {
 
     // --- Fetch Total Customers from Firebase ---
     private fun fetchTotalCustomers() {
+
         val customersRef = database.getReference("Customers")
 
         customersRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+
                 val totalCustomers = snapshot.childrenCount
+
+
+                val totalCustomers = snapshot.childrenCount
+
                 binding.totalCustomersValue.text = totalCustomers.toString()
             }
 
             override fun onCancelled(error: DatabaseError) {
+
+                binding.totalCustomersValue.text = "Error" // Or handle more gracefully
+
                 binding.totalCustomersValue.text = "Error"
                 Log.e("IncomeFragment", "Failed to load customers: ${error.message}")
             }
@@ -407,6 +427,13 @@ class IncomeFragment : Fragment() {
         pieChart.setEntryLabelColor(Color.WHITE)
         pieChart.setEntryLabelTextSize(12f)
 
+
+
+        val entries: ArrayList<PieEntry> = ArrayList()
+        entries.add(PieEntry(70f, "Solar panel"))
+        entries.add(PieEntry(20f, "Lithium Battery"))
+        entries.add(PieEntry(10f, "Inverters"))
+
         // No need to call updateCategorySalesChart() here, it's called after product data is fetched
     }
 
@@ -421,6 +448,11 @@ class IncomeFragment : Fragment() {
         dataSet.selectionShift = 5f
 
         val colors: ArrayList<Int> = ArrayList()
+
+        colors.add(Color.parseColor("#FFC107"))
+        colors.add(Color.parseColor("#2196F3"))
+        colors.add(Color.parseColor("#4CAF50"))
+
         // Define colors for your categories in the order you expect them or map them explicitly
         // Make sure these colors align with your XML legend colors
         val solarPanelColor = Color.parseColor("#FFC107")
@@ -457,6 +489,19 @@ class IncomeFragment : Fragment() {
         pieChart.highlightValues(null)
         pieChart.invalidate()
     }
+
+
+    // --- Bar Chart Setup ---
+    private fun setupBarChart() {
+        val barChart = binding.monthlyBarChart
+
+
+        val barEntriesList: ArrayList<BarEntry> = ArrayList()
+        barEntriesList.add(BarEntry(1f, 100f)) // Jan
+        barEntriesList.add(BarEntry(2f, 250f)) // Feb
+        barEntriesList.add(BarEntry(3f, 150f)) // Mar
+        barEntriesList.add(BarEntry(4f, 300f)) // Apr
+        barEntriesList.add(BarEntry(5f, 200f)) // May
 
     // --- Fetch Monthly Sales Data for Bar Chart from Firebase ---
     private fun fetchMonthlySalesDataForBarChart() {
@@ -522,6 +567,7 @@ class IncomeFragment : Fragment() {
     private fun setupBarChartWithData(barEntriesList: ArrayList<BarEntry>, monthLabels: ArrayList<String>) {
         val barChart = binding.monthlyBarChart
 
+
         // If no data, display a message or clear the chart
         if (barEntriesList.isEmpty()) {
             barChart.setNoDataText("No monthly sales data available.")
@@ -535,6 +581,14 @@ class IncomeFragment : Fragment() {
         barChart.data = barData
 
         barDataSet.valueTextColor = Color.BLACK
+
+        barDataSet.setColor(requireContext().getColor(R.color.purple_200))
+        barDataSet.valueTextSize = 16f
+        barChart.description.isEnabled = false
+
+
+        barChart.invalidate()
+
         barDataSet.setColor(requireContext().getColor(R.color.purple_200)) // Ensure R.color.purple_200 is defined
         barDataSet.valueTextSize = 12f // Reduced text size for better fit
         barData.barWidth = 0.5f // Adjust bar width
@@ -565,9 +619,10 @@ class IncomeFragment : Fragment() {
         barChart.axisRight.isEnabled = false
 
         barChart.invalidate() // Refresh the chart
+
     }
 
-    // Clean up the binding in onDestroyView() to prevent memory leaks.
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

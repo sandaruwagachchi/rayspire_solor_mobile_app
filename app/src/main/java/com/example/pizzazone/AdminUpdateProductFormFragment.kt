@@ -15,7 +15,7 @@ import com.example.pizzazone.Domain.CategoryModel
 import com.example.pizzazone.Domain.ItemModel
 import com.example.pizzazone.ViewModel.MainViewModel
 import com.example.pizzazone.databinding.FragmentAdminUpdateProductFormBinding
-import com.bumptech.glide.Glide // Import Glide if you're using it
+import com.bumptech.glide.Glide
 
 class AdminUpdateProductFormFragment : Fragment() {
 
@@ -53,12 +53,12 @@ class AdminUpdateProductFormFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d("FORM_DEBUG", "onViewCreated called. Checking ViewModel state.")
 
-        // Make sure these views exist in your XML:
+
         binding.headerLayout.visibility = View.VISIBLE
         binding.headerSeparator.visibility = View.VISIBLE
         binding.textView3.text = getString(R.string.update_product)
 
-        // Call the setup functions (ensure they are defined below within the class)
+
         setupFormFields()
         setupCategorySpinner()
         setupClickListeners()
@@ -66,18 +66,18 @@ class AdminUpdateProductFormFragment : Fragment() {
 
     private fun setupFormFields() {
         itemToUpdate?.let { item ->
-            binding.editTextTitle.setText(item.title) // Corrected: Should be editTextTitle now
+            binding.editTextTitle.setText(item.title)
             binding.editTextDescription.setText(item.description)
             binding.editTextPrice.setText(item.price.toString())
 
-            // Load image using Glide
+
             if (item.picUrl.isNotEmpty()) {
                 Glide.with(this)
-                    .load(item.picUrl[0]) // Access the first element of the ArrayList
-                    .into(binding.imageViewProduct) // Corrected: Should be imageViewProduct now
+                    .load(item.picUrl[0])
+                    .into(binding.imageViewProduct)
             } else {
-                // Set a placeholder image if picUrl is empty
-                binding.imageViewProduct.setImageResource(R.drawable.placeholder_image) // Make sure you have this drawable
+
+                binding.imageViewProduct.setImageResource(R.drawable.placeholder_image)
             }
         } ?: run {
             Toast.makeText(requireContext(), "Error: Product data not found.", Toast.LENGTH_SHORT).show()
@@ -89,7 +89,7 @@ class AdminUpdateProductFormFragment : Fragment() {
             categories = categoryList
 
             val categoryNames = categoryList.map { it.title ?: "Unknown" }.toMutableList()
-            categoryNames.add(0, "Select Category") // Add a default option
+            categoryNames.add(0, "Select Category")
 
             val spinnerAdapter = ArrayAdapter(
                 requireContext(),
@@ -99,11 +99,11 @@ class AdminUpdateProductFormFragment : Fragment() {
             spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.categorySpinner.adapter = spinnerAdapter
 
-            // Select the item's current category in the spinner
+
             itemToUpdate?.categoryId?.let { currentCatId ->
                 val index = categories.indexOfFirst { it.id.toString() == currentCatId }
                 if (index != -1) {
-                    binding.categorySpinner.setSelection(index + 1) // +1 because of "Select Category"
+                    binding.categorySpinner.setSelection(index + 1)
                 }
             }
 
@@ -124,7 +124,7 @@ class AdminUpdateProductFormFragment : Fragment() {
     }
 
     private fun setupClickListeners() {
-        binding.buttonUpdateProduct.setOnClickListener { // Corrected: Should be buttonUpdateProduct now
+        binding.buttonUpdateProduct.setOnClickListener {
             updateProduct()
         }
 
@@ -134,7 +134,7 @@ class AdminUpdateProductFormFragment : Fragment() {
     }
 
     private fun updateProduct() {
-        val title = binding.editTextTitle.text.toString().trim() // Corrected: Should be editTextTitle now
+        val title = binding.editTextTitle.text.toString().trim()
         val description = binding.editTextDescription.text.toString().trim()
         val priceString = binding.editTextPrice.text.toString().trim()
 
@@ -149,33 +149,28 @@ class AdminUpdateProductFormFragment : Fragment() {
             return
         }
 
-        // Ensure itemToUpdate is not null and has an ID
         itemToUpdate?.id?.let { itemId ->
             val updatedItem = ItemModel(
-                id = itemId, // Keep the original ID
+                id = itemId,
                 title = title,
                 description = description,
                 price = price,
                 categoryId = selectedCategoryId!!,
-                picUrl = itemToUpdate?.picUrl ?: arrayListOf() // Keep original picUrl for now, or add logic for new image upload
+                picUrl = itemToUpdate?.picUrl ?: arrayListOf()
             )
 
             viewModel.updateItem(updatedItem).observe(viewLifecycleOwner) { success ->
                 if (success) {
                     Toast.makeText(requireContext(), "Product updated successfully!", Toast.LENGTH_SHORT).show()
 
-                    // --- START MODIFICATION ---
-                    // Replace YourTargetActivity::class.java with the actual Activity you want to navigate to.
-                    // For example, if you want to go back to the Admin Main Activity:
+
                     val intent = Intent(requireActivity(), AdminHomeScreenActivity::class.java)
 
-                    // Optional: Clear the back stack so the user can't go back to the update form
-                    // This is often desired after a successful form submission.
+
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
 
                     startActivity(intent)
-                    requireActivity().finish() // Finish the current hosting Activity if you don't want to keep it in the stack
-                    // --- END MODIFICATION ---
+                    requireActivity().finish()
                 } else {
                     Toast.makeText(requireContext(), "Failed to update product.", Toast.LENGTH_SHORT).show()
                 }

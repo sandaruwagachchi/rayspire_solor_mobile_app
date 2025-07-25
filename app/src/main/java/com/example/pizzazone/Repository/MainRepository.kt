@@ -11,7 +11,6 @@ class MainRepository {
 
     private val db = FirebaseDatabase.getInstance().reference
 
-    // ... (existing loadCategory, loadPopular, loadItemCategory functions) ...
 
     fun loadCategory(): LiveData<MutableList<CategoryModel>> {
         val data = MutableLiveData<MutableList<CategoryModel>>()
@@ -30,7 +29,7 @@ class MainRepository {
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("FIREBASE_CATEGORY", "Error loading categories", error.toException())
-                data.value = mutableListOf() // return empty list on error
+                data.value = mutableListOf()
             }
         })
         return data
@@ -44,7 +43,7 @@ class MainRepository {
                 for (c in snapshot.children) {
                     val item = c.getValue(ItemModel::class.java)
                     item?.let {
-                        it.id = c.key ?: "" // Set the ItemModel's ID to the Firebase database key
+                        it.id = c.key ?: ""
                         list.add(it)
                     }
                 }
@@ -68,7 +67,7 @@ class MainRepository {
                 for (c in snapshot.children) {
                     val item = c.getValue(ItemModel::class.java)
                     item?.let {
-                        it.id = c.key ?: "" // Set the ItemModel's ID to the Firebase database key
+                        it.id = c.key ?: ""
                         list.add(it)
                     }
                 }
@@ -83,7 +82,7 @@ class MainRepository {
         return itemsLiveData
     }
 
-    // *** NEW FUNCTION: Load all items ***
+
     fun loadAllItems(): LiveData<MutableList<ItemModel>> {
         val allItemsLiveData = MutableLiveData<MutableList<ItemModel>>()
         db.child("Items").addValueEventListener(object : ValueEventListener {
@@ -92,7 +91,7 @@ class MainRepository {
                 for (c in snapshot.children) {
                     val item = c.getValue(ItemModel::class.java)
                     item?.let {
-                        it.id = c.key ?: "" // Set the ItemModel's ID to the Firebase database key
+                        it.id = c.key ?: ""
                         list.add(it)
                     }
                 }
@@ -122,7 +121,7 @@ class MainRepository {
         return result
     }
 
-    // New function to update an item
+
     fun updateItem(item: ItemModel): LiveData<Boolean> {
         val result = MutableLiveData<Boolean>()
         if (item.id.isNullOrEmpty()) {
@@ -131,21 +130,18 @@ class MainRepository {
             return result
         }
 
-        // Convert ItemModel to a Map for partial updates
-        // This is good if you only want to update specific fields,
-        // but for full model update, just setting value might be simpler.
-        // If you are pushing the entire object, ensure all fields are correctly set.
+
         val itemMap = mapOf(
             "title" to item.title,
             "description" to item.description,
             "picUrl" to item.picUrl,
             "price" to item.price,
-            "rating" to item.rating, // Keep rating, or remove if not updated
-            "numberInCart" to item.numberInCart, // Keep, or remove if not updated
+            "rating" to item.rating,
+            "numberInCart" to item.numberInCart,
             "categoryId" to item.categoryId
         )
 
-        db.child("Items").child(item.id!!).updateChildren(itemMap) // Use updateChildren for partial updates
+        db.child("Items").child(item.id!!).updateChildren(itemMap)
             .addOnSuccessListener {
                 Log.d("FIREBASE_UPDATE", "Item ${item.id} updated successfully.")
                 result.value = true

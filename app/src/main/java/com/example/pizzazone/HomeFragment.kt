@@ -28,16 +28,16 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var popularAdapter: PopularAdapter
-    private lateinit var suggestionAdapter: SuggestionAdapter // Declare suggestion adapter
+    private lateinit var suggestionAdapter: SuggestionAdapter
 
-    private var allItems: List<ItemModel> = emptyList() // To store all items from Firebase
+    private var allItems: List<ItemModel> = emptyList()
     private var originalPopularItems: MutableList<ItemModel> = mutableListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
-        // Setup category RecyclerView (horizontal)
+
         categoryAdapter = CategoryAdapter(mutableListOf())
         binding.recycleView.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -48,7 +48,6 @@ class HomeFragment : Fragment() {
             binding.recycleView.adapter = categoryAdapter
         }
 
-        // Setup popular items RecyclerView (grid)
         popularAdapter = PopularAdapter(mutableListOf())
         binding.recycleView2.apply {
             layoutManager = GridLayoutManager(context, 2) // Set span count to 2
@@ -60,19 +59,16 @@ class HomeFragment : Fragment() {
             popularAdapter.updateItems(popList)
         }
 
-        // *** NEW: Load all items for search suggestions ***
         viewModel.loadAllItems().observe(viewLifecycleOwner) { items ->
             allItems = items // Store all items
         }
 
-        // Setup search suggestion RecyclerView
+
         suggestionAdapter = SuggestionAdapter(emptyList()) { item ->
-            // Handle click on a suggestion: navigate to item details
             val intent = Intent(context, DetailsScreenActivity::class.java)
             intent.putExtra(DetailsScreenActivity.EXTRA_ITEM_OBJECT, item)
             startActivity(intent)
 
-            // Optional: Clear search bar and hide suggestions after clicking
             binding.editTextText3.text.clear()
             binding.suggestionsRecyclerView.visibility = View.GONE
         }
@@ -80,17 +76,17 @@ class HomeFragment : Fragment() {
         binding.suggestionsRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = suggestionAdapter
-            visibility = View.GONE // Start hidden
+            visibility = View.GONE
         }
 
-        // Search bar implementation for suggestions
+
         binding.editTextText3.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Not needed for this implementation
+
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Not needed for this implementation
+
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -99,19 +95,19 @@ class HomeFragment : Fragment() {
                     filterSuggestions(query)
                 } else {
                     binding.suggestionsRecyclerView.visibility = View.GONE
-                    // When search bar is empty, show popular items again if they were hidden
+
                     binding.recycleView2.visibility = View.VISIBLE
                     popularAdapter.updateItems(originalPopularItems)
                 }
             }
         })
 
-        // Add a focus change listener to hide suggestions when search bar loses focus
+
         binding.editTextText3.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             if (!hasFocus && binding.suggestionsRecyclerView.visibility == View.VISIBLE) {
-                // Delay hiding slightly to allow click event on suggestion to register
+
                 v.postDelayed({
-                    if (!v.isPressed) { // Check if not pressed (meaning a suggestion wasn't clicked)
+                    if (!v.isPressed) {
                         binding.suggestionsRecyclerView.visibility = View.GONE
                     }
                 }, 100)
@@ -130,12 +126,11 @@ class HomeFragment : Fragment() {
         if (filteredSuggestions.isNotEmpty()) {
             suggestionAdapter.updateSuggestions(filteredSuggestions)
             binding.suggestionsRecyclerView.visibility = View.VISIBLE
-            // Optional: Hide other RecyclerViews when suggestions are shown
-            binding.recycleView2.visibility = View.GONE // Hide popular items
+            binding.recycleView2.visibility = View.GONE
         } else {
             binding.suggestionsRecyclerView.visibility = View.GONE
-            binding.recycleView2.visibility = View.VISIBLE // Show popular items if no suggestions
-            popularAdapter.updateItems(originalPopularItems) // Reset popular items
+            binding.recycleView2.visibility = View.VISIBLE
+            popularAdapter.updateItems(originalPopularItems)
         }
     }
 

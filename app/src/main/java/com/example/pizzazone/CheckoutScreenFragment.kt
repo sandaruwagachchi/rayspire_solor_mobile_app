@@ -19,7 +19,6 @@ import java.util.*
 import android.util.Log // Import Log for debugging
 
 
-
 class CheckoutScreenFragment : Fragment() {
 
     override fun onCreateView(

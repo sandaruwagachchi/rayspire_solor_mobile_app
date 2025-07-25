@@ -15,6 +15,7 @@ class OrderListAdapter(
     private val orderList: ArrayList<OrderDetail>,
     private val itemLayoutResId: Int,
     private val orderStatusButtonClickListener: ((OrderDetail, Int) -> Unit)? = null
+
 ) : RecyclerView.Adapter<OrderListAdapter.OrderViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
