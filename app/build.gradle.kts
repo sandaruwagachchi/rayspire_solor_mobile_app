@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.firebase.storage.ktx.v2100)
 
     implementation(libs.litert.support.api)
+    implementation(libs.firebase.storage.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
