@@ -35,6 +35,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 # firebase-storage-ktx-v2100 = { module = "com.google.firebase:firebase-storage-ktx", version.ref = "firebaseStorageKtxVersion" } # REMOVED
 
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+google-firebase-auth = { module = "com.google.firebase:firebase-auth" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
