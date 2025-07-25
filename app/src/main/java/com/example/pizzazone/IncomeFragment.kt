@@ -41,10 +41,8 @@ import com.google.firebase.database.ValueEventListener
 
 class IncomeFragment : Fragment() {
 
-
     private var _binding: FragmentIncomeBinding? = null
     private val binding get() = _binding!!
-
 
     private lateinit var database: FirebaseDatabase
 
@@ -53,14 +51,10 @@ class IncomeFragment : Fragment() {
     // Month formatter for displaying month names on the Bar Chart X-axis
     private val monthFormatter = SimpleDateFormat("MMM", Locale.getDefault())
 
-
     // To keep track of the currently selected date for pie chart filtering
     private var selectedDateForPieChart: String = ""
 
-    // Dynamic product titles for mapping categories
-    private val productTitles = mutableListOf<String>()
-
-    // Map to store product name to its price
+    // Map to store product name to its price (populated from "Products" node)
     private val productPrices = mutableMapOf<String, Double>()
 
     // Define all possible categories that you want in your legend
@@ -76,24 +70,16 @@ class IncomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentIncomeBinding.inflate(inflater, container, false)
         val view = binding.root
 
-
         database = FirebaseDatabase.getInstance()
-
-
-        setupPieChart()
-        setupBarChart()
-
-
-        fetchTotalCustomers()
-        // Fetch product titles and prices first, then proceed with other data fetching
-        fetchProductDataAndInitialize()
 
         // Initialize selectedDateForPieChart to today's date
         selectedDateForPieChart = dateFormatter.format(Calendar.getInstance().time)
+
+        // Fetch product data first, then initialize charts and other data fetches
+        fetchProductDataAndInitialize()
 
         // Set up CalendarView listener
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
@@ -112,9 +98,7 @@ class IncomeFragment : Fragment() {
             updateCategorySalesChart()
         }
 
-
         binding.backArrowIncome.setOnClickListener {
-
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
@@ -122,60 +106,53 @@ class IncomeFragment : Fragment() {
         binding.orderHistoryButton.setOnClickListener {
             Log.d("IncomeFragment", "Order History Button Clicked!")
             // Implement navigation to Order History Fragment/Activity here
+            // Example: findNavController().navigate(R.id.action_incomeFragment_to_orderHistoryFragment)
         }
 
         return view
     }
 
-
-
-    private fun fetchTotalCustomers() {
-
     // --- Fetch Product Data (Titles and Prices) from Firebase ---
     private fun fetchProductDataAndInitialize() {
-        val productsRef = database.getReference("Products") // Your 'Products' node
+        val productsRef = database.getReference("Products")
 
         productsRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                productTitles.clear() // Clear previous data
                 productPrices.clear() // Clear previous data
 
                 for (productSnapshot in snapshot.children) {
                     val title = productSnapshot.child("title").getValue(String::class.java)
-                    // Assuming you have a 'price' field in your Products node
                     val price = productSnapshot.child("price").getValue(Double::class.java) ?: 0.0
 
                     if (title != null) {
-                        productTitles.add(title)
                         productPrices[title] = price // Store price with title
                     }
                 }
-                Log.d("IncomeFragment", "Fetched Product Titles: $productTitles")
                 Log.d("IncomeFragment", "Fetched Product Prices: $productPrices")
 
                 // After fetching products, proceed with setting up charts and other data
-                setupPieChart()
-                // Call fetchMonthlySalesDataForBarChart here to populate the bar chart with real data
-                fetchMonthlySalesDataForBarChart()
-                fetchTotalCustomers()
-                fetchSalesData()
-                fetchSelectedDateIncome(selectedDateForPieChart)
+                setupPieChart() // Setup pie chart config
+                setupBarChart() // Setup bar chart config
+                fetchMonthlySalesDataForBarChart() // Populate bar chart
+                fetchTotalCustomers() // Populate total customers
+                fetchSalesData() // Populate today's and monthly sales
+                fetchSelectedDateIncome(selectedDateForPieChart) // Populate selected date income
                 updateCategorySalesChart() // Initial update for pie chart based on today's date
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("IncomeFragment", "Failed to load product data: ${error.message}")
-                // Handle error: maybe show a message or use default empty data
+                // Handle error: show a message or use default empty data
                 setupPieChart() // Setup with empty/dummy data if fetching fails
                 setupBarChartWithData(ArrayList(), ArrayList()) // Setup bar chart with empty data
-                fetchTotalCustomers()
-                fetchSalesData()
-                fetchSelectedDateIncome(selectedDateForPieChart)
+                binding.todaySalesValue.text = "Error"
+                binding.monthlySalesValue.text = "Error"
+                binding.selectedDateIncomeValue.text = "Error"
+                binding.totalCustomersValue.text = "Error"
                 updateCategorySalesChart() // Try to update chart even on error, might show "No Sales Data"
             }
         })
     }
-
 
     // --- Fetch Sales Data (Today's and Monthly) from Firebase ---
     private fun fetchSalesData() {
@@ -259,24 +236,15 @@ class IncomeFragment : Fragment() {
 
     // --- Fetch Total Customers from Firebase ---
     private fun fetchTotalCustomers() {
-
         val customersRef = database.getReference("Customers")
 
         customersRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-
                 val totalCustomers = snapshot.childrenCount
-
-
-                val totalCustomers = snapshot.childrenCount
-
                 binding.totalCustomersValue.text = totalCustomers.toString()
             }
 
             override fun onCancelled(error: DatabaseError) {
-
-                binding.totalCustomersValue.text = "Error" // Or handle more gracefully
-
                 binding.totalCustomersValue.text = "Error"
                 Log.e("IncomeFragment", "Failed to load customers: ${error.message}")
             }
@@ -338,15 +306,13 @@ class IncomeFragment : Fragment() {
                 }
 
                 val entries: ArrayList<PieEntry> = ArrayList()
-                var totalSalesForPieChart = 0f
 
                 // Iterate through all defined display categories to ensure they are represented
+                // Only add to entries if sales are greater than 0, as MikePhilChart doesn't draw 0-value slices
                 for (category in allDisplayCategories) {
                     val sales = categorySales.getOrDefault(category, 0f)
-                    // Add to entries only if sales are greater than 0, as MikePhilChart doesn't draw 0-value slices
                     if (sales > 0) {
                         entries.add(PieEntry(sales, category))
-                        totalSalesForPieChart += sales
                     }
                 }
 
@@ -382,7 +348,6 @@ class IncomeFragment : Fragment() {
         }
     }
 
-
     // Helper function to get unit price of an item
     private fun getItemUnitPrice(itemName: String): Double {
         // Try to get price from the productPrices map which is fetched from Firebase
@@ -398,11 +363,10 @@ class IncomeFragment : Fragment() {
             itemName.contains("Solar Panel", ignoreCase = true) -> 150.0
             itemName.contains("Lithium Battery", ignoreCase = true) -> 100.0
             itemName.contains("Inverter", ignoreCase = true) -> 200.0
-            // Add specific dummy prices for other common categories if productPrices is not reliable
+            itemName.contains("Solar Panel System", ignoreCase = true) -> 500.0 // Add dummy for system too
             else -> 50.0 // Default dummy price for 'Others'
         }
     }
-
 
     // --- Pie Chart Setup (basic configuration) ---
     private fun setupPieChart() {
@@ -426,15 +390,7 @@ class IncomeFragment : Fragment() {
         pieChart.legend.isEnabled = false // Disable built-in legend as you have a custom one in XML
         pieChart.setEntryLabelColor(Color.WHITE)
         pieChart.setEntryLabelTextSize(12f)
-
-
-
-        val entries: ArrayList<PieEntry> = ArrayList()
-        entries.add(PieEntry(70f, "Solar panel"))
-        entries.add(PieEntry(20f, "Lithium Battery"))
-        entries.add(PieEntry(10f, "Inverters"))
-
-        // No need to call updateCategorySalesChart() here, it's called after product data is fetched
+        // No initial dummy data here, it will be populated by updateCategorySalesChart()
     }
 
     // This function actually sets the data to the pie chart
@@ -447,19 +403,13 @@ class IncomeFragment : Fragment() {
         dataSet.iconsOffset = MPPointF(0f, 40f)
         dataSet.selectionShift = 5f
 
-        val colors: ArrayList<Int> = ArrayList()
-
-        colors.add(Color.parseColor("#FFC107"))
-        colors.add(Color.parseColor("#2196F3"))
-        colors.add(Color.parseColor("#4CAF50"))
-
         // Define colors for your categories in the order you expect them or map them explicitly
         // Make sure these colors align with your XML legend colors
-        val solarPanelColor = Color.parseColor("#FFC107")
-        val lithiumBatteryColor = Color.parseColor("#2196F3")
-        val invertersColor = Color.parseColor("#4CAF50")
-        val othersColor = Color.parseColor("#9C27B0")
-        val solarPanelSystemColor = Color.parseColor("#673AB7")
+        val solarPanelColor = Color.parseColor("#FFC107") // Orange
+        val lithiumBatteryColor = Color.parseColor("#2196F3") // Blue
+        val invertersColor = Color.parseColor("#4CAF50") // Green
+        val othersColor = Color.parseColor("#9C27B0") // Purple
+        val solarPanelSystemColor = Color.parseColor("#673AB7") // Deep Purple
         val noSalesColor = Color.GRAY // A distinct color for "No Sales Data"
 
         // Map colors to categories for consistency
@@ -490,18 +440,43 @@ class IncomeFragment : Fragment() {
         pieChart.invalidate()
     }
 
-
-    // --- Bar Chart Setup ---
+    // --- Bar Chart Setup (basic configuration) ---
     private fun setupBarChart() {
         val barChart = binding.monthlyBarChart
 
+        barChart.description.isEnabled = false
+        barChart.setDrawGridBackground(false)
+        barChart.setDrawBarShadow(false)
+        barChart.setPinchZoom(false)
+        barChart.setDrawValueAboveBar(true) // Values above bars
+        barChart.setTouchEnabled(true)
+        barChart.isDragEnabled = true
+        barChart.setScaleEnabled(true)
 
-        val barEntriesList: ArrayList<BarEntry> = ArrayList()
-        barEntriesList.add(BarEntry(1f, 100f)) // Jan
-        barEntriesList.add(BarEntry(2f, 250f)) // Feb
-        barEntriesList.add(BarEntry(3f, 150f)) // Mar
-        barEntriesList.add(BarEntry(4f, 300f)) // Apr
-        barEntriesList.add(BarEntry(5f, 200f)) // May
+        // Customize X-axis
+        val xAxis: XAxis = barChart.xAxis
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setDrawGridLines(false)
+        xAxis.granularity = 1f
+        xAxis.setCenterAxisLabels(true)
+        xAxis.setLabelCount(12, false) // Max 12 months, do not force exactly 12 if less data
+        xAxis.textColor = Color.BLACK
+        xAxis.textSize = 10f
+
+        // Customize Y-axis (left)
+        val leftAxis: YAxis = barChart.axisLeft
+        leftAxis.setDrawGridLines(true)
+        leftAxis.setAxisMinimum(0f)
+        leftAxis.textColor = Color.BLACK
+        leftAxis.textSize = 10f
+
+        // Disable right Y-axis
+        barChart.axisRight.isEnabled = false
+
+        barChart.legend.isEnabled = false // Disable built-in legend
+
+        // No initial dummy data here, it will be populated by fetchMonthlySalesDataForBarChart()
+    }
 
     // --- Fetch Monthly Sales Data for Bar Chart from Firebase ---
     private fun fetchMonthlySalesDataForBarChart() {
@@ -530,25 +505,16 @@ class IncomeFragment : Fragment() {
                 }
 
                 // Sort the months to ensure correct order on the chart
-                val sortedMonthKeys = monthlySalesMap.keys.toList().sorted()
-
+                // And generate labels for the last 6-12 months, even if no sales
+                val allMonthsInChartRange = getMonthsForBarChart()
                 val barEntriesList: ArrayList<BarEntry> = ArrayList()
                 val monthLabels: ArrayList<String> = ArrayList()
 
-                // Prepare entries and labels for the chart
-                for ((index, monthKey) in sortedMonthKeys.withIndex()) {
+                for ((index, monthDate) in allMonthsInChartRange.withIndex()) {
+                    val monthKey = SimpleDateFormat("yyyy-MM", Locale.getDefault()).format(monthDate)
                     val sales = monthlySalesMap[monthKey] ?: 0f
-                    // Use index + 1 as x-value for BarEntry
                     barEntriesList.add(BarEntry(index.toFloat(), sales))
-
-                    // Extract month name (e.g., "Jan", "Feb") from "YYYY-MM"
-                    try {
-                        val dateForMonth = SimpleDateFormat("yyyy-MM", Locale.getDefault()).parse(monthKey)
-                        monthLabels.add(monthFormatter.format(dateForMonth!!))
-                    } catch (e: ParseException) {
-                        Log.e("IncomeFragment", "Error parsing month key for label: $monthKey", e)
-                        monthLabels.add("N/A") // Fallback
-                    }
+                    monthLabels.add(monthFormatter.format(monthDate))
                 }
 
                 // Pass the prepared data to the setup function
@@ -562,39 +528,44 @@ class IncomeFragment : Fragment() {
         })
     }
 
+    // Helper to generate month labels for the last 6-12 months for consistent bar chart x-axis
+    private fun getMonthsForBarChart(): List<Date> {
+        val months = mutableListOf<Date>()
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.DAY_OF_MONTH, 1) // Set to 1st of month to avoid issues with date calculations
 
-    // --- Bar Chart Setup (with dynamic data) ---
+        // Get data for the last 6 months (adjust as needed, e.g., 12 for a full year)
+        for (i in 0 until 6) { // You can change 6 to 12 for a full year
+            months.add(0, calendar.time) // Add to the beginning to keep chronological order
+            calendar.add(Calendar.MONTH, -1) // Move to previous month
+        }
+        return months
+    }
+
+
+    // This function actually sets the data to the bar chart
     private fun setupBarChartWithData(barEntriesList: ArrayList<BarEntry>, monthLabels: ArrayList<String>) {
         val barChart = binding.monthlyBarChart
-
 
         // If no data, display a message or clear the chart
         if (barEntriesList.isEmpty()) {
             barChart.setNoDataText("No monthly sales data available.")
+            barChart.data = null // Clear any existing data
             barChart.invalidate()
             return
         }
 
         val barDataSet = BarDataSet(barEntriesList, "Monthly Sales Data")
+        barDataSet.setColor(requireContext().getColor(R.color.purple_200)) // Ensure R.color.purple_200 is defined
+        barDataSet.valueTextColor = Color.BLACK
+        barDataSet.valueTextSize = 12f
+        barDataSet.setDrawValues(true) // Ensure values are drawn on top of bars
 
         val barData = BarData(barDataSet)
+        barData.barWidth = 0.5f // Adjust bar width for better spacing
+
         barChart.data = barData
-
-        barDataSet.valueTextColor = Color.BLACK
-
-        barDataSet.setColor(requireContext().getColor(R.color.purple_200))
-        barDataSet.valueTextSize = 16f
-        barChart.description.isEnabled = false
-
-
-        barChart.invalidate()
-
-        barDataSet.setColor(requireContext().getColor(R.color.purple_200)) // Ensure R.color.purple_200 is defined
-        barDataSet.valueTextSize = 12f // Reduced text size for better fit
-        barData.barWidth = 0.5f // Adjust bar width
-
-        barChart.description.isEnabled = false // Disable description label
-        barChart.animateY(1000) // Add animation for bar chart
+        barChart.animateY(1000, Easing.EaseInOutQuad) // Add animation for bar chart
 
         // Customize X-axis labels to show month names
         val xAxis: XAxis = barChart.xAxis
@@ -602,8 +573,9 @@ class IncomeFragment : Fragment() {
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.setDrawGridLines(false)
         xAxis.granularity = 1f // Set granularity to 1 to ensure all labels are displayed if enough space
-        xAxis.setCenterAxisLabels(true) // Center labels below bars
+        xAxis.setCenterAxisLabels(false) // Align labels to the start of the bar group
         xAxis.setLabelCount(monthLabels.size, false) // Ensure all labels are shown, if possible
+        xAxis.setAvoidFirstLastClipping(false) // Prevent labels from being cut off
 
         // Customize Y-axis (left) to show dollar values
         val leftAxis: YAxis = barChart.axisLeft
@@ -619,13 +591,10 @@ class IncomeFragment : Fragment() {
         barChart.axisRight.isEnabled = false
 
         barChart.invalidate() // Refresh the chart
-
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-    
 }
