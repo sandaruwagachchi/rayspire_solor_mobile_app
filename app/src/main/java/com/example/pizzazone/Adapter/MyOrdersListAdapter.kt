@@ -61,6 +61,7 @@ class OrderListAdapter(
                 holder.statusButton.text = "Done"
                 holder.statusButton.isEnabled = false
 
+
             } else {
                 holder.statusButton.text = "Order"
                 holder.statusButton.isEnabled = true
@@ -92,7 +93,7 @@ class OrderListAdapter(
             statusButton?.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    // Retrieve the OrderDetail object from the button's tag
+
                     val clickedOrder = it.tag as? OrderDetail
                     clickedOrder?.let { orderDetail ->
                         orderStatusButtonClickListener?.invoke(orderDetail, position)

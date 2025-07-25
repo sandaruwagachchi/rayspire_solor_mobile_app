@@ -143,12 +143,11 @@ class CheckoutScreenFragment : Fragment() {
             return
         }
 
-        // FIX STARTS HERE
-        // The CartItem now contains an ItemModel, so access its 'title'
+
         val orderItems = cartItems.map { cartItem ->
             OrderItem(itemName = cartItem.item.title, quantity = cartItem.quantity)
         }
-        // FIX ENDS HERE
+
 
         val totalAmount = subtotal + deliveryFees
 
