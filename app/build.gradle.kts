@@ -46,7 +46,6 @@ dependencies {
 
     implementation(platform(libs.firebase.bom))
 
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -54,14 +53,10 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
 
     implementation(libs.firebase.database)
-    implementation(libs.firebase.auth
+    implementation(libs.firebase.auth) // Fixed: Added closing parenthesis
     implementation(libs.firebase.firestore) // Using the non-KTX alias
     implementation(libs.firebase.storage)   // Using the non-KTX alias
-    implementation(libs.google.firebase.auth)
-    // Credentials and Google ID
-    implementation(libs.firebase.firestore)
-    implementation(libs.firebase.storage)
-
+    implementation(libs.google.firebase.auth) // This might be redundant if libs.firebase.auth is already included via BoM
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
@@ -77,7 +72,7 @@ dependencies {
     implementation(libs.gson)
 
     implementation(libs.mpandroidchart)
-
 }
+
 
 apply(plugin = "com.google.gms.google-services")
