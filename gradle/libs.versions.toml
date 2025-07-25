@@ -1,5 +1,5 @@
 [versions]
-agp = "8.10.1"
+agp = "8.11.1"
 # firebaseDatabaseVersion = "22.0.0" # REMOVED: Will be managed by Firebase BoM
 # firebaseFirestoreKtxVersion = "25.1.4" # REMOVED: KTX modules are deprecated/removed
 # firebaseStorageKtxVersion = "21.0.2" # REMOVED: KTX modules are deprecated/removed
