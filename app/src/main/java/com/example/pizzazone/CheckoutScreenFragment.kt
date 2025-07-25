@@ -18,9 +18,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.util.Log // Import Log for debugging
 
-// Remove the placeholder CartItem and PopularDomain if they are in this file,
-// as the actual CartManager object is now provided separately.
-// The actual CartItem and ItemModel are defined in the CartManager file.
+
 
 class CheckoutScreenFragment : Fragment() {
 
@@ -146,18 +144,17 @@ class CheckoutScreenFragment : Fragment() {
             return
         }
 
-        // FIX STARTS HERE
-        // The CartItem now contains an ItemModel, so access its 'title'
+
         val orderItems = cartItems.map { cartItem ->
             OrderItem(itemName = cartItem.item.title, quantity = cartItem.quantity)
         }
-        // FIX ENDS HERE
+
 
         val totalAmount = subtotal + deliveryFees
 
         val orderDetail = OrderDetail(
             orderId = orderId,
-            userId = currentUser.uid, // This is essential for linking the order to the user!
+            userId = currentUser.uid,
             date = date,
             time = time,
             fullName = fullName,
@@ -172,7 +169,7 @@ class CheckoutScreenFragment : Fragment() {
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Order Confirmed!", Toast.LENGTH_SHORT).show()
                 Log.d("CheckoutScreenFragment", "Order saved successfully for UID: ${currentUser.uid}, Order ID: $orderId")
-                CartManager.clearCart() // Clear the cart after successful order
+                CartManager.clearCart()
                 startActivity(Intent(requireActivity(), OrderConfirmActivity::class.java))
                 requireActivity().finish()
             }
