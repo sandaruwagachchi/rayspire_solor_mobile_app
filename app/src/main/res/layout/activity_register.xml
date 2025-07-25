@@ -80,7 +80,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/registerFormCard"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="900px"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginTop="24dp"
@@ -93,7 +93,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="1000px"
                     android:orientation="vertical"
                     android:padding="24dp">
 
