@@ -83,6 +83,31 @@ class MainRepository {
         return itemsLiveData
     }
 
+    // *** NEW FUNCTION: Load all items ***
+    fun loadAllItems(): LiveData<MutableList<ItemModel>> {
+        val allItemsLiveData = MutableLiveData<MutableList<ItemModel>>()
+        db.child("Items").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val list = mutableListOf<ItemModel>()
+                for (c in snapshot.children) {
+                    val item = c.getValue(ItemModel::class.java)
+                    item?.let {
+                        it.id = c.key ?: "" // Set the ItemModel's ID to the Firebase database key
+                        list.add(it)
+                    }
+                }
+                allItemsLiveData.value = list
+                Log.d("FIREBASE_ALL_ITEMS", "Loaded ${list.size} all items")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("FIREBASE_ALL_ITEMS", "Error loading all items", error.toException())
+                allItemsLiveData.value = mutableListOf()
+            }
+        })
+        return allItemsLiveData
+    }
+
     fun deleteItem(itemId: String): LiveData<Boolean> {
         val result = MutableLiveData<Boolean>()
         db.child("Items").child(itemId).removeValue()

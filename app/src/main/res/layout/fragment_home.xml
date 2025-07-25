@@ -7,6 +7,10 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,9 +45,22 @@
                         android:hint="@string/search_anything"
                         android:padding="10dp" />
                 </androidx.cardview.widget.CardView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/suggestionsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:background="@android:color/white"
+                    android:elevation="4dp"
+                    android:maxHeight="200dp"
+                    android:visibility="gone"
+                    tools:listitem="@layout/viewholder_suggestion"
+                    tools:visibility="visible" />
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/bannerCardView"
                 android:layout_width="match_parent"
                 android:layout_height="165dp"
                 android:layout_marginHorizontal="30dp"
@@ -110,5 +127,5 @@
                 android:nestedScrollingEnabled="false"
                 android:layout_marginHorizontal="12dp" />
         </LinearLayout>
-
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
