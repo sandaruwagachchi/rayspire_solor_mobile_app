@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
+
 }
 
 android {
@@ -58,7 +59,7 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore) // Using the non-KTX alias
     implementation(libs.firebase.storage)   // Using the non-KTX alias
-
+    implementation(libs.google.firebase.auth)
     // Credentials and Google ID
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)

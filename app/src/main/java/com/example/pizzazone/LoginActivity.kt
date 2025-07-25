@@ -25,6 +25,8 @@ class LoginActivity : AppCompatActivity() {
         val backArrow = findViewById<ImageView>(R.id.backArrow)
 
         buttonLogin.setOnClickListener {
+
+
             val email = editTextEmail.text.toString().trim()
             val password = editTextPassword.text.toString().trim()
 
