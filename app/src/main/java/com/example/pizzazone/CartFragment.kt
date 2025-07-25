@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView // Import ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,7 @@ class CartFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var cartAdapter: CartAdapter
     private lateinit var textSubprice: TextView
+    private lateinit var backArrow: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,21 +30,17 @@ class CartFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerViewCart)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-
         textSubprice = view.findViewById(R.id.textSubprice)
-
 
         cartAdapter = CartAdapter(mutableListOf()) {
             updateSubtotal()
         }
         recyclerView.adapter = cartAdapter
 
-
         CartManager.cartItems.observe(viewLifecycleOwner) { items ->
             cartAdapter.updateCartItems(items)
             updateSubtotal()
         }
-
 
         val buttonCheck = view.findViewById<Button>(R.id.buttonCheckout)
         buttonCheck.setOnClickListener {
@@ -54,6 +52,10 @@ class CartFragment : Fragment() {
         }
 
 
+        backArrow = view.findViewById(R.id.backArrow)
+        backArrow.setOnClickListener {
+            val intent = Intent(requireContext(), HomeScreenActivity::class.java)
+        }
         return view
     }
 

@@ -93,9 +93,6 @@ class ProfileFragment : Fragment() {
         cameraIcon = view.findViewById(R.id.cameraIcon)
 
 
-        backArrow.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
-        }
 
         logoutButton.setOnClickListener {
             auth.signOut()
