@@ -29,59 +29,57 @@ import com.google.firebase.database.ValueEventListener
 
 class IncomeFragment : Fragment() {
 
-    // View Binding for the fragment layout
+
     private var _binding: FragmentIncomeBinding? = null
     private val binding get() = _binding!!
 
-    // Firebase Database reference
+
     private lateinit var database: FirebaseDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment using View Binding
+
         _binding = FragmentIncomeBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        // Initialize Firebase Database
+
         database = FirebaseDatabase.getInstance()
 
-        // Setup both charts after the view is inflated
+
         setupPieChart()
         setupBarChart()
 
-        // --- Fetch and display total customers ---
+
         fetchTotalCustomers()
 
-        // Handle back arrow click
+
         binding.backArrowIncome.setOnClickListener {
-            // Handle back button click, e.g., navigate back
+
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
         return view
     }
 
-    // --- Fetch Total Customers from Firebase ---
+
     private fun fetchTotalCustomers() {
-        // Reference to the "Customers" node in your Firebase Realtime Database
+
         val customersRef = database.getReference("Customers")
 
         customersRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                // Get the count of children under the "Customers" node
+
                 val totalCustomers = snapshot.childrenCount
 
-                // Update the TextView with the total customer count
                 binding.totalCustomersValue.text = totalCustomers.toString()
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle any errors that occur during data retrieval
-                // You might want to log the error or show a message to the user
+
                 binding.totalCustomersValue.text = "Error" // Or handle more gracefully
-                // Log.e("IncomeFragment", "Failed to load customers: ${error.message}")
+
             }
         })
     }
@@ -109,7 +107,7 @@ class IncomeFragment : Fragment() {
         pieChart.setEntryLabelColor(Color.WHITE)
         pieChart.setEntryLabelTextSize(12f)
 
-        // Dummy data for Pie Chart. Replace with real data from Firebase as needed.
+
         val entries: ArrayList<PieEntry> = ArrayList()
         entries.add(PieEntry(70f, "Solar panel"))
         entries.add(PieEntry(20f, "Lithium Battery"))
@@ -122,10 +120,9 @@ class IncomeFragment : Fragment() {
         dataSet.selectionShift = 5f
 
         val colors: ArrayList<Int> = ArrayList()
-        // Make sure these colors match your XML color definitions for the legend
-        colors.add(Color.parseColor("#FFC107")) // Solar panel color
-        colors.add(Color.parseColor("#2196F3")) // Lithium Battery color
-        colors.add(Color.parseColor("#4CAF50")) // Inverters color
+        colors.add(Color.parseColor("#FFC107"))
+        colors.add(Color.parseColor("#2196F3"))
+        colors.add(Color.parseColor("#4CAF50"))
 
         dataSet.colors = colors
 
@@ -142,9 +139,9 @@ class IncomeFragment : Fragment() {
 
     // --- Bar Chart Setup ---
     private fun setupBarChart() {
-        val barChart = binding.monthlyBarChart // Access the BarChart via binding
+        val barChart = binding.monthlyBarChart
 
-        // Dummy data for Bar Chart. Replace with real data from Firebase as needed.
+
         val barEntriesList: ArrayList<BarEntry> = ArrayList()
         barEntriesList.add(BarEntry(1f, 100f)) // Jan
         barEntriesList.add(BarEntry(2f, 250f)) // Feb
@@ -159,15 +156,15 @@ class IncomeFragment : Fragment() {
         barChart.data = barData
 
         barDataSet.valueTextColor = Color.BLACK
-        barDataSet.setColor(requireContext().getColor(R.color.purple_200)) // Ensure R.color.purple_200 is defined
+        barDataSet.setColor(requireContext().getColor(R.color.purple_200))
         barDataSet.valueTextSize = 16f
         barChart.description.isEnabled = false
 
-        // Invalidate chart to refresh
+
         barChart.invalidate()
     }
 
-    // Clean up the binding in onDestroyView() to prevent memory leaks.
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -35,9 +35,8 @@ class AdminViewAndUpdateFragment : Fragment() {
         setupSpinner()
         setupClickListeners()
 
-        // *** IMPORTANT ADDITION: Load default items immediately ***
-        // This will display popular items when the fragment first loads.
-        loadDefaultItems() // Call this new function
+
+        loadDefaultItems()
 
         return binding.root
     }
@@ -107,7 +106,6 @@ class AdminViewAndUpdateFragment : Fragment() {
         adminViewProductAdapter.updateItems(items)
     }
 
-    // *** NEW FUNCTION: To load popular items by default ***
     private fun loadDefaultItems() {
         viewModel.loadPopular().observe(viewLifecycleOwner) { popList ->
             updateProductList(popList.toMutableList())
@@ -126,12 +124,10 @@ class AdminViewAndUpdateFragment : Fragment() {
             .commit()
     }
 
-    // Refresh the list when returning from the details/update screen
+
     override fun onResume() {
         super.onResume()
-        // Ensure that when you come back, the list is still populated based on the last state
-        // or just reload popular by default for simplicity if the spinner state is complex to manage.
-        reloadCurrentCategoryItems() // This function already handles re-loading based on spinner or popular
+        reloadCurrentCategoryItems()
     }
 
     private fun reloadCurrentCategoryItems() {
@@ -144,7 +140,6 @@ class AdminViewAndUpdateFragment : Fragment() {
                 }
             }
         } else {
-            // If "Select Category" is chosen or no category was previously selected, load popular items
             loadDefaultItems()
         }
     }

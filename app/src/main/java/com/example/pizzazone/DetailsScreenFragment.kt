@@ -50,33 +50,29 @@ class DetailsScreenFragment : Fragment() {
                 binding.imageProduct.setImageResource(R.drawable.placeholder_image)
             }
 
-            // *** MODIFIED ADD TO CART BUTTON LISTENER ***
+
             binding.buttondetails.setOnClickListener {
-                // 1. Add the current item to the cart using CartManager
+
                 CartManager.addItemToCart(item)
 
-                // 2. Navigate to the CartFragment via the BottomNavigationView
-                // This assumes DetailsScreenActivity hosts the BottomNavigationView.
-                // It's good practice to ensure the activity is of the correct type.
+
                 (activity as? HomeScreenActivity)?.let { homeScreenActivity ->
                     homeScreenActivity.findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)?.selectedItemId = R.id.nav_cart
                 }
 
-                // Optionally, if you want to close the DetailsScreenActivity after adding to cart
                  requireActivity().finish()
             }
 
         } ?: run {
-            // Handle case where itemModel is null (e.g., show an error message)
+
             binding.textProductName.text = "Error: Product details not found."
-            // Hide other UI elements if they depend on itemModel
             binding.textProductDescription.visibility = View.GONE
             binding.textProductPrice.visibility = View.GONE
             binding.imageProduct.visibility = View.GONE
             binding.buttondetails.visibility = View.GONE
             binding.textDelivery.visibility = View.GONE
-            binding.detailsTitle.visibility = View.GONE // If you want to hide this as well
-            binding.scrollDescription.visibility = View.GONE // If you want to hide this as well
+            binding.detailsTitle.visibility = View.GONE
+            binding.scrollDescription.visibility = View.GONE
         }
     }
 
