@@ -53,7 +53,7 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-
+            // Firebase Authentication හරහා user ලියාපදිංචි කිරීම
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
@@ -61,27 +61,29 @@ class RegisterActivity : AppCompatActivity() {
                         val userId = firebaseUser?.uid
 
                         if (userId != null) {
-
+                            // Firebase Realtime Database එකට user දත්ත save කිරීම
+                            // Customer data class එක RegisterActivity ඇතුළත ඇති බැවින් කෙලින්ම ප්‍රවේශ විය හැක.
+                            // සටහන: password එක database එකේ save නොකිරීම ආරක්ෂිතයි. email සහ name පමණක් save කරන්න.
                             val user = Customer(userId, name, email)
                             usersRef.child(userId).setValue(user)
                                 .addOnSuccessListener {
                                     Toast.makeText(this, "Registration Successful!", Toast.LENGTH_SHORT).show()
-
+                                    // සාර්ථක වුනොත් Login Activity එකට යොමු කිරීම
                                     val intent = Intent(this, LoginActivity::class.java)
                                     startActivity(intent)
-                                    finish()
+                                    finish() // වත්මන් activity එක වසා දැමීම
                                 }
                                 .addOnFailureListener { dbException ->
-
+                                    // දත්ත save කිරීම අසාර්ථක වුවහොත්
                                     Toast.makeText(this, "Failed to save user data: ${dbException.message}", Toast.LENGTH_LONG).show()
                                     dbException.printStackTrace() // debugging සඳහා
                                 }
                         } else {
-
+                            // Firebase User ID එක නොලැබුණොත්
                             Toast.makeText(this, "User ID not found after registration.", Toast.LENGTH_LONG).show()
                         }
                     } else {
-
+                        // Registration අසාර්ථක වුවහොත් (උදා: දුර්වල password, පවතින email)
                         val errorMessage = task.exception?.message ?: "Registration failed. Please try again."
                         Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
                         task.exception?.printStackTrace() // debugging සඳහා
@@ -89,8 +91,7 @@ class RegisterActivity : AppCompatActivity() {
                 }
         }
 
-
-
+        // Login link එක Click කළ විට Login Activity එකට යාම
         textViewLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
@@ -98,11 +99,12 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-
+    // Customer Data Class - Firebase Realtime Database වලට දත්ත save කිරීමට.
+    // userId, name, email යන fields පමණක් අවශ්‍ය වේ. Password Firebase Auth හි ගබඩා වේ.
     data class Customer(
         val userId: String = "",
         val name: String = "",
         val email: String = ""
-
+        // val password: String = "" // Password එක Realtime Database වල save නොකරන්න.
     )
 }

@@ -92,7 +92,12 @@ class ProfileFragment : Fragment() {
         themeToggleButton = view.findViewById(R.id.leftToRight) // ID remains 'leftToRight' from XML
         profileImage = view.findViewById(R.id.profileImage)
         cameraIcon = view.findViewById(R.id.cameraIcon)
-        
+
+
+        // Set up click listeners
+        backArrow.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
 
         logoutButton.setOnClickListener {
             auth.signOut()
