@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.pizzazone.Domain.ItemModel
-import com.example.pizzazone.databinding.FragmentAdminProductDetailsBinding // Ensure this matches your layout file name for details
+import com.example.pizzazone.databinding.FragmentAdminProductDetailsBinding
 
 class AdminProductDetailsFragment : Fragment() {
 
@@ -78,7 +78,7 @@ class AdminProductDetailsFragment : Fragment() {
             }
         }
         parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, updateFragment) // <--- CRITICAL: Make sure R.id.fragment_container is correct
+            .replace(R.id.fragment_container, updateFragment)
             .addToBackStack(null)
             .commit()
     }

@@ -10,7 +10,7 @@ import com.example.pizzazone.Domain.ItemModel
 import com.example.pizzazone.DetailsScreenActivity
 import com.example.pizzazone.R
 import com.example.pizzazone.databinding.ViewholderPopularBinding
-import com.example.pizzazone.CartManager // Import CartManager
+import com.example.pizzazone.CartManager
 
 class PopularAdapter(val items:MutableList<ItemModel>):RecyclerView.Adapter<PopularAdapter.Viewholder>() {
     lateinit var context: Context
@@ -39,18 +39,17 @@ class PopularAdapter(val items:MutableList<ItemModel>):RecyclerView.Adapter<Popu
             Glide.with(context).load(R.drawable.placeholder_image).into(holder.binding.imageView3)
         }
 
-        // Handle item click to go to details screen
+
         holder.itemView.setOnClickListener {
             val intent = Intent(context, DetailsScreenActivity::class.java)
             intent.putExtra(DetailsScreenActivity.EXTRA_ITEM_OBJECT, item)
             context.startActivity(intent)
         }
 
-        // *** ADD TO CART BUTTON CLICK LISTENER ***
-        holder.binding.imageView5.setOnClickListener { // imageView5 is your plus icon
+
+        holder.binding.imageView5.setOnClickListener {
             CartManager.addItemToCart(item)
-            // Optionally, show a toast or a small animation to confirm addition
-            // Toast.makeText(context, "${item.title} added to cart!", Toast.LENGTH_SHORT).show()
+
         }
     }
 

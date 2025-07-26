@@ -93,6 +93,7 @@ class ProfileFragment : Fragment() {
         profileImage = view.findViewById(R.id.profileImage)
         cameraIcon = view.findViewById(R.id.cameraIcon)
 
+
         // Set up click listeners
         backArrow.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()

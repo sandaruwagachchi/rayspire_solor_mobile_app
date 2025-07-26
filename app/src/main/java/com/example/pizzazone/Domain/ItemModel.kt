@@ -10,5 +10,5 @@ data class ItemModel(
     var rating: Double = 0.0,
     var numberInCart: Int? = null,
     var categoryId: String = "",
-    var id: String = "" // Make sure this is a var and initialized
+    var id: String = ""
 ) : Serializable

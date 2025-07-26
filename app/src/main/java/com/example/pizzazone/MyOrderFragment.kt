@@ -22,7 +22,7 @@ import android.util.Log
 class MyOrderFragment : Fragment() {
 
     private lateinit var ordersRecyclerView: RecyclerView
-    private lateinit var orderListAdapter: OrderListAdapter // Changed adapter type
+    private lateinit var orderListAdapter: OrderListAdapter
     private lateinit var orderList: ArrayList<OrderDetail>
     private lateinit var emptyOrdersTextView: TextView
 
@@ -42,8 +42,8 @@ class MyOrderFragment : Fragment() {
         ordersRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         orderList = ArrayList()
 
-        // Initialize OrderListAdapter with item_order.xml (no button click listener needed here)
-        orderListAdapter = OrderListAdapter(orderList, R.layout.item_order, null) // Pass null for click listener
+
+        orderListAdapter = OrderListAdapter(orderList, R.layout.item_order, null)
         ordersRecyclerView.adapter = orderListAdapter
 
         auth = FirebaseAuth.getInstance()

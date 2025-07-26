@@ -38,9 +38,8 @@ class AdminDeleteProductFragment : Fragment() {
         setupSpinner()
         setupClickListeners()
 
-        // *** IMPORTANT ADDITION: Load default items immediately ***
-        // This will display popular items when the fragment first loads.
-        loadDefaultItems() // Call this new function
+
+        loadDefaultItems()
 
         return binding.root
     }
@@ -80,7 +79,6 @@ class AdminDeleteProductFragment : Fragment() {
                             }
                         }
                     } else {
-                        // If "Select Category" is chosen, load popular items again
                         loadDefaultItems()
                     }
                 }
