@@ -38,4 +38,5 @@
     <string name="easy_order_and_free_setup">Easy Order and Free Setup</string>
     <string name="choose_your_solar_package_place_your_order_through_the_app_and_enjoy_hassle_free_installation_at_your_home_100_free_setup_included">Choose your solar package, place your order through the app, and enjoy hassle-free installation at your home—100% free setup included!</string>
     <string name="get_started">Get Started</string>
+    <string name="default_web_client_id" translatable="false">YOUR_WEB_CLIENT_ID_FROM_GOOGLE_SERVICES_JSON</string>
 </resources>

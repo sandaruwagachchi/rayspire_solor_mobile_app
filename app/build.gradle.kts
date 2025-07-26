@@ -3,8 +3,7 @@ import org.gradle.kotlin.dsl.implementation
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.google.gms.google.services)
-
+    alias(libs.plugins.google.gms.google.services) // මෙය plugin එකක් ලෙස උඩම තිබිය යුතුයි
 }
 
 android {
@@ -44,6 +43,7 @@ android {
 
 dependencies {
     // Import the Firebase BoM to manage Firebase library versions
+    // ඔබ දැනටමත් මෙය භාවිතා කරන නිසා, අලුත්ම stable version එක යොදන්න
     implementation(platform(libs.firebase.bom))
 
     // AndroidX and Material Design dependencies
@@ -57,16 +57,23 @@ dependencies {
     // IMPORTANT: Use the *non-KTX* versions as KTX functionality is now in main modules.
     implementation(libs.firebase.database)
     implementation(libs.firebase.auth)
-    implementation(libs.firebase.firestore) // Using the non-KTX alias
-    implementation(libs.firebase.storage)   // Using the non-KTX alias
-    implementation(libs.google.firebase.auth)
-    // Credentials and Google ID
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
+
+    // Google Sign-in Library
+    // මෙය අත්‍යවශ්‍යයි Google Sign-in සඳහා. ඔබගේ libs.versions.toml හි playServicesAuth යනුවෙන් alias එකක් ඇත්දැයි පරීක්ෂා කරන්න.
+    // නැතිනම්, මෙය අතින් එකතු කරන්න.
+    implementation("com.google.android.gms:play-services-auth:21.0.0") // 2025-07-26 දිනට අදාල අලුත්ම stable version එක යොදන්න.
+    // ඔබට libs.play.services.auth වැනි alias එකක් තිබේ නම්, එය භාවිතා කරන්න.
+
+    // Credentials and Google ID (ඔබ දැනටමත් මේවා එකතු කර ඇති නිසා වෙනස්කම් අවශ්‍ය නැත)
     implementation(libs.androidx.credentials)
-    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.androidx.credentials.play.services.auth) // මෙයත් play services auth සඳහා අවශ්‍ය වේ.
     implementation(libs.googleid)
 
     // Other libraries
     implementation(libs.litert.support.api)
+    implementation(libs.firebase.ai) // මෙය නිවැරදි dependency name එකක්දැයි පරීක්ෂා කරන්න. Litert.support.api සාමාන්‍ය දෙයක් නොවේ.
 
     // Testing dependencies
     testImplementation(libs.junit)
@@ -74,16 +81,16 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     // UI/Utility libraries
-    implementation(libs.lottie) // Using the alias from libs.versions.toml
+    implementation(libs.lottie)
     implementation(libs.glide)
     implementation(libs.gson)
 
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     // The explicit Lottie version can be removed if libs.lottie points to the desired version.
-    // Keeping it here for now if you intend to override the libs.versions.toml entry,
-    // but typically you'd just use libs.lottie.
-    // implementation("com.airbnb.android:lottie:6.4.1")
+    // implementation("com.airbnb.android:lottie:6.4.1") // මෙය අතිරික්ත නම් ඉවත් කරන්න
 }
 
-apply(plugin = "com.google.gms.google-services")
+// Google Services plugin එකේ apply() method එක plugins block එක තුළට ගෙන යන්න.
+// මෙය Kotlin DSL එකේදී plugins block එක තුළටම දැමීම වඩාත් හොඳ පුරුද්දකි.
+// apply(plugin = "com.google.gms.google-services")
