@@ -2,7 +2,7 @@
 
  1. Frontend: Android Studio (Kotlin)
  
- 2. Backend/Database: Firebase Realtime Database
+ 2. Backend/Database: Firebase Realtime Database/Firebase storage
  
  3. Authentication: Firebase Authentication
 
