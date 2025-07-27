@@ -2,155 +2,215 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="?android:attr/colorBackground"
+    tools:context=".AdminAddProductFragment">
 
-    <!-- ImageView to preview selected image -->
-    <ImageView
-        android:id="@+id/imagePreview"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="16dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_background"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_header_bar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="4dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- Add Image Button BELOW the ImageView -->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonChooseImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Image"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/imagePreview"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Product Name TextInput -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/productNameLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/buttonChooseImage"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:boxBackgroundMode="outline"
-        app:boxStrokeColor="@color/black"
-        app:hintTextColor="@color/black">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextProductName"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/back_arrow"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Product Name" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Category Dropdown (Replaced TextInputEditText with MaterialAutoCompleteTextView) -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/categoryLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:hint="Category"
-        app:layout_constraintTop_toBottomOf="@id/productNameLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:boxBackgroundMode="outline"
-        app:boxStrokeColor="@color/black"
-        app:hintTextColor="@color/black">
-
-        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-            android:id="@+id/editTextCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="none"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="Back"
+            android:clickable="true"
             android:focusable="true"
-            android:clickable="true" />
+            app:tint="?android:attr/textColorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/screen_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Products"
+            android:textColor="?attr/colorPrimary" android:textSize="22sp" android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Price TextInput -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/priceLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@id/categoryLayout"
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:id="@+id/headerSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D3D3D3"
+        app:layout_constraintTop_toBottomOf="@id/top_header_bar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:boxBackgroundMode="outline"
-        app:boxStrokeColor="@color/black"
-        app:hintTextColor="@color/black">
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextPrice"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/top_header_bar"
+        app:layout_constraintBottom_toTopOf="@id/btnhome"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Price"
-            android:inputType="numberDecimal" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:orientation="vertical"
+            android:paddingBottom="16dp"> <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imagePreview"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_add_photo"
+            android:background="?attr/colorSurface"
+            android:padding="4dp"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSizeLarge"
+            app:strokeColor="?attr/colorPrimary"
+            app:strokeWidth="1dp"
+            android:contentDescription="Product image preview" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/rateLayout"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@id/priceLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:boxBackgroundMode="outline"
-        app:boxStrokeColor="@color/black"
-        app:hintTextColor="@color/black">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonChooseImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choose Image"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center_horizontal"
+                app:icon="@drawable/button_orange_rounded" app:iconTint="?attr/colorOnPrimary"
+                app:backgroundTint="?attr/colorPrimary"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                app:cornerRadius="12dp" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextRate"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Rating"
-            android:inputType="numberDecimal" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/productNameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Product Name"
+                app:boxStrokeColor="?attr/colorPrimary"
+                app:hintTextColor="?android:attr/textColorSecondary">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/descriptionLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@id/rateLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:boxBackgroundMode="outline"
-        app:boxStrokeColor="@color/black"
-        app:hintTextColor="@color/black">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextProductName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="?android:attr/textColorPrimary" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Description"
-            android:minLines="2"
-            android:maxLines="5"
-            android:inputType="textMultiLine" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/categoryLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:hint="Category"
+                app:boxStrokeColor="?attr/colorPrimary"
+                app:hintTextColor="?android:attr/textColorSecondary">
 
-    <!-- Add Button -->
-    <androidx.appcompat.widget.AppCompatButton
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/editTextCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:textColor="?android:attr/textColorPrimary"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/priceLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Price"
+                app:boxStrokeColor="?attr/colorPrimary"
+                app:hintTextColor="?android:attr/textColorSecondary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:textColor="?android:attr/textColorPrimary" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/rateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Rating (e.g., 4.5)"
+                app:boxStrokeColor="?attr/colorPrimary"
+                app:hintTextColor="?android:attr/textColorSecondary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextRate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:textColor="?android:attr/textColorPrimary" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/descriptionLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Description"
+                app:boxStrokeColor="?attr/colorPrimary"
+                app:hintTextColor="?android:attr/textColorSecondary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minLines="3"
+                    android:gravity="top|start"
+                    android:inputType="textMultiLine"
+                    android:textColor="?android:attr/textColorPrimary" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnhome"
-        android:layout_width="250dp"
-        android:layout_height="64dp"
-        android:text="Add"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Add Product"
         android:textAllCaps="false"
-        android:background="@drawable/button_orange_rounded"
-        android:textColor="@android:color/black"
+        app:backgroundTint="?attr/colorPrimary"
+        android:textColor="#000000"
         android:textStyle="bold"
         android:textSize="18sp"
-        android:layout_marginBottom="35dp"
+        android:paddingVertical="14dp"
+        app:cornerRadius="12dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

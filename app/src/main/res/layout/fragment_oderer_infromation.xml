@@ -55,16 +55,16 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieAnimationView"
-            android:layout_width="250dp"
+            android:layout_width="400dp"
             android:layout_height="250dp"
             android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.523"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/shipping_header_bar"
             app:lottie_autoPlay="true"
             app:lottie_fileName="DeliveryTruck.json"
-            app:lottie_loop="true"
-            app:layout_constraintTop_toBottomOf="@id/shipping_header_bar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
+            app:lottie_loop="true" />
 
         <TextView
             android:id="@+id/textViewName"
