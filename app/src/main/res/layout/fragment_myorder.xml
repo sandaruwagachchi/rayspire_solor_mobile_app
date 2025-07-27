@@ -22,7 +22,7 @@
             android:id="@+id/shipping_back_arrow"  android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:padding="8dp" android:src="@drawable/ic_arrow_back" app:tint="@android:color/black" app:layout_constraintStart_toStartOf="parent"
+            android:padding="8dp" android:src="@drawable/ic_back_arrow_black" app:tint="@android:color/black" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 

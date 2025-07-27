@@ -36,7 +36,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="16dp"
-            android:src="@drawable/ic_arrow_back"
+            android:src="@drawable/ic_back_arrow_black"
             android:contentDescription="Back"
             android:clickable="true"
             android:focusable="true"
