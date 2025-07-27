@@ -102,13 +102,6 @@ class IncomeFragment : Fragment() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        // Handle Order History Button click
-        binding.orderHistoryButton.setOnClickListener {
-            Log.d("IncomeFragment", "Order History Button Clicked!")
-            // Implement navigation to Order History Fragment/Activity here
-            // Example: findNavController().navigate(R.id.action_incomeFragment_to_orderHistoryFragment)
-        }
-
         return view
     }
 

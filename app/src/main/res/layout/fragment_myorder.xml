@@ -6,30 +6,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".MyOrderFragment"> <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/shipping_header_bar"
-    android:layout_width="0dp"
-    android:layout_marginTop="30dp"
-    android:layout_height="?attr/actionBarSize"
-    android:background="@android:color/white"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent">
+    tools:context=".MyOrderFragment">
 
-
-    <TextView
-        android:id="@+id/shipping_title_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="My Orders" android:textColor="#FF9800"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/shipping_header_bar"
+        android:layout_width="0dp"
+        android:layout_marginTop="30dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/shipping_back_arrow"  android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:padding="8dp" android:src="@drawable/ic_arrow_back" app:tint="@android:color/black" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/shipping_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Orders"
+            android:textColor="#FF9800"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/headerSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D3D3D3"
+        app:layout_constraintTop_toBottomOf="@id/shipping_header_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ordersRecyclerView"
@@ -40,7 +59,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:listitem="@layout/item_order" /> <TextView
+        tools:listitem="@layout/item_order" />
+
+    <TextView
         android:id="@+id/emptyOrdersTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -5,59 +5,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F8F8"
-    tools:context=".ProfileFragment"> <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/topBarLayout"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="30dp"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent">
+    android:background="?android:attr/colorBackground"
+    tools:context=".ProfileFragment">
 
-    <ImageView
-        android:id="@+id/backArrow"
-        android:layout_width="28dp" android:layout_height="28dp" android:src="@drawable/ic_back_arrow"
-        android:contentDescription="Back"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <TextView
-        android:id="@+id/profileTitle"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBarLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Profile"
-        android:textColor="#FF8C00"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <ImageView
-        android:id="@+id/leftToRight"
-        android:layout_width="30dp" android:layout_height="30dp" android:src="@drawable/ic_back_theam"
-        android:contentDescription="Toggle Theme"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_back_arrow"
+            android:contentDescription="Back"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/profileTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profile"
+            android:textColor="@color/orange_500"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/themeToggleButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_back_theam"
+            android:contentDescription="Toggle Theme"
+            android:clickable="true"
+            android:focusable="true"
+            app:tint="?android:attr/textColorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
         android:id="@+id/dividerTopBar"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:background="#D3D3D3"
+        android:background="?android:attr/textColorSecondary"
         app:layout_constraintTop_toBottomOf="@id/topBarLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -80,32 +87,33 @@
             android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"> <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/profileImage"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/dummy_profile_image"
-            />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profileImage"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/dummy_profile_image"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+
             <ImageView
                 android:id="@+id/cameraIcon"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:padding="4dp" android:src="@drawable/ic_camera"
-                app:tint="@android:color/white" app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"
+                android:src="@drawable/ic_camera"
+                android:background="@drawable/button_orange_rounded"
+                android:padding="8dp"
+                android:contentDescription="Take Picture"
                 android:clickable="true"
                 android:focusable="true"
-                android:contentDescription="Change profile picture" />
-
+                app:tint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -113,127 +121,174 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Hii, Thenula!"
-                android:textColor="@android:color/black"
-                android:textSize="24sp"
+                android:text="Hi, !"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profileImageContainer" />
+                app:layout_constraintTop_toBottomOf="@id/profileImageContainer" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/infoCard"
-                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="24dp"
+                android:id="@+id/detailsCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="24dp"
+                app:cardBackgroundColor="?attr/cardBackgroundColor"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/greetingText">
+                app:layout_constraintTop_toBottomOf="@id/greetingText">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
                         android:paddingVertical="8dp">
+
+                        <TextView
+                            android:id="@+id/labelName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Name"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="14sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/textViewProfileName"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Thenula"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp" />
+                            android:layout_marginTop="4dp"
+                            android:text="Loading..."
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@id/editName"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/labelName" />
 
                         <ImageView
                             android:id="@+id/editName"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:clickable="true"
-                            android:contentDescription="Edit Name"
-                            android:focusable="true"
                             android:src="@drawable/ic_edit"
-                            app:tint="#8A8A8A" />
-                    </LinearLayout>
+                            android:contentDescription="Edit Name"
+                            android:clickable="true"
+                            android:focusable="true"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/textViewProfileName"
+                            app:layout_constraintBottom_toBottomOf="@id/textViewProfileName" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginVertical="8dp"
-                        android:background="#E0E0E0" />
+                        android:background="?android:attr/textColorSecondary"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"/>
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
                         android:paddingVertical="8dp">
+
+                        <TextView
+                            android:id="@+id/labelEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Email"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="14sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/textViewProfileEmail"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="thenula@gmail.com"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp" />
+                            android:layout_marginTop="4dp"
+                            android:text="Loading..."
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@id/editEmail"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/labelEmail" />
 
                         <ImageView
                             android:id="@+id/editEmail"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:clickable="true"
-                            android:contentDescription="Edit Email"
-                            android:focusable="true"
                             android:src="@drawable/ic_edit"
-                            app:tint="#8A8A8A" />
-                    </LinearLayout>
+                            android:contentDescription="Edit Email"
+                            android:clickable="true"
+                            android:focusable="true"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/textViewProfileEmail"
+                            app:layout_constraintBottom_toBottomOf="@id/textViewProfileEmail" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginVertical="9dp"
-                        android:background="#E0E0E0" />
+                        android:background="?android:attr/textColorSecondary"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"/>
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
                         android:paddingVertical="8dp">
+
+                        <TextView
+                            android:id="@+id/labelPassword"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Password"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="14sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/textViewProfilePassword"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text=""
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp" />
+                            android:layout_marginTop="4dp"
+                            android:text="********"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@id/editPassword"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/labelPassword" />
 
                         <ImageView
                             android:id="@+id/editPassword"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:clickable="true"
-                            android:contentDescription="Edit Password"
-                            android:focusable="true"
                             android:src="@drawable/ic_edit"
-                            app:tint="#8A8A8A" />
-                    </LinearLayout>
+                            android:contentDescription="Edit Password"
+                            android:clickable="true"
+                            android:focusable="true"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/textViewProfilePassword"
+                            app:layout_constraintBottom_toBottomOf="@id/textViewProfilePassword" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
@@ -241,20 +296,17 @@
         android:id="@+id/buttonLogout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="80dp"
-        android:backgroundTint="#FF8C00"
-        android:paddingVertical="13dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/orange_500"
         android:text="Logout"
-        android:textAllCaps="false"
-        android:textColor="@android:color/black"
-        android:textSize="17sp"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:cornerRadius="8dp"
+        app:cornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

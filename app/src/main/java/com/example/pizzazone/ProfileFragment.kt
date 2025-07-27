@@ -2,6 +2,7 @@ package com.example.pizzazone
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,10 +10,12 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log // Added for logging
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -22,6 +25,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -30,6 +34,15 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.ByteArrayOutputStream
+
+// Define Customer data class at the top-level or in a common file
+// so it's accessible by both ProfileFragment and RegisterActivity
+data class Customer(
+    val userId: String = "",
+    val name: String = "",
+    val email: String = "",
+    val profileImageUrl: String? = null // This field has been added for profile picture
+)
 
 class ProfileFragment : Fragment() {
 
@@ -42,23 +55,34 @@ class ProfileFragment : Fragment() {
     private lateinit var greetingText: TextView
     private lateinit var textViewProfileName: TextView
     private lateinit var textViewProfileEmail: TextView
+    private lateinit var textViewProfilePassword: TextView // To display masked password
     private lateinit var logoutButton: Button
     private lateinit var backArrow: ImageView
-    private lateinit var themeToggleButton: ImageView // Renamed from leftToRightImage for clarity
+    private lateinit var themeToggleButton: ImageView
     private lateinit var profileImage: ShapeableImageView
     private lateinit var cameraIcon: ImageView
+
+    // Edit icons
+    private lateinit var editName: ImageView
+    private lateinit var editEmail: ImageView
+    private lateinit var editPassword: ImageView
 
     // ActivityResultLauncher for taking a picture from the camera
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val imageBitmap = result.data?.extras?.get("data") as? Bitmap
             imageBitmap?.let {
-                profileImage.setImageBitmap(it) // Set the taken picture to profileImage
-                Toast.makeText(requireContext(), "Picture taken. Uploading...", Toast.LENGTH_SHORT).show()
-                uploadImageToFirebaseStorage(it) // Upload to Firebase Storage
+                profileImage.setImageBitmap(it) // Set the taken picture to profileImage immediately
+                // Only show Toast and upload if the fragment is still attached
+                if (isAdded) {
+                    Toast.makeText(requireContext(), "Picture taken. Uploading...", Toast.LENGTH_SHORT).show()
+                    uploadImageToFirebaseStorage(it) // Upload to Firebase Storage
+                }
             }
         } else {
-            Toast.makeText(requireContext(), "Picture taking cancelled or failed.", Toast.LENGTH_SHORT).show()
+            if (isAdded) {
+                Toast.makeText(requireContext(), "Picture taking cancelled or failed.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -67,7 +91,9 @@ class ProfileFragment : Fragment() {
         if (isGranted) {
             openCamera()
         } else {
-            Toast.makeText(requireContext(), "Camera permission is required to take a photo.", Toast.LENGTH_LONG).show()
+            if (isAdded) {
+                Toast.makeText(requireContext(), "Camera permission is required to take a photo.", Toast.LENGTH_LONG).show()
+            }
         }
     }
 
@@ -87,12 +113,17 @@ class ProfileFragment : Fragment() {
         greetingText = view.findViewById(R.id.greetingText)
         textViewProfileName = view.findViewById(R.id.textViewProfileName)
         textViewProfileEmail = view.findViewById(R.id.textViewProfileEmail)
+        textViewProfilePassword = view.findViewById(R.id.textViewProfilePassword) // Initialize password TextView
         logoutButton = view.findViewById(R.id.buttonLogout)
         backArrow = view.findViewById(R.id.backArrow)
-        themeToggleButton = view.findViewById(R.id.leftToRight) // ID remains 'leftToRight' from XML
+        themeToggleButton = view.findViewById(R.id.themeToggleButton)
         profileImage = view.findViewById(R.id.profileImage)
         cameraIcon = view.findViewById(R.id.cameraIcon)
 
+        // Initialize edit icons
+        editName = view.findViewById(R.id.editName)
+        editEmail = view.findViewById(R.id.editEmail)
+        editPassword = view.findViewById(R.id.editPassword)
 
         // Set up click listeners
         backArrow.setOnClickListener {
@@ -101,13 +132,23 @@ class ProfileFragment : Fragment() {
 
         logoutButton.setOnClickListener {
             auth.signOut()
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            requireActivity().finish()
+            // Make sure the fragment is still attached before creating and starting intent
+            if (isAdded) {
+                val intent = Intent(requireContext(), LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                requireActivity().finish()
+            }
         }
 
         // --- Dark/Light Mode Toggle Logic ---
+        // Ensure fragment is added before calling requireActivity()
+        // It's generally better to handle the initial theme setting in the hosting Activity's onCreate()
+        // or in the Application class for consistent behavior across app launch.
+        if (isAdded) {
+            AppCompatDelegate.setDefaultNightMode(loadThemePreference())
+        }
+
         themeToggleButton.setOnClickListener {
             toggleAppTheme()
         }
@@ -119,6 +160,39 @@ class ProfileFragment : Fragment() {
         }
         // --- End Camera Icon Click Listener ---
 
+        // --- EDITING FUNCTIONALITY ---
+        editName.setOnClickListener {
+            // Ensure fragment is added before showing dialog
+            if (isAdded) {
+                showEditDialog("Name", textViewProfileName.text.toString()) { newName ->
+                    updateNameInDatabase(newName)
+                }
+            }
+        }
+
+        editEmail.setOnClickListener {
+            // Ensure fragment is added before showing dialog
+            if (isAdded) {
+                showReAuthDialog("Email", "Enter your current password to update email.") { currentPassword ->
+                    showEditDialog("Email", textViewProfileEmail.text.toString()) { newEmail ->
+                        updateEmailInFirebase(currentPassword, newEmail)
+                    }
+                }
+            }
+        }
+
+        editPassword.setOnClickListener {
+            // Ensure fragment is added before showing dialog
+            if (isAdded) {
+                showReAuthDialog("Password", "Enter your current password to change password.") { currentPassword ->
+                    showEditDialog("New Password", "", true) { newPassword -> // Pass true for isPassword
+                        updatePasswordInFirebase(currentPassword, newPassword)
+                    }
+                }
+            }
+        }
+        // --- END EDITING FUNCTIONALITY ---
+
         // Load user profile data
         loadUserProfile()
 
@@ -127,176 +201,451 @@ class ProfileFragment : Fragment() {
 
     private fun loadUserProfile() {
         val currentUser = auth.currentUser
+        Log.d("ProfileFragment", "loadUserProfile called. Current User: ${currentUser?.email ?: "No user logged in"}")
 
         if (currentUser != null) {
             val userId = currentUser.uid
+            Log.d("ProfileFragment", "Logged in user ID: $userId")
             val userRef = database.getReference("Customers").child(userId)
 
             userRef.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                        val customer = snapshot.getValue(Customer::class.java)
-                        customer?.let {
-                            greetingText.text = "Hi, ${it.name}!"
-                            textViewProfileName.text = it.name
-                            textViewProfileEmail.text = it.email
+                    Log.d("ProfileFragment", "onDataChange triggered. Data path: ${snapshot.ref.path}")
 
-                            // Load profileImageUrl from Firebase Database
-                            val profileImageUrl = it.profileImageUrl
+                    // FIX: Check if the fragment is still attached before updating UI or showing Toast
+                    if (!isAdded) {
+                        Log.d("ProfileFragment", "Fragment not attached, skipping UI update in onDataChange.")
+                        return // Fragment is no longer attached, do not proceed with UI updates
+                    }
+
+                    if (snapshot.exists()) {
+                        Log.d("ProfileFragment", "DataSnapshot exists. Raw data: ${snapshot.value}")
+                        val customer = snapshot.getValue(Customer::class.java)
+
+                        if (customer != null) {
+                            Log.d("ProfileFragment", "Customer object created: Name='${customer.name}', Email='${customer.email}', ProfileImageURL='${customer.profileImageUrl}'")
+
+                            greetingText.text = "Hi, ${customer.name}!"
+                            textViewProfileName.text = customer.name
+                            textViewProfileEmail.text = customer.email
+                            textViewProfilePassword.text = "********" // Always display masked
+
+                            // Load profileImageUrl from Firebase Database using Glide
+                            val profileImageUrl = customer.profileImageUrl
                             if (!profileImageUrl.isNullOrEmpty()) {
-                                // Load image using Glide library
-                                Glide.with(requireContext())
-                                    .load(profileImageUrl)
-                                    .placeholder(R.drawable.dummy_profile_image) // default image
-                                    .error(R.drawable.dummy_profile_image) // image to show on error
-                                    .into(profileImage)
+                                Log.d("ProfileFragment", "Loading profile image: $profileImageUrl")
+                                // Ensure context is valid for Glide
+                                if (context != null) { // context check for Glide
+                                    Glide.with(requireContext())
+                                        .load(profileImageUrl)
+                                        .placeholder(R.drawable.dummy_profile_image)
+                                        .error(R.drawable.dummy_profile_image)
+                                        .into(profileImage)
+                                } else {
+                                    Log.e("ProfileFragment", "Context is null for Glide when loading image after isAdded check.")
+                                    profileImage.setImageResource(R.drawable.dummy_profile_image)
+                                }
                             } else {
-                                // Show default image if no URL is available
+                                Log.d("ProfileFragment", "No profile image URL found, setting dummy image.")
                                 profileImage.setImageResource(R.drawable.dummy_profile_image)
                             }
+                        } else {
+                            Log.e("ProfileFragment", "Customer object is null after snapshot.getValue(). This indicates a data mapping issue. Check Customer data class fields vs. Firebase keys (case sensitivity!).")
+                            Toast.makeText(requireContext(), "Error: Could not parse user data. Check Firebase structure.", Toast.LENGTH_LONG).show()
+                            profileImage.setImageResource(R.drawable.dummy_profile_image)
                         }
                     } else {
+                        Log.d("ProfileFragment", "DataSnapshot does not exist for user ID: $userId. User data might be missing in Firebase Realtime Database at 'Customers/$userId'.")
                         Toast.makeText(requireContext(), "User data not found in database.", Toast.LENGTH_SHORT).show()
-                        // Show default image if data is missing
                         profileImage.setImageResource(R.drawable.dummy_profile_image)
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(requireContext(), "Failed to load profile: ${error.message}", Toast.LENGTH_SHORT).show()
-                    error.toException().printStackTrace()
+                    Log.e("ProfileFragment", "Firebase Database error: ${error.message}", error.toException())
+                    // FIX: Check if the fragment is still attached before showing Toast
+                    if (isAdded) {
+                        Toast.makeText(requireContext(), "Failed to load profile: ${error.message}", Toast.LENGTH_SHORT).show()
+                    }
+                    profileImage.setImageResource(R.drawable.dummy_profile_image)
                 }
             })
         } else {
-            Toast.makeText(requireContext(), "No user logged in. Please log in.", Toast.LENGTH_SHORT).show()
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            requireActivity().finish()
+            Log.d("ProfileFragment", "No user logged in. Redirecting to Login Activity.")
+            // FIX: Check if the fragment is still attached before showing Toast or redirecting
+            if (isAdded) {
+                Toast.makeText(requireContext(), "No user logged in. Redirecting to Login.", Toast.LENGTH_SHORT).show()
+                val intent = Intent(requireContext(), LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                requireActivity().finish()
+            }
         }
     }
 
-    // --- Dark/Light Mode Toggle Function ---
+    // --- Editing Dialogs and Firebase Update Functions ---
+
+    /**
+     * Shows a generic dialog for editing a text field.
+     * @param title The title of the dialog (e.g., "Edit Name").
+     * @param initialValue The current value to pre-fill the EditText.
+     * @param isPassword If true, sets input type to password and warns about re-entering.
+     * @param onSave A lambda function to call with the new value when the user clicks save.
+     */
+    private fun showEditDialog(title: String, initialValue: String, isPassword: Boolean = false, onSave: (String) -> Unit) {
+        // Ensure fragment is added before creating AlertDialog which requires context
+        if (!isAdded) {
+            Log.w("ProfileFragment", "Attempted to showEditDialog but fragment is not attached.")
+            return
+        }
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(title)
+
+        val input = EditText(requireContext())
+        input.setText(initialValue)
+        if (isPassword) {
+            input.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+            input.hint = "Enter new password"
+        }
+        builder.setView(input)
+
+        builder.setPositiveButton("Save") { dialog, _ ->
+            val newValue = input.text.toString().trim()
+            if (newValue.isNotEmpty()) {
+                onSave(newValue)
+            } else {
+                if (isAdded) { // Redundant check here if already checked above, but harmless
+                    Toast.makeText(requireContext(), "$title cannot be empty.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            dialog.dismiss()
+        }
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.cancel()
+        }
+        builder.show()
+    }
+
+    /**
+     * Shows a re-authentication dialog, prompting the user for their current password.
+     * @param title The title for the re-authentication context.
+     * @param message The message explaining why re-authentication is needed.
+     * @param onReAuthenticated A lambda function to call with the current password if re-authentication is successful.
+     */
+    private fun showReAuthDialog(title: String, message: String, onReAuthenticated: (String) -> Unit) {
+        // Ensure fragment is added before creating AlertDialog which requires context
+        if (!isAdded) {
+            Log.w("ProfileFragment", "Attempted to showReAuthDialog but fragment is not attached.")
+            return
+        }
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(title)
+        builder.setMessage(message)
+
+        val input = EditText(requireContext())
+        input.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+        input.hint = "Current Password"
+        builder.setView(input)
+
+        builder.setPositiveButton("Verify") { dialog, _ ->
+            val currentPassword = input.text.toString().trim()
+            if (currentPassword.isNotEmpty()) {
+                val user = auth.currentUser
+                if (user != null && user.email != null) {
+                    val credential = EmailAuthProvider.getCredential(user.email!!, currentPassword)
+                    user.reauthenticate(credential)
+                        .addOnCompleteListener { task ->
+                            // Check if fragment is still added before showing Toast
+                            if (!isAdded) {
+                                Log.w("ProfileFragment", "Re-authentication task completed but fragment detached.")
+                                return@addOnCompleteListener
+                            }
+
+                            if (task.isSuccessful) {
+                                Toast.makeText(requireContext(), "Re-authentication successful.", Toast.LENGTH_SHORT).show()
+                                onReAuthenticated(currentPassword) // Proceed with the actual update
+                            } else {
+                                Toast.makeText(requireContext(), "Re-authentication failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                                Log.e("ProfileFragment", "Re-authentication failed", task.exception)
+                            }
+                        }
+                } else {
+                    if (isAdded) {
+                        Toast.makeText(requireContext(), "User not logged in or email unavailable.", Toast.LENGTH_SHORT).show()
+                    }
+                    Log.w("ProfileFragment", "User is null or email is null during re-authentication attempt.")
+                }
+            } else {
+                if (isAdded) {
+                    Toast.makeText(requireContext(), "Current password cannot be empty.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            dialog.dismiss()
+        }
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.cancel()
+        }
+        builder.show()
+    }
+
+
+    private fun updateNameInDatabase(newName: String) {
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            val userId = currentUser.uid
+            database.getReference("Customers").child(userId).child("name").setValue(newName)
+                .addOnSuccessListener {
+                    // Check if fragment is still added before showing Toast or updating UI
+                    if (!isAdded) {
+                        Log.w("ProfileFragment", "Name update successful but fragment detached before UI update.")
+                        return@addOnSuccessListener
+                    }
+                    Toast.makeText(requireContext(), "Name updated successfully!", Toast.LENGTH_SHORT).show()
+                    textViewProfileName.text = newName // Update UI immediately
+                    greetingText.text = "Hi, $newName!" // Update greeting
+                    Log.d("ProfileFragment", "Name updated in DB and UI: $newName")
+                }
+                .addOnFailureListener { e ->
+                    // Check if fragment is still added before showing Toast
+                    if (!isAdded) {
+                        Log.w("ProfileFragment", "Failed to update name but fragment detached.")
+                        return@addOnFailureListener
+                    }
+                    Toast.makeText(requireContext(), "Failed to update name: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("ProfileFragment", "Failed to update name in DB", e)
+                }
+        }
+    }
+
+    private fun updateEmailInFirebase(currentPassword: String, newEmail: String) {
+        val user = auth.currentUser
+        if (user != null) {
+            user.updateEmail(newEmail)
+                .addOnCompleteListener { task ->
+                    // Check if fragment is still added before showing Toast
+                    if (!isAdded) {
+                        Log.w("ProfileFragment", "Email update task completed but fragment detached.")
+                        return@addOnCompleteListener
+                    }
+
+                    if (task.isSuccessful) {
+                        Log.d("ProfileFragment", "Email updated in Firebase Auth: $newEmail")
+                        // Also update email in Realtime Database to keep it consistent
+                        database.getReference("Customers").child(user.uid).child("email").setValue(newEmail)
+                            .addOnSuccessListener {
+                                if (isAdded) { // Redundant here but safe
+                                    Toast.makeText(requireContext(), "Email updated successfully!", Toast.LENGTH_SHORT).show()
+                                    textViewProfileEmail.text = newEmail // Update UI
+                                }
+                                Log.d("ProfileFragment", "Email updated in Realtime Database.")
+                            }
+                            .addOnFailureListener { e ->
+                                if (isAdded) { // Redundant here but safe
+                                    Toast.makeText(requireContext(), "Email updated in Auth, but failed to update in Database: ${e.message}", Toast.LENGTH_LONG).show()
+                                }
+                                Log.e("ProfileFragment", "Failed to update email in Realtime Database", e)
+                            }
+                    } else {
+                        Toast.makeText(requireContext(), "Failed to update email: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                        Log.e("ProfileFragment", "Failed to update email in Firebase Auth", task.exception)
+                    }
+                }
+        }
+    }
+
+    private fun updatePasswordInFirebase(currentPassword: String, newPassword: String) {
+        val user = auth.currentUser
+        if (user != null) {
+            if (newPassword.length < 6) {
+                if (isAdded) {
+                    Toast.makeText(requireContext(), "New password must be at least 6 characters.", Toast.LENGTH_LONG).show()
+                }
+                Log.w("ProfileFragment", "Password update failed: New password too short.")
+                return
+            }
+
+            user.updatePassword(newPassword)
+                .addOnCompleteListener { task ->
+                    // Check if fragment is still added before showing Toast
+                    if (!isAdded) {
+                        Log.w("ProfileFragment", "Password update task completed but fragment detached.")
+                        return@addOnCompleteListener
+                    }
+
+                    if (task.isSuccessful) {
+                        Toast.makeText(requireContext(), "Password updated successfully!", Toast.LENGTH_SHORT).show()
+                        Log.d("ProfileFragment", "Password updated in Firebase Auth.")
+                        // No UI update needed for password as it's masked
+                    } else {
+                        Toast.makeText(requireContext(), "Failed to update password: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                        Log.e("ProfileFragment", "Failed to update password in Firebase Auth", task.exception)
+                    }
+                }
+        }
+    }
+
+    // --- End Editing Dialogs and Firebase Update Functions ---
+
     private fun toggleAppTheme() {
         val currentNightMode = resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
-
-        when (currentNightMode) {
-            android.content.res.Configuration.UI_MODE_NIGHT_YES -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                saveThemePreference(AppCompatDelegate.MODE_NIGHT_NO)
-                Toast.makeText(requireContext(), "Switched to Light Mode", Toast.LENGTH_SHORT).show()
-            }
-            android.content.res.Configuration.UI_MODE_NIGHT_NO -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                saveThemePreference(AppCompatDelegate.MODE_NIGHT_YES)
-                Toast.makeText(requireContext(), "Switched to Dark Mode", Toast.LENGTH_SHORT).show()
-            }
-            else -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                saveThemePreference(AppCompatDelegate.MODE_NIGHT_YES)
-                Toast.makeText(requireContext(), "Switched to Dark Mode", Toast.LENGTH_SHORT).show()
-            }
+        val newMode = when (currentNightMode) {
+            android.content.res.Configuration.UI_MODE_NIGHT_YES -> AppCompatDelegate.MODE_NIGHT_NO
+            else -> AppCompatDelegate.MODE_NIGHT_YES
         }
-        requireActivity().recreate() // Recreate activity to apply theme changes immediately
+        AppCompatDelegate.setDefaultNightMode(newMode)
+        Log.d("ProfileFragment", "Attempting to toggle theme to mode: $newMode")
+
+        // Ensure fragment is added before accessing shared preferences or showing Toast
+        if (isAdded) {
+            saveThemePreference(newMode)
+
+            val modeName = if (newMode == AppCompatDelegate.MODE_NIGHT_YES) "Dark Mode" else "Light Mode"
+            Toast.makeText(requireContext(), "Switched to $modeName", Toast.LENGTH_SHORT).show()
+            Log.d("ProfileFragment", "Theme preference saved and recreating activity.")
+            requireActivity().recreate()
+        } else {
+            Log.w("ProfileFragment", "Fragment not attached, cannot toggle theme or recreate activity.")
+        }
     }
 
-    // --- Theme Preference Save/Load Functions ---
     private fun saveThemePreference(mode: Int) {
+        // Ensure fragment is added before accessing shared preferences
+        if (!isAdded) {
+            Log.w("ProfileFragment", "Attempted to saveThemePreference but fragment is not attached.")
+            return
+        }
         val sharedPref = requireActivity().getSharedPreferences("app_settings", Context.MODE_PRIVATE)
         with(sharedPref.edit()) {
             putInt("theme_mode", mode)
             apply()
         }
+        Log.d("ProfileFragment", "Theme preference saved: mode = $mode")
     }
 
     private fun loadThemePreference(): Int {
+        // Ensure fragment is added before accessing shared preferences
+        if (!isAdded) {
+            Log.w("ProfileFragment", "Attempted to loadThemePreference but fragment is not attached, returning default.")
+            return AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM // Return default if not attached
+        }
         val sharedPref = requireActivity().getSharedPreferences("app_settings", Context.MODE_PRIVATE)
-        return sharedPref.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        val loadedMode = sharedPref.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        Log.d("ProfileFragment", "Theme preference loaded: mode = $loadedMode")
+        return loadedMode
     }
 
-    // --- Camera permission and opening camera functions ---
     private fun checkCameraPermission() {
+        // Ensure fragment is added before accessing context for permissions or showing Toast
+        if (!isAdded) {
+            Log.w("ProfileFragment", "Attempted to checkCameraPermission but fragment is not attached.")
+            return
+        }
+
         when {
             ContextCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.CAMERA
             ) == PackageManager.PERMISSION_GRANTED -> {
+                Log.d("ProfileFragment", "Camera permission already granted.")
                 openCamera()
             }
             shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
                 Toast.makeText(requireContext(), "We need camera permission to take your profile picture.", Toast.LENGTH_LONG).show()
+                Log.d("ProfileFragment", "Showing camera permission rationale.")
                 requestPermissionLauncher.launch(Manifest.permission.CAMERA)
             }
             else -> {
+                Log.d("ProfileFragment", "Requesting camera permission.")
                 requestPermissionLauncher.launch(Manifest.permission.CAMERA)
             }
         }
     }
 
     private fun openCamera() {
+        // Ensure fragment is added before accessing context for packageManager or showing Toast
+        if (!isAdded) {
+            Log.w("ProfileFragment", "Attempted to openCamera but fragment is not attached.")
+            return
+        }
+
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
+            Log.d("ProfileFragment", "Launching camera intent.")
             takePictureLauncher.launch(takePictureIntent)
         } else {
             Toast.makeText(requireContext(), "No camera app found.", Toast.LENGTH_SHORT).show()
+            Log.e("ProfileFragment", "No camera app found to handle ACTION_IMAGE_CAPTURE.")
         }
     }
 
-    // --- Function to upload image to Firebase Storage ---
     private fun uploadImageToFirebaseStorage(bitmap: Bitmap) {
         val currentUser = auth.currentUser
         if (currentUser == null) {
-            Toast.makeText(requireContext(), "Please log in to upload picture.", Toast.LENGTH_SHORT).show()
+            // Check if fragment is added before showing Toast
+            if (isAdded) {
+                Toast.makeText(requireContext(), "Please log in to upload picture.", Toast.LENGTH_SHORT).show()
+            }
+            Log.w("ProfileFragment", "No user logged in, cannot upload image.")
             return
         }
 
         val userId = currentUser.uid
-        // Create a file in the "profile_images" folder named after the user's UID
         val profileImageRef = storageRef.child("profile_images/$userId.jpg")
+        Log.d("ProfileFragment", "Attempting to upload image for user: $userId to path: ${profileImageRef.path}")
 
-        // Convert Bitmap to ByteArray
         val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos) // 100% quality
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos)
         val data = baos.toByteArray()
 
-        // Upload Task
         val uploadTask = profileImageRef.putBytes(data)
 
         uploadTask.addOnSuccessListener { taskSnapshot ->
-            // Upload successful, get download URL
+            Log.d("ProfileFragment", "Image uploaded successfully. Bytes transferred: ${taskSnapshot.bytesTransferred}")
             profileImageRef.downloadUrl.addOnSuccessListener { uri ->
                 val imageUrl = uri.toString()
-                // Update user data in Realtime Database
+                Log.d("ProfileFragment", "Download URL obtained: $imageUrl")
                 updateProfileImageUrlInDatabase(userId, imageUrl)
             }.addOnFailureListener { e ->
-                Toast.makeText(requireContext(), "Failed to get download URL: ${e.message}", Toast.LENGTH_SHORT).show()
+                // Check if fragment is added before showing Toast
+                if (isAdded) {
+                    Toast.makeText(requireContext(), "Failed to get download URL: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+                Log.e("ProfileFragment", "Failed to get download URL", e)
             }
         }.addOnFailureListener { e ->
-            Toast.makeText(requireContext(), "Failed to upload picture: ${e.message}", Toast.LENGTH_SHORT).show()
+            // Check if fragment is added before showing Toast
+            if (isAdded) {
+                Toast.makeText(requireContext(), "Failed to upload picture: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+            Log.e("ProfileFragment", "Failed to upload picture", e)
         }.addOnProgressListener { taskSnapshot ->
             val progress = (100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount).toInt()
-            // You can use a Progress Bar here if desired
+            // Uncomment the toast below for debugging upload progress if needed
+            // if (isAdded) {
             // Toast.makeText(requireContext(), "Uploading... $progress%", Toast.LENGTH_SHORT).show()
+            // }
+            Log.d("ProfileFragment", "Upload progress: $progress%")
         }
     }
 
-    // --- Function to update profileImageUrl in Realtime Database ---
     private fun updateProfileImageUrlInDatabase(userId: String, imageUrl: String) {
         val userRef = database.getReference("Customers").child(userId)
         userRef.child("profileImageUrl").setValue(imageUrl)
             .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Profile picture saved successfully.", Toast.LENGTH_SHORT).show()
+                // Check if fragment is added before showing Toast
+                if (isAdded) {
+                    Toast.makeText(requireContext(), "Profile picture saved successfully.", Toast.LENGTH_SHORT).show()
+                }
+                Log.d("ProfileFragment", "Profile image URL saved to Realtime Database for user: $userId")
             }
             .addOnFailureListener { e ->
-                Toast.makeText(requireContext(), "Failed to save profile picture in Database: ${e.message}", Toast.LENGTH_SHORT).show()
+                // Check if fragment is added before showing Toast
+                if (isAdded) {
+                    Toast.makeText(requireContext(), "Failed to save profile picture in Database: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+                Log.e("ProfileFragment", "Failed to save profile picture URL in Database", e)
             }
     }
-
-    // Customer Data Class (updated with profileImageUrl field)
-    data class Customer(
-        val userId: String = "",
-        val name: String = "",
-        val email: String = "",
-        val profileImageUrl: String? = null // This field has been added
-    )
 }
