@@ -1,6 +1,7 @@
 package com.example.pizzazone
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
@@ -220,6 +221,7 @@ class ProfileFragment : Fragment() {
             val userRef = database.getReference("Customers").child(userId)
 
             userRef.addValueEventListener(object : ValueEventListener {
+                @SuppressLint("RestrictedApi")
                 override fun onDataChange(snapshot: DataSnapshot) {
                     Log.d("ProfileFragment", "onDataChange triggered. Data path: ${snapshot.ref.path}")
 
