@@ -61,9 +61,14 @@ class ItemsListCategoryAdapter(private val items: MutableList<ItemModel>) :
                 holder.binding.textView8.text = "$${String.format("%.2f", item.price)}"
                 holder.binding.ratingBar.rating = item.rating.toFloat()
 
+                val fallbackAsset = com.example.pizzazone.ImageFallbackProvider.getAssetImageForTitle(item.title)
                 if (item.picUrl.isNotEmpty()) {
                     Glide.with(context)
                         .load(item.picUrl[0])
+                        .into(holder.binding.imageView4)
+                } else if (fallbackAsset != null) {
+                    Glide.with(context)
+                        .load(fallbackAsset)
                         .into(holder.binding.imageView4)
                 } else {
                     Glide.with(context).load(R.drawable.placeholder_image).into(holder.binding.imageView4)
@@ -81,9 +86,14 @@ class ItemsListCategoryAdapter(private val items: MutableList<ItemModel>) :
                 holder.binding.textView8.text = "$${String.format("%.2f", item.price)}"
                 holder.binding.ratingBar.rating = item.rating.toFloat()
 
+                val fallbackAsset = com.example.pizzazone.ImageFallbackProvider.getAssetImageForTitle(item.title)
                 if (item.picUrl.isNotEmpty()) {
                     Glide.with(context)
                         .load(item.picUrl[0])
+                        .into(holder.binding.imageView4)
+                } else if (fallbackAsset != null) {
+                    Glide.with(context)
+                        .load(fallbackAsset)
                         .into(holder.binding.imageView4)
                 } else {
                     Glide.with(context).load(R.drawable.placeholder_image).into(holder.binding.imageView4)

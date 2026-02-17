@@ -5,7 +5,7 @@ agp = "8.10.1"
 # firebaseStorageKtxVersion = "21.0.2" # REMOVED: KTX modules are deprecated/removed
 glide = "4.15.1"
 gson = "2.11.0"
-kotlin = "2.0.21"
+kotlin = "2.1.0"
 coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -27,9 +27,7 @@ googleid = "1.1.1"
 litertSupportApi = "1.4.0"
 
 firebaseBom = "34.0.0"
-firebaseAi = "17.0.0" # ADDED: Define the Firebase BoM version
-
-firebaseBom = "34.0.0" # ADDED: Define the Firebase BoM version
+firebaseAi = "17.0.0"
 mpandroidchart = "v3.1.0"
 
 

@@ -42,9 +42,14 @@ class DetailsScreenFragment : Fragment() {
             binding.textProductDescription.text = item.description
             binding.textProductPrice.text = "$${String.format("%.2f", item.price)}"
 
+            val fallbackAsset = ImageFallbackProvider.getAssetImageForTitle(item.title)
             if (item.picUrl.isNotEmpty()) {
                 Glide.with(this)
                     .load(item.picUrl[0])
+                    .into(binding.imageProduct)
+            } else if (fallbackAsset != null) {
+                Glide.with(this)
+                    .load(fallbackAsset)
                     .into(binding.imageProduct)
             } else {
                 binding.imageProduct.setImageResource(R.drawable.placeholder_image)

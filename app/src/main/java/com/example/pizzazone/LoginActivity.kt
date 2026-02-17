@@ -18,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.FirebaseDatabase
 
 class LoginActivity : AppCompatActivity() {
 
@@ -124,14 +125,34 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    // Email/Password Login Function
+    // Email/Password Login Function — on success we save user metadata to Firebase Realtime Database (never store plaintext passwords)
     private fun loginUser(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, HomeScreenActivity::class.java)) // Login සාර්ථක නම්, HomeScreenActivity වෙත යන්න
-                    finish()
+                    // Signed in successfully — write user metadata to Realtime Database
+                    val user = auth.currentUser
+                    val uid = user?.uid ?: ""
+                    val database = FirebaseDatabase.getInstance().reference
+                    val userMap: Map<String, Any> = mapOf(
+                        "email" to email,
+                        "uid" to uid,
+                        "lastLogin" to System.currentTimeMillis()
+                    )
+
+                    // Save (or update) user node under /Users/{uid}
+                    database.child("Users").child(uid).setValue(userMap)
+                        .addOnCompleteListener { dbTask ->
+                            if (dbTask.isSuccessful) {
+                                Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(this, "Login succeeded but DB write failed: ${'$'}{dbTask.exception?.message}", Toast.LENGTH_LONG).show()
+                            }
+
+                            // Proceed to main screen regardless of DB write result
+                            startActivity(Intent(this, HomeScreenActivity::class.java))
+                            finish()
+                        }
                 } else {
                     Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }

@@ -17,6 +17,7 @@ import com.example.pizzazone.Adapter.SuggestionAdapter // Import the new adapter
 import com.example.pizzazone.Domain.ItemModel
 import com.example.pizzazone.ViewModel.MainViewModel
 import com.example.pizzazone.databinding.FragmentHomeBinding
+import com.bumptech.glide.Glide
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -78,6 +79,12 @@ class HomeFragment : Fragment() {
             adapter = suggestionAdapter
             visibility = View.GONE
         }
+
+        // Load static image for the "Hot Deals" title (use asset provided in /assets)
+        val hotDealsAsset = "file:///android_asset/popular off grid battery.webp"
+        Glide.with(this)
+            .load(hotDealsAsset)
+            .into(binding.hotDealsImage)
 
 
         binding.editTextText3.addTextChangedListener(object : TextWatcher {

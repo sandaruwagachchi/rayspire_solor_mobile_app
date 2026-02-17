@@ -31,9 +31,14 @@ class PopularAdapter(val items:MutableList<ItemModel>):RecyclerView.Adapter<Popu
         holder.binding.textView5.text = item.title
         holder.binding.textView6.text ="$"+item.price.toString()
 
+        val fallbackAsset = com.example.pizzazone.ImageFallbackProvider.getAssetImageForTitle(item.title)
         if (item.picUrl.isNotEmpty()) {
             Glide.with(context)
                 .load(item.picUrl[0])
+                .into(holder.binding.imageView3)
+        } else if (fallbackAsset != null) {
+            Glide.with(context)
+                .load(fallbackAsset)
                 .into(holder.binding.imageView3)
         } else {
             Glide.with(context).load(R.drawable.placeholder_image).into(holder.binding.imageView3)

@@ -98,17 +98,3 @@ dependencies {
     // implementation("com.airbnb.android:lottie:6.4.1") // මෙය අතිරික්ත නම් ඉවත් කරන්න
 }
 
-// Google Services plugin එකේ apply() method එක plugins block එක තුළට ගෙන යන්න.
-// මෙය Kotlin DSL එකේදී plugins block එක තුළටම දැමීම වඩාත් හොඳ පුරුද්දකි.
-// apply(plugin = "com.google.gms.google-services")
-
-    implementation(libs.lottie) // Using the alias from libs.versions.toml
-    implementation(libs.glide)
-    implementation(libs.gson)
-
-    implementation(libs.mpandroidchart)
-}
-
-
-apply(plugin = "com.google.gms.google-services")
-
